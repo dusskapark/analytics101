@@ -21,6 +21,7 @@ Coursera 에서 진행되는 Marketing Analytics 강의를 수강함
 ## 기술 스터디
 - 간단한 웹/앱을 각각 만들어서 Universal Analytics 가이드라인에 따라서 통계 코드를 심고 추적하는 것을 스터디 함.
 - 이 과정에서 학습되는 Sample Code를 기록하고, 불편한 점을 이슈로 기록함.
+
 ### 샘플 web/App 만들기 
 - Tistory 블로그 및 안드로이드 앱을 제작
 - 블로그 API (RSS/xml)를 활용해서 App으로도 구축
