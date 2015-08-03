@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.materialboxed').materialbox();
+    $('.modal-trigger').leanModal();
 
     $.ajax({
         type : 'GET',
@@ -39,22 +39,37 @@ $(document).ready(function() {
 
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l4'>";
-            card += "<div class='card small'>"
+            card += "<div class='card small hoverable'>";
             card += "<div class='card-image waves-effect waves-block waves-light'>";
-            card += "<a href='#" + id + "'/>";
-            card += "<img width='800' height='600' src=' " + thumbnail + " ' class='materialboxed responsive-img'/> </a>";
-            card += "<span class='card-title'>" + FBpage_name + "</span></div>";
-            card += "<div class='card-content'><p><a href='#" + FBcategory + "'>" + FBcategory + "</a><i class='material-icons right'>more_vert</i></p>";
-            card += "<span class='activator grey-text text-darken-4'>" + description + "</span></div>";
+            card += "<a href='#" + id + "' class='modal-trigger' />";
+            card += "<img width='800' height='600' src=' " + thumbnail + " ' class='responsive-img'/> </a>";
+            card += "<span class='card-title'>" + FBcategory + "</span></div>";
+            card += "<div class='card-content'><span class='card-title activator grey-text text-darken-4 truncate'>" + FBpage_name + "</span>";
+            card += "<p>" + description + "</p></div>";
             card += "<div class='card-reveal'><span class='card-title grey-text text-darken-4'>" + FBcategory + "<i class='material-icons right'>close</i></span>";
             card += "<ul class='collection'><li class='collection-item avatar'><img src='" + FBprofile_image + "' class='circle'>";
             card += "<span class='title'>" + FBpage_name + "</span>";
             card += "<p>updated: " + updated_time + "</br>";
             card += "created: " + created_time + "</p></li></ul>";
-            card += "</div></div>"
+            card += "</div></div>";
 
             //카드를 화면에 표시한다.
             $("#FeviCard").append(card);
+            
+            
+            //비디오 플레이 modal
+            var playCard = "<div id='" + id +"' class='modal'>";
+            playCard += "<div class='modal-content'>";
+            playCard += "<h4>" + FBpage_name + "</h4>";
+//            playCard += "<video class='videoPlay' controls muted autoplay poster='" + thumbnail + "'>";
+//            playCard += "<source src='" + source  + "' width='" + width + "' height='" + height + "' /></video>";
+            playCard += "<p>" + description + "</p>";
+            playCard += "</div>";
+            playCard += "<div class='modal-footer'><a href='#!' class='modal-action modal-close waves-effect waves-green btn-flat'>Close</a></div></div>";
+
+            //카드를 화면에 표시한다.
+            $("#modalView").append(playCard);
+
 
         });
     };
