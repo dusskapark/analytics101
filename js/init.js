@@ -42,7 +42,7 @@ $(document).ready(function() {
             card += "<div class='card small hoverable'>";
             card += "<div class='card-image waves-effect waves-block waves-light'>";
             card += "<img width='800' height='600' src=' " + thumbnail + " ' class='responsive-img'/>";
-            card += "<a href='#" + id + "' class='modal-trigger' />";            
+            card += "<a href='#" + id + "' class='modal-trigger' >";            
             card += "<span class='card-title'>" + FBcategory + " <i class='large material-icons'>play_circle_filled</i></span> </a></div>";
             card += "<div class='card-content'><span class='card-title activator grey-text text-darken-4 truncate'>" + FBpage_name + "</span>";
             card += "<p>" + description + "</p></div>";
