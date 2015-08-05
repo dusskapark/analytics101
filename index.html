@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-		<link rel="shortcut icon" href="/images/favicon/apple-touch-icon-152x152.png" type="image/png" />
+		<link rel="shortcut icon" href="./images/favicon/apple-touch-icon-152x152.png" type="image/png" />
 
 		<!-- 타이틀 + 영상제목 -->
 		<title>FEVI </title>
@@ -22,40 +22,40 @@
 						<div id="logo-container">
 							<a href="#"><img width="40" class="icon hide-on-med-and-down" src="./images/favicon/apple-touch-icon-152x152.png" alt=""></a>
 							<a  href="http://adbeus.com" class="brand-logo">FEVI</a>
-							<ul class="right hide-on-med-and-down">
+							<ul class="right hide-on-med-and-down category" >
 								<li>
-									<a href="#">Trend</a>
+									<a href="#trend" class="trend">Trend</a>
 								</li>
 								<li>
-									<a href="#">Pet</a>
+									<a href="#pet" class="pet">Pet</a>
 								</li>
 								<li>
-									<a href="#">Music</a>
+									<a href="#music" class="music">Music</a>
 								</li>
 								<li>
-									<a href="#">Sports</a>
+									<a href="#sports" class="sports">Sports</a>
 								</li>
 								<li>
-									<a href="#">Game</a>
+									<a href="#game" class="game">Game</a>
 								</li>
 							</ul>
 						</div>
 						<!-- 모바일 버전 -->
-						<ul id="nav-mobile" class="side-nav">
+						<ul id="nav-mobile" class="side-nav category">
 							<li>
-								<a href="#">Trend</a>
+								<a href="#trend">Trend</a>
 							</li>
 							<li>
-								<a href="#">Pet</a>
+								<a href="#pet">Pet</a>
 							</li>
 							<li>
-								<a href="#">Music</a>
+								<a href="#music">Music</a>
 							</li>
 							<li>
-								<a href="#">Sports</a>
+								<a href="#sports">Sports</a>
 							</li>
 							<li>
-								<a href="#">Game</a>
+								<a href="#game">Game</a>
 							</li>
 						</ul>
 						<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -66,33 +66,11 @@
 		<div class="container">
 			<div class="section">
 
-				<div id="FeviCard" class="row isotope">
-					<!-- API 더보기 버튼 -->
-					<div class='col s12 m12 l4'>
-						<div class='card small valign-wrapper hoverable'>
-							<a href="#modal1" class='center-align modal-trigger' /><i class='large material-icons'>playlist_add</i></a>
-						</div>
-					</div>
+				<div id="FeviCard" class="row grid">
+					
 				</div>
 
-				<!-- Modal Structure -->
-				<div id="modal1" class="modal">
-					<div class="modal-content">
-						<h4>Modal Header</h4>
-						<div class="video-container">
-							<div class="video-container">
-								<iframe width="853" height="480" src="//www.youtube.com/embed/Q8TXgCzxEnw?rel=0;autohide=1" frameborder="0" allowfullscreen></iframe>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="modal-footer">
-						<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-					</div>
-				</div>
-
-				<div id="modalView"></div>
+				<div id="modalView" class ="row grid"></div>
 
 				<div class="container">
 					<div class="section">
@@ -200,8 +178,10 @@
 				<script src="./js/materialize.js"></script>
 				<script src="./js/init.js"></script>
 				<script src="./js/ui.js"></script>
-
+				
+				<!--카드 움직임 -->
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>
 
 	</body>
 </html>
