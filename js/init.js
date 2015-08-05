@@ -1,11 +1,3 @@
-(function($){
-  $(function(){
-
-    
-    // $('.parallax').parallax();
-
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
 
 $(document).ready(function() {
     var url = "http://munsangdong.cafe24.com/api/card";  
@@ -40,10 +32,7 @@ $(document).ready(function() {
 
     function response_json(json) {
         console.log(json);
-
         var video_list = json.content;
-
-<<<<<<< HEAD
         video_list.forEach(function(v, i) {
             var item = v;
                         // 카드를 구성한다
@@ -63,24 +52,6 @@ $(document).ready(function() {
                                         "created: " + item.created_time + "</p></li></ul>" +
                                 "</div>" + 
                               "</div>";
-=======
-            // 카드를 구성한다
-            var card = "<div class='col s12 m12 l4'>";
-            card += "<div class='card small hoverable'>";
-            card += "<div class='card-image waves-effect waves-block waves-light'>";
-            card += "<img width='800' height='600' src=' " + thumbnail + " ' class='responsive-img'/>";
-            card += "<a href='#" + id + "' class='modal-trigger' >";            
-            card += "<span class='card-title'>" + FBcategory + " <i class='large material-icons'>play_circle_filled</i></span> </a></div>";
-            card += "<div class='card-content'><span class='card-title activator grey-text text-darken-4 truncate'>" + FBpage_name + "</span>";
-            card += "<p>" + description + "</p></div>";
-            card += "<div class='card-reveal'><span class='card-title grey-text text-darken-4'>" + FBcategory + "<i class='material-icons right'>close</i></span>";
-            card += "<ul class='collection'><li class='collection-item avatar'><img src='" + FBprofile_image + "' class='circle'>";
-            card += "<span class='title'>" + FBpage_name + "</span>";
-            card += "<p>updated: " + updated_time + "</br>";
-            card += "created: " + created_time + "</p></li></ul>";
-            card += "</div></div>";
->>>>>>> FETCH_HEAD
-
 
             //카드를 화면에 표시한다.
             $("#FeviCard").append(card);
@@ -159,3 +130,11 @@ $(document).ready(function() {
 
 // end of document ready
 
+(function($){
+  $(function(){
+
+    
+    // $('.parallax').parallax();
+
+  }); // end of document ready
+})(jQuery); // end of jQuery name space
