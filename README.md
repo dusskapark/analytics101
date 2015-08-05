@@ -23,10 +23,9 @@ Coursera 에서 진행되는 Marketing Analytics 강의를 수강함
 - 이 과정에서 학습되는 Sample Code를 기록하고, 불편한 점을 이슈로 기록함.
 
 ### 샘플 web/App 만들기 
-- Tistory 블로그 및 안드로이드 앱을 제작
-- 블로그 API (RSS/xml)를 활용해서 App으로도 구축
- - 푸시 서비스 구축
-- 샘플 웹/앱에 추적코드(MP) 넣기
+- Fevi API를 활용한 Android 앱, Web을 만들고고 통합 통계툴을 적용함.
+- 통계 웹: [FEVI web](http://dusskapark.github.io/analytics101)
+- 통계 안드로이드: [FEVI APK](https://github.com/dusskapark/fevi-regacy/tree/master/Fevi)
  
 ### Measurement Protocol 스터디
 - UA를 구현할 수 있도록 코드를 구축

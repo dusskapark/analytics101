@@ -1,5 +1,4 @@
 jQuery(document).ready(function() {
-    $('.parallax').parallax();
     $(".button-collapse").sideNav();
 
     // var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true :
@@ -35,9 +34,11 @@ jQuery(document).ready(function() {
 
 jQuery(document).ready(function($) {
 
-    $grid.isotope({
+    $('.grid').isotope({
         itemSelector : '.grid-item',
-        layoutMode : 'fitRows',
+        masonry : {
+            columnWidth : 50,
+            gutter : 10
+        }
     });
-
 });
