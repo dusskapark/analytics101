@@ -23,3 +23,8 @@
   text-transform: uppercase;
   left:50px;
 }
+
+.grid-item {
+  float: left;
+  width: 300px !important;
+}
