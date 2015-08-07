@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('.modal-trigger').leanModal();
+    
     var url = "http://munsangdong.cafe24.com/api/card";
     var callApi = function(url) {
         $.ajax({
@@ -37,7 +39,7 @@ $(document).ready(function() {
                         var card = "<div class='col s12 m12 l4 grid-item " + item.category + "'>" +
                             "<div class='card'>" +
                                 "<div class='card-image waves-effect waves-block waves-light'>" +
-                                    "<a href='#" + item.id + "' class='modal-trigger' ><img width='800' height='600' src=' " + item.picture + " ' class='responsive-img'/></a>" +
+                                    "<a href='#" + item.id + "' class='modal-trigger'><img width='800' height='600' src=' " + item.picture + " ' class='responsive-img'/></a>" +
                                         "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
                                 "</div>" +
                                 "<div class='card-content'><span class='card-title activator grey-text text-darken-4 truncate'>" + item.name + "</span>" +
@@ -52,6 +54,18 @@ $(document).ready(function() {
                               "</div>";
             //카드를 화면에 표시한다.
             $("#FeviCard").append(card);
+            
+                // 모달 화면을 만든다.
+                var modal = "<div id='" + item.id + "' class='modal'>" +
+                    "<div class='modal-content'>" +
+                        "<h4>" + item.name + "</h4>" +
+                            "<p>" + item.description + "</p>" +
+                    "</div>" +
+                    "<div class='modal-footer'>" +
+                        "<a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Okay</a>" +
+                    "</div>" +
+                  "</div>";
+                $("#modalView").append(modal);
         });
 
         $('.grid').isotope({
@@ -62,5 +76,7 @@ $(document).ready(function() {
             }
         });
     };
+    
+
 
 });
