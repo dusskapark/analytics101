@@ -1,5 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();
+  });
+  
+$(document).ready(function() {
     
     var url = "http://munsangdong.cafe24.com/api/card";
     var callApi = function(url) {
@@ -67,7 +71,7 @@ $(document).ready(function() {
                   "</div>";
                 $("#modalView").append(modal);
         });
-
+        
         $('.grid').isotope({
             itemSelector : '.grid-item',
             masonry : {
@@ -77,6 +81,5 @@ $(document).ready(function() {
         });
     };
     
-
 
 });
