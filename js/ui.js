@@ -32,13 +32,5 @@ jQuery(document).ready(function() {
 
 });
 
-jQuery(document).ready(function($) {
-
-    $('.grid').isotope({
-        itemSelector : '.grid-item',
-        masonry : {
-            columnWidth : 50,
-            gutter : 10
-        }
-    });
-});
+  $(document).ready(function(){
+  });
