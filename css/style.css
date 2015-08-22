@@ -29,10 +29,16 @@
 	width: 300px !important;
 }
 
-#responsive-img {
+#responsive-image {
 	width: 80%;
 	display: block;
 	margin: 0 auto;
+}
+
+.smallcircle {
+	width: 21px;
+	vertical-align: middle;
+	
 }
 
 /* Banner 관련 */
@@ -95,3 +101,15 @@
     background-color: #f5a5a8;
 }
 
+#modalfevi {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.75);
+	z-index: 999;
+	overflow-y: scroll;
+}
+
+.
