@@ -16,8 +16,9 @@ $(document).ready(function() {
       $(this).parents(".grid-item").removeClass("grid-item l4").delay(1000).addClass(".grid expanded l12");
 
       // 클릭시 비디오가 플레이 된다.
-        var $play = $(this).parents('.card').children('div.card-reveal').children('video').get(0);
-        $play.play();
+      // 모바일에서는 지극히 느려져서.. 삭제
+        // var $play = $(this).parents('.card').children('div.card-reveal').children('video').get(0);
+        // $play.play();
 
       $('.grid').isotope();
     });
