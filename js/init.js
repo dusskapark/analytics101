@@ -12,15 +12,14 @@ $(document).ready(function() {
     callApi( url + window.location.search, response_json );
 
     // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
-    if( window.location.hash !== "" ) {
-      var IDis = window.location.hash;
-      var URLis = window.location.search;
-      // window.location.search = URLis + '&id=' + IDis;
-        console.log(IDis);
-      // callApi( url + window.location.search, response_json );
-    } else {
-      callApi( url, response_json );
-    }
+    // if( window.location.hash !== "" ) {
+    //   var IDis = window.location.hash;
+    //   var URLis = window.location.search;
+    //   // window.location.search = URLis + '&id=' + IDis;
+    //   // callApi( url + window.location.search, response_json );
+    // } else {
+    //   callApi( url, response_json );
+    // }
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
