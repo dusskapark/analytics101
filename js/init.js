@@ -9,11 +9,24 @@ $(document).ready(function() {
             success : successFn
         });
     };
-    callApi( url, response_json );
+    callApi( url + window.location.search, response_json );
+
+    // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
+    if( window.location.hash !== "" ) {
+      var IDis = window.location.hash;
+      var URLis = window.location.search;
+      // window.location.search = URLis + '&id=' + IDis;
+        console.log(IDis);
+      // callApi( url + window.location.search, response_json );
+    } else {
+      callApi( url, response_json );
+    }
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      $(this).parents(".grid-item").removeClass("grid-item l4").delay(1000).addClass(".grid expanded l12");
+      window.location.hash = $(this).parents('div[id]').get(0).id;
+      console.log(window.location.hash);
+      $(this).parents(".grid-item").removeClass("grid-item l4").addClass(".grid expanded l12");
 
       // 클릭시 비디오가 플레이 된다.
       // 모바일에서는 지극히 느려져서.. 삭제
@@ -25,7 +38,7 @@ $(document).ready(function() {
 
     // 닫기를 누르면 카드가 다시 작아진다.
     $( "body" ).on( "click", "div.card-reveal > span", function( e )  {
-      $(this).parents(".expanded").removeClass(".grid expanded l12").delay(1000).addClass("grid-item l4");
+      $(this).parents(".expanded").removeClass(".grid expanded l12").addClass("grid-item l4");
 
       //비디오는 플레이가 중지된다.
         var $pause = $(this).parents('.card-reveal').children('video').get(0);
@@ -43,15 +56,13 @@ $(document).ready(function() {
     });
 
 
-
-
     function response_json(json) {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
-            var card = "<div class='col s12 m12 l4 grid-item " + item.category + "'>" +
-                "<div class='card' id='" + item.id + "'>" +
+            var card = "<div class='col s12 m12 l4 grid-item " + item.category + "' id='" + item.id +  "''>" +
+                "<div class='card'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
                             "<img src=' " + item.picture + " ' class='activator'>" +
                             "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +

@@ -330,3 +330,12 @@ jQuery( ".email-form" ).submit(function( event ) {
 		// console.log(url);
 		// $('.grid').isotope({ filter : '.' + category.toUpperCase() });
 // });
+
+// 클릭하면 아래에 카테고리 정보 추가
+// $( ".category li a" ).on( "click", function( e ) {
+//   console.log( "clicked", e.target );
+//   var categoryUrl = url + "?category=" + e.target.className;
+//   $( "#FeviCard" ).empty();
+//   callApi( categoryUrl, response_json );
+//
+// });
