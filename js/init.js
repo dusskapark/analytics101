@@ -106,7 +106,7 @@ $(document).ready(function() {
       var clickedPath = $(this).attr('alt');
       console.log(contentID, clickedPath);
 
-      ga('send', 'event',  contentID, clickedPath, window.location.search);
+      ga('send', 'event', contentID, "card-reveal", clickedPath  );
       });
     //google-analytics 비디오 플레이를 눌렀는지 체크
     $('body').on('click', '.card-reveal', function(e){
