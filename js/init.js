@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      window.location.hash = $(this).parents('div[id]').get(0).id;
+      window.location.hash = $(this).parents('div[id]').attr('id');
       console.log(window.location.hash);
       $(this).parents(".grid-item").removeClass("grid-item l4").addClass(".grid expanded l12");
 
@@ -63,12 +63,12 @@ $(document).ready(function() {
             var card = "<div class='col s12 m12 l4 grid-item " + item.category + "' id='" + item.id +  "''>" +
                 "<div class='card'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
-                            "<img src=' " + item.picture + " ' class='activator'>" +
+                            "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
                             "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
                     "</div>" +
                     "<div class='card-content'>" +
-                        "<span class='card-title activator grey-text text-darken-4 truncate'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
-                            "<p class='activator'>" + item.description + "</p>" +
+                        "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
+                            "<p class='activator' alt='description'>" + item.description + "</p>" +
                     "</div>" +
                     "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
                         "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
@@ -99,5 +99,23 @@ $(document).ready(function() {
         });
 
     };
+
+    // google-analytics 카드 어디를 누를지 체크
+    $("body").on("click", ".activator", function ( e ){
+      var contentID = $(this).parents('div[id]').attr('id');
+      var clickedPath = $(this).attr('alt');
+      console.log(contentID, clickedPath);
+
+      ga('send', 'event',  contentID, clickedPath, window.location.search);
+      });
+    //google-analytics 비디오 플레이를 눌렀는지 체크
+    $('body').on('click', '.card-reveal', function(e){
+    //   var videID = $(this).parent().attr('data-id');
+      console.log(this);
+    });
+
+
+
+
 
 });
