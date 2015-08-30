@@ -25,7 +25,7 @@ $(document).ready(function() {
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
       console.log(window.location.hash);
-      $(this).parents(".grid-item").removeClass("grid-item l4").addClass(".grid expanded l12");
+      $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass(".grid expanded s12 m12 l12");
 
       // 클릭시 비디오가 플레이 된다.
       // 모바일에서는 지극히 느려져서.. 삭제
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
     // 닫기를 누르면 카드가 다시 작아진다.
     $( "body" ).on( "click", "div.card-reveal > span", function( e )  {
-      $(this).parents(".expanded").removeClass(".grid expanded l12").addClass("grid-item l4");
+      $(this).parents(".expanded").removeClass(".grid expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
 
       //비디오는 플레이가 중지된다.
         var $pause = $(this).parents('.card-reveal').children('video').get(0);
@@ -60,7 +60,7 @@ $(document).ready(function() {
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
-            var card = "<div class='col s12 m12 l4 grid-item " + item.category + "' id='" + item.id +  "''>" +
+            var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
                 "<div class='card'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
                             "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +

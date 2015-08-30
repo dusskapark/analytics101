@@ -25,9 +25,9 @@
 }
 
 .grid-item {
-	float: center;
+	float: left;
 	min-width: 300px !important;
-	max-width: 500px;
+	/*max-width: 500px;*/
 }
 
 #responsive-image {
