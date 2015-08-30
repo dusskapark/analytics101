@@ -25,8 +25,9 @@
 }
 
 .grid-item {
-	float: left;
-	width: 300px !important;
+	float: center;
+	min-width: 300px !important;
+	max-width: 500px;
 }
 
 #responsive-image {
@@ -38,7 +39,7 @@
 .smallcircle {
 	width: 21px;
 	vertical-align: middle;
-	
+
 }
 
 /* Banner 관련 */
