@@ -339,3 +339,18 @@ jQuery( ".email-form" ).submit(function( event ) {
 //   callApi( categoryUrl, response_json );
 //
 // });
+
+
+    // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
+    // if( window.location.hash !== "" ) {
+    //   var IDis = window.location.hash;
+    //   var URLis = window.location.search;
+    //   // window.location.search = URLis + '&id=' + IDis;
+    //   // callApi( url + window.location.search, response_json );
+    // } else {
+    //   callApi( url, response_json );
+    // }
+
+    // $("#addMore").click(function(e){
+    //   console.log(window.location.search[page=]);
+    // });

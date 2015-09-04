@@ -27,11 +27,13 @@
 	  -->
 		<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/skin/pink.flag/css/jplayer.pink.flag.min.css" type="text/css" rel="stylesheet" />
+
 
 	</head>
 	<body>
 		<!--상단 네비게이션 -->
-		<div class="navbar-fixed">
+		<div class="navbar">
 			<nav class="pink lighten-1" role="navigation">
 				<div class="container">
 					<div class="nav-wrapper">
@@ -84,9 +86,26 @@
 			<div class="section">
 
 				<div id="FeviCard" class="row grid">
-					&nbsp;
+					<div id="addMore"class="col s12 m12 l3 grid-item waves-effect waves-block waves-light">
+		        <div class="card small pink lighten-1 valign-wrapper white-text">
+		          <h5 class="valign center" style="width: 100%;"><i class="material-icons large">playlist_add</i></h5>
+		        </div>
+		      </div>
 
 				</div>
+
+				<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+			    <a id="scrollTop" class="btn-floating btn-large red">
+			      <i class="large material-icons">keyboard_arrow_up</i>
+			    </a>
+			    <!-- <ul>
+			      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></i></a></li>
+			      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+			      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+			      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+			    </ul> -->
+			  </div>
+
 			</div>
 		</div>
 
@@ -174,7 +193,8 @@
 
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.min.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
 
 		<script src="./js/materialize.js"></script>
 		<script src="./js/init.js"></script>

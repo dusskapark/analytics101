@@ -9,17 +9,18 @@ $(document).ready(function() {
             success : successFn
         });
     };
-    callApi( url + window.location.search, response_json );
+    // callApi( url + window.location.search, response_json );
 
     // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
-    // if( window.location.hash !== "" ) {
-    //   var IDis = window.location.hash;
-    //   var URLis = window.location.search;
-    //   // window.location.search = URLis + '&id=' + IDis;
-    //   // callApi( url + window.location.search, response_json );
-    // } else {
-    //   callApi( url, response_json );
-    // }
+    if( window.location.hash !== "" ) {
+      var URLis = "?id=" + window.location.hash.substr(1);
+    //   // window.location.hash = "";
+      callApi( url + URLis, response_id );
+    //   console.log(window.location.search);
+    //
+    } else {
+      callApi( url + window.location.search, response_json );
+    }
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
@@ -82,9 +83,8 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
-            $("#FeviCard").append(card);
+            $("#FeviCard").prepend(card);
         });
-
 
         $('.grid').isotope({
                 itemSelector : '.grid-item',
@@ -100,6 +100,38 @@ $(document).ready(function() {
 
     };
 
+    function response_id (json) {
+        var video_list = json.content;
+        video_list.forEach(function(v, i) {
+            var item = v;
+            // 카드를 구성한다
+            var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
+                "<div class='card'>" +
+                    "<div class='card-image waves-effect waves-block waves-light'>" +
+                            "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
+                            "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
+                    "</div>" +
+                    "<div class='card-content'>" +
+                        "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
+                            "<p class='activator' alt='description'>" + item.description + "</p>" +
+                    "</div>" +
+                    "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
+                        "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "</video>" +
+                        "<ul class='collection'><li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
+                            "<span class='title'>" + item.name + "</span>" +
+                            "<p>updated: " + item.updated_time + "</br>" +
+                                "created: " + item.created_time + "</p></li></ul>" +
+                    "</div>" +
+                  "</div>" ;
+
+            //카드를 화면에 표시한다.
+            // $('.grid').isotope().append(card);
+            $("#FeviCard").prepend(card);
+        });
+      }
+
+
     // google-analytics 카드 어디를 누를지 체크
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
@@ -112,6 +144,12 @@ $(document).ready(function() {
     $('body').on('click', '.card-reveal', function(e){
     //   var videID = $(this).parent().attr('data-id');
       console.log(this);
+    });
+
+    // 하단 fix 버튼 클릭시 움직임
+    $('#scrollTop').click(function(){
+      $('html, body').animate({ scrollTop: 0}, "slow");
+      return false;
     });
 
 
