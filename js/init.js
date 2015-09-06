@@ -25,7 +25,6 @@ $(document).ready(function() {
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
-      console.log(window.location.hash);
       $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass(".grid expanded s12 m12 l12");
 
       // 클릭시 비디오가 플레이 된다.
@@ -50,7 +49,6 @@ $(document).ready(function() {
     // 공유 버튼을 누르면 모달 팝업이 뜬다.
     $("body").on ("click", "i.sharing", function(e){
       var sharing = $(this).attr("data-id");
-      console.log(sharing);
       $('#modal1').openModal();
 
     });
@@ -156,7 +154,7 @@ $(document).ready(function() {
 
             // ID 별로 파라메터를 따로 설정을 한다.
             var virtualPvByParam =  "index.html?id=" + item.id;
-            ga('send', 'pageview', 'virtualPvByParam');
+            ga('send', 'pageview', virtualPvByParam);
         });
       }
 
@@ -165,8 +163,6 @@ $(document).ready(function() {
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
       var clickedPath = $(this).attr('alt');
-      console.log(contentID, clickedPath);
-
       ga('send', 'event', "card-reveal", clickedPath, contentID  );
       });
 
@@ -175,7 +171,8 @@ $(document).ready(function() {
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
       var virtualPvByID = "/index.html?id=" + contentID;
-      ga('send', 'pageview', 'virtualPvByID');
+      console.log(virtualPvByID);
+      ga('send', 'pageview', virtualPvByID);
     });
 
 
@@ -183,7 +180,7 @@ $(document).ready(function() {
     //google-analytics 비디오 플레이를 눌렀는지 체크
     $('body').on('click', '.card-reveal', function(e){
     //   var videID = $(this).parent().attr('data-id');
-      console.log(this);
+      // console.log(this);
     });
 
     // 하단 fix 버튼 클릭시 움직임
