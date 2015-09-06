@@ -57,6 +57,7 @@ $(document).ready(function() {
 
 
     function response_json(json) {
+      console.log(json);
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
@@ -83,8 +84,32 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
-            $("#FeviCard").prepend(card);
+            $("#FeviCard").append(card);
         });
+
+        // 더보기 버튼 추가하기
+        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+          "</div>"+
+        "</div>";
+        $("#FeviCard").append(addMore);
+
+        //page 및 각종 앨리먼트 정보를 표시한다.
+        $("#video_list > ul >li").eq(0).text(
+          "총 동영상수: " + json.totalElements
+        );
+        $("#video_list > ul >li").eq(2).text(
+          "총 페이지 수: " + json.totalPages
+        );
+        $("#video_list > ul >li").eq(1).text(
+          "현재 페이지의 카드 수: " + json.size
+        );
+        $("#video_list > ul >li").eq(3).text(
+          "현재 페이지 번호: " + json.number
+        );
+
+
 
         $('.grid').isotope({
                 itemSelector : '.grid-item',
@@ -127,7 +152,11 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
-            $("#FeviCard").prepend(card);
+            $("#FeviCard").append(card);
+
+            // ID 별로 파라메터를 따로 설정을 한다.
+            var virtualPvByParam =  "index.html?id=" + item.id;
+            ga('send', 'pageview', 'virtualPvByParam');
         });
       }
 
@@ -138,8 +167,19 @@ $(document).ready(function() {
       var clickedPath = $(this).attr('alt');
       console.log(contentID, clickedPath);
 
-      ga('send', 'event', contentID, "card-reveal", clickedPath  );
+      ga('send', 'event', "card-reveal", clickedPath, contentID  );
       });
+
+    // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
+    // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
+    $("body").on("click", ".activator", function ( e ){
+      var contentID = $(this).parents('div[id]').attr('id');
+      var virtualPvByID = "/index.html?id=" + contentID;
+      ga('send', 'pageview', 'virtualPvByID');
+    });
+
+
+
     //google-analytics 비디오 플레이를 눌렀는지 체크
     $('body').on('click', '.card-reveal', function(e){
     //   var videID = $(this).parent().attr('data-id');
