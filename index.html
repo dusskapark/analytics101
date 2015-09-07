@@ -42,38 +42,38 @@
 							<a  href="index.html" class="brand-logo">FEVI</a>
 							<ul class="right hide-on-med-and-down category" >
 								<li>
-									<a href="?category=trend&page=1&size=20" class="trend">Trend</a>
+									<a href="?category=trend&size=20" class="trend">Trend</a>
 								</li>
 								<li>
-									<a href="?category=pet&page=1&size=20" class="pet">Pet</a>
+									<a href="?category=pet&size=20" class="pet">Pet</a>
 								</li>
 								<li>
-									<a href="?category=music&page=1&size=20" class="music">Music</a>
+									<a href="?category=music&size=20" class="music">Music</a>
 								</li>
 								<li>
-									<a href="?category=sports&page=1&size=20" class="sports">Sports</a>
+									<a href="?category=sports&size=20" class="sports">Sports</a>
 								</li>
 								<li>
-									<a href="?category=game&page=1&size=20" class="game">Game</a>
+									<a href="?category=game&size=20" class="game">Game</a>
 								</li>
 							</ul>
 						</div>
 						<!-- 모바일 버전 -->
 						<ul id="nav-mobile" class="side-nav category">
 							<li>
-								<a href="?category=trend&page=1&size=20" class="trend">Trend</a>
+								<a href="?category=trend&size=20" class="trend">Trend</a>
 							</li>
 							<li>
-								<a href="?category=pet&page=1&size=20" class="pet">Pet</a>
+								<a href="?category=pet&size=20" class="pet">Pet</a>
 							</li>
 							<li>
-								<a href="?category=music&page=1&size=20" class="music">Music</a>
+								<a href="?category=music&size=20" class="music">Music</a>
 							</li>
 							<li>
-								<a href="?category=sports&page=1&size=20" class="sports">Sports</a>
+								<a href="?category=sports&size=20" class="sports">Sports</a>
 							</li>
 							<li>
-								<a href="?category=game&page=1&size=20" class="game">Game</a>
+								<a href="?category=game&size=20" class="game">Game</a>
 							</li>
 						</ul>
 						<a href="/index.html" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -88,7 +88,6 @@
 				<div id="FeviCard" class="row grid">
 
 				</div>
-
 				<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
 			    <a id="scrollTop" class="btn-floating btn-large red">
 			      <i class="large material-icons">keyboard_arrow_up</i>
@@ -102,6 +101,11 @@
 			  </div>
 
 			</div>
+			<div class="row col s12 valign-wrapper center-align">
+				<ul id="paging" class='pagination'>
+				</ul>
+			</div>
+
 		</div>
 
 		<footer class="page-footer orange">
@@ -116,16 +120,41 @@
 					</div>
 					<div id="video_list" class="col l3 s12">
 						<h5 class="white-text">Video Lists</h5>
-						<ul>
-							<li class="white-text">Link 1</li>
-							<li class="white-text">Link 2</li>
-							<li class="white-text">Link 3</li>
-							<li class="white-text">Link 4</li>
-						</ul>
+						<table  class="white-text">
+		         <thead>
+		           <tr>
+		               <th data-field="id">구분</th>
+		               <th data-field="name">아이템</th>
+		           </tr>
+		         </thead>
+
+		         <tbody>
+		           <tr>
+		             <td>총 카드수</td>
+		             <td id="totalElements">&nbsp;</td>
+		           </tr>
+		           <tr>
+		             <td>총 페이지수</td>
+		             <td id="totalPages">&nbsp;</td>
+		           </tr>
+		           <tr>
+		             <td>현재 페이지의 카드수</td>
+		             <td id="cardSize">&nbsp;</td>
+		           </tr>
+							 <tr>
+								 <td>현재 페이지 번호</td>
+								 <td id="currentPage">&nbsp;</td>
+							 </tr>
+							 <tr style="display:none">
+								 <td id="firstPage">&nbsp;</td>
+								 <td id="lastPage">&nbsp;</td>
+							 </tr>
+		         </tbody>
+		       </table>
 					</div>
 					<div class="col l3 s12">
 						<h5 class="white-text">Connect</h5>
-						<ul>
+						<ul id="test">
 							<li>
 								<a class="white-text" href="#!">Link 1</a>
 							</li>
@@ -185,7 +214,8 @@
 
 		<script src="./js/materialize.js"></script>
 		<script src="./js/init.js"></script>
-		<script src="./js/ui.js"></script>
+		<script src="./js/jquery.paging.min.js"></script>
+
 
 		<!--카드 움직임 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>

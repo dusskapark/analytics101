@@ -1,4 +1,25 @@
 $(document).ready(function() {
+  $('.button-collapse').sideNav({
+      menuWidth : 240,
+      activationWidth : 70
+  });
+
+  //URL 파싱하기
+  var $search = function() {
+    var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
+    if (l === 0) {return false;}
+    while (l--) {
+      kv = p[l].split(/\=/);
+      r[kv[0]] = decodeURIComponent(kv[1] || '') || true;
+    }
+    return r;
+  }();
+
+  //page= 가 있나 없나?
+
+    console.log($search.category);
+
+
 
     var url = "http://munsangdong.cafe24.com/api/card";
     var callApi = function( url, successFn ) {
@@ -21,6 +42,14 @@ $(document).ready(function() {
     } else {
       callApi( url + window.location.search, response_json );
     }
+
+    // addMore 버튼을 누르면 카드를 20개 더 추가한다.
+    $("body").on("click", "#addMore", function( e ){
+      var pageNm = $("#currentPage").text();
+      var pageNmInt = Number(pageNm) + 1;
+      var nextPageUrl = "?page=" + pageNmInt;
+      callApi(url + nextPageUrl, response_json);
+    });
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
@@ -54,8 +83,8 @@ $(document).ready(function() {
     });
 
 
+
     function response_json(json) {
-      console.log(json);
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
@@ -81,32 +110,46 @@ $(document).ready(function() {
                   "</div>" ;
 
             //카드를 화면에 표시한다.
-            // $('.grid').isotope().append(card);
             $("#FeviCard").append(card);
         });
 
         // 더보기 버튼 추가하기
-        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-          "</div>"+
-        "</div>";
-        $("#FeviCard").append(addMore);
+        // materialize 의 height 가 fix 되는 문제로 인해서 더보기 카드 삭제 //
+        // var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        // $("#FeviCard").append(addMore);
+
+        //한글 페이지 파싱 라이브러리
+    		$('#paging').paging({
+    			item: "li",
+    			itemClass: "waves-effect",
+    			itemCurrent: "active",
+    			format: "{0}",
+    			next: "<i class='material-icons'>chevron_right</i>" ,
+    			prev: "<i class='material-icons'>chevron_left</i>",
+    			first: "<i class='material-icons'>arrow_back</i>",
+    			last: "<i class='material-icons'>arrow_forward</i>",
+    			current:json.number,
+    			max:json.totalPages,
+    			// event: false,
+    			onclick: function(e,page){
+    				// event.stopPropagation();
+            	alert('going to page '+ page);
+    			//   // var urlPaging = window.location.search + "&page=" + $pageNm;
+    				// window.location.search = urlPaging;
+    			}
+    		});
 
         //page 및 각종 앨리먼트 정보를 표시한다.
-        $("#video_list > ul >li").eq(0).text(
-          "총 동영상수: " + json.totalElements
-        );
-        $("#video_list > ul >li").eq(2).text(
-          "총 페이지 수: " + json.totalPages
-        );
-        $("#video_list > ul >li").eq(1).text(
-          "현재 페이지의 카드 수: " + json.size
-        );
-        $("#video_list > ul >li").eq(3).text(
-          "현재 페이지 번호: " + json.number
-        );
-
+        $("#totalElements").text(json.totalElements);
+        $("#totalPages").text(json.totalPages);
+        $("#cardSize").text(json.size);
+        $("#currentPage").text(json.number);
+        $("#firstPage").text(json.first);
+        $("#lastPage").text(json.last);
 
 
         $('.grid').isotope({
@@ -128,32 +171,47 @@ $(document).ready(function() {
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
-            var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
-                "<div class='card'>" +
-                    "<div class='card-image waves-effect waves-block waves-light'>" +
-                            "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
-                            "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
-                    "</div>" +
-                    "<div class='card-content'>" +
-                        "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
-                            "<p class='activator' alt='description'>" + item.description + "</p>" +
-                    "</div>" +
-                    "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
+            var card = "<div class='grid-item" + item.category + "' id='" + item.id +  "''>" +
+                    "<div class=' container ' data-id='" + item.id +"'>" +
                         "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
-                        "<ul class='collection'><li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
-                            "<span class='title'>" + item.name + "</span>" +
-                            "<p>updated: " + item.updated_time + "</br>" +
-                                "created: " + item.created_time + "</p></li></ul>" +
-                    "</div>" +
+                        "<ul class='collection'>" +
+                          "<li class='collection-item'>"+
+                          "<span class='title pink-text'><strong>" + item.category + "</strong><i class='secondary-content pink-text material-icons sharing right' data-id=" + item.id + ">share</i></span>"+
+                          "</li>"+
+                          "<li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
+                              "<span class='title'>" + item.name + "</span>" +
+                              "<p>updated: " + item.updated_time + "</br>" +
+                                  "created: " + item.created_time + "</p>"+
+                              "<a href='http://facebook.com/" + item.id + "' target='_blank' class='secondary-content'><i class='material-icons pink-text'>send</i></a>"+
+                          "</li>"+
+                          "<li class='collection-item avatar'><i class='material-icons circle red'>play_arrow</i>"+
+                          "<span class='title'>Description</span>" +
+                          "<p>"+ item.description +"</p>"
+                          "</li>"+
+                        "</ul>" +
+                    "</div>"
                   "</div>" ;
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
             $("#FeviCard").append(card);
 
+            // 더보기 많은 동영상보기 버튼 추가하기
+            var addFevi = "<div id='addFevi' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+              "<div class='card pink lighten-1 valign-wrapper white-text'>" +
+                "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>add</i><br/>더 많은 비디오 보기</h5>" +
+              "</div>"+
+            "</div>";
+            $("#FeviCard").append(addFevi);
+
+            //ID로 접속한 경우에는 페이지 정보는 삭제한다.
+            $("#video_list").remove();
+
+
             // ID 별로 파라메터를 따로 설정을 한다.
             var virtualPvByParam =  "index.html?id=" + item.id;
+            console.log(virtualPvByParam);
             ga('send', 'pageview', virtualPvByParam);
         });
       }
