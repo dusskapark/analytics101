@@ -15,7 +15,6 @@ $(document).ready(function() {
     return r;
   }();
 
-
     var url = "http://munsangdong.cafe24.com/api/card";
     var callApi = function( url, successFn ) {
         $.ajax({
@@ -30,7 +29,8 @@ $(document).ready(function() {
     // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
     if( window.location.hash !== "" ) {
       var URLis = "?id=" + window.location.hash.substr(1);
-    //   // window.location.hash = "";
+      $("#FeviCard").empty();
+
       callApi( url + URLis, response_id );
     //   console.log(window.location.search);
     //
@@ -38,13 +38,13 @@ $(document).ready(function() {
       callApi( url + window.location.search, response_json );
     }
 
-    // addMore 버튼을 누르면 카드를 20개 더 추가한다.
-    $("body").on("click", "#addMore", function( e ){
-      var pageNm = $("#currentPage").text();
-      var pageNmInt = Number(pageNm) + 1;
-      var nextPageUrl = "?page=" + pageNmInt;
-      callApi(url + nextPageUrl, response_json);
-    });
+    // // addMore 버튼을 누르면 카드를 20개 더 추가한다.
+    // $("body").on("click", "#addMore", function( e ){
+    //   var pageNm = $("#currentPage").text();
+    //   var pageNmInt = Number(pageNm);
+    //   var nextPageUrl = "?page=" + pageNmInt;
+    //   callApi(url + nextPageUrl, response_json);
+    // });
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
@@ -129,20 +129,15 @@ $(document).ready(function() {
     			last: "<i class='material-icons'>arrow_forward</i>",
     			current:json.number,
     			max:json.totalPages,
-    			// event: false,
+    			event: true,
     			// onclick: function(e,page){
           //   //page= 가 있나 없나?
-          //   if ($search.page !== 0) {
-          //     var urlPaging =
-          //   }else {
-          //     console.log($search.category);
+          //   if ($search.category == "") {
+          //     window.location.search = "?page=" + page;
+          //   } else {
+          //     window.location.search = "?category=" + $search.category + "&page=" + page;
+          //     }
           //   }
-          //
-    			// 	// event.stopPropagation();
-          //   	alert('going to page '+ page);
-    			// //   // var urlPaging = window.location.search + "&page=" + $pageNm;
-    			// 	// window.location.search = urlPaging;
-    			// }
     		});
 
         //page 및 각종 앨리먼트 정보를 표시한다.
@@ -173,7 +168,7 @@ $(document).ready(function() {
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
-            var card = "<div class='grid-item" + item.category + "' id='" + item.id +  "''>" +
+            var card = "<div class='grid-item " + item.category + "' id='" + item.id +  "''>" +
                     "<div class=' container ' data-id='" + item.id +"'>" +
                         "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
@@ -187,25 +182,21 @@ $(document).ready(function() {
                                   "created: " + item.created_time + "</p>"+
                               "<a href='http://facebook.com/" + item.id + "' target='_blank' class='secondary-content'><i class='material-icons pink-text'>send</i></a>"+
                           "</li>"+
-                          "<li class='collection-item avatar'><i class='material-icons circle red'>play_arrow</i>"+
-                          "<span class='title'>Description</span>" +
-                          "<p>"+ item.description +"</p>"
+                          "<li class='collection-item avatar'><i class='material-icons circle pink'>play_arrow</i>"+
+                            "<span class='title'>Description</span>" +
+                            "<p>"+ item.description +"</p>"+
+                          "</li>"+
+                          "<li class='collection-item avatar'><a href='/index.html'><i class='material-icons circle pink'>add</i>"+
+                            "<span class='title'>더 많은 동영상 보기</span>" +
+                            "<p>FEVI에서 더 많은 영상을 볼 수 있습니다. 지금 FEVI를 방문하세요! </p></a>"+
                           "</li>"+
                         "</ul>" +
-                    "</div>"
+                    "</div>"+
                   "</div>" ;
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
             $("#FeviCard").append(card);
-
-            // 더보기 많은 동영상보기 버튼 추가하기
-            var addFevi = "<div id='addFevi' class='col s12 grid-item waves-effect waves-block waves-light'>" +
-              "<div class='card pink lighten-1 valign-wrapper white-text'>" +
-                "<h5 class='valign center' style='width: 100%;'><i class='material-icons'>add</i><br/>더 많은 비디오 보기</h5>" +
-              "</div>"+
-            "</div>";
-            $("#FeviCard").append(addFevi);
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("#video_list").remove();
