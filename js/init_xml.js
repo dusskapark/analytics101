@@ -354,3 +354,28 @@ jQuery( ".email-form" ).submit(function( event ) {
     // $("#addMore").click(function(e){
     //   console.log(window.location.search[page=]);
     // });
+
+
+
+		//한글 페이지 파싱 라이브러리
+		// $('#paging').paging({
+		// 	item: "li",
+		// 	itemClass: "waves-effect",
+		// 	itemCurrent: "active",
+		// 	format: "{0}",
+		// 	next: "<i class='material-icons'>chevron_right</i>" ,
+		// 	prev: "<i class='material-icons'>chevron_left</i>",
+		// 	first: "<i class='material-icons'>arrow_back</i>",
+		// 	last: "<i class='material-icons'>arrow_forward</i>",
+		// 	current:json.number,
+		// 	max:json.totalPages,
+		// 	event: true,
+		// 	// onclick: function(e,page){
+			//   //page= 가 있나 없나?
+			//   if ($search.category == "") {
+			//     window.location.search = "?page=" + page;
+			//   } else {
+			//     window.location.search = "?category=" + $search.category + "&page=" + page;
+			//     }
+			//   }
+		// });

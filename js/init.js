@@ -4,6 +4,14 @@ $(document).ready(function() {
       activationWidth : 70
   });
 
+  $('.grid').isotope({
+          itemSelector : '.grid-item',
+          masonry : {
+              columnWidth : 50,
+              gutter : 10
+          }
+      });
+
   //URL 파싱하기
   var $search = function() {
     var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
@@ -41,8 +49,9 @@ $(document).ready(function() {
     // addMore 버튼을 누르면 카드를 20개 더 추가한다.
     $("body").on("click", "#addMore", function( e ){
       var pageNm = $("#currentPage").text();
-      var pageNmInt = Number(pageNm);
-      var nextPageUrl = "?page=" + pageNmInt;
+      var pageNmInt = Number(pageNm) + 1;
+      var nextPageUrl = "?size=10&page=" + pageNmInt;
+      $("#addMore").remove();
       callApi(url + nextPageUrl, response_json);
     });
 
@@ -81,6 +90,12 @@ $(document).ready(function() {
 
     function response_json(json) {
         var video_list = json.content;
+        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+          "</div>"+
+        "</div>";
+
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
@@ -105,40 +120,13 @@ $(document).ready(function() {
                   "</div>" ;
 
             //카드를 화면에 표시한다.
-            $("#FeviCard").append(card);
+            $('.grid').isotope('insert', $(card));
         });
 
-        // 더보기 버튼 추가하기
-        // materialize 의 height 가 fix 되는 문제로 인해서 더보기 카드 삭제 //
-        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-          "</div>"+
-        "</div>";
-        $("#FeviCard").append(addMore);
 
-        //한글 페이지 파싱 라이브러리
-    		// $('#paging').paging({
-    		// 	item: "li",
-    		// 	itemClass: "waves-effect",
-    		// 	itemCurrent: "active",
-    		// 	format: "{0}",
-    		// 	next: "<i class='material-icons'>chevron_right</i>" ,
-    		// 	prev: "<i class='material-icons'>chevron_left</i>",
-    		// 	first: "<i class='material-icons'>arrow_back</i>",
-    		// 	last: "<i class='material-icons'>arrow_forward</i>",
-    		// 	current:json.number,
-    		// 	max:json.totalPages,
-    		// 	event: true,
-    		// 	// onclick: function(e,page){
-          //   //page= 가 있나 없나?
-          //   if ($search.category == "") {
-          //     window.location.search = "?page=" + page;
-          //   } else {
-          //     window.location.search = "?category=" + $search.category + "&page=" + page;
-          //     }
-          //   }
-    		// });
+        // $("#FeviCard").append(addMore);
+        $('.grid').isotope('insert', $(addMore));
+
 
         //page 및 각종 앨리먼트 정보를 표시한다.
         $("#totalElements").text(json.totalElements);
@@ -149,13 +137,7 @@ $(document).ready(function() {
         $("#lastPage").text(json.last);
 
 
-        $('.grid').isotope({
-                itemSelector : '.grid-item',
-                masonry : {
-                    columnWidth : 50,
-                    gutter : 10
-                }
-            });
+
 
         $('.grid').imagesLoaded().done(function() {
             $('.grid').isotope();
@@ -196,7 +178,7 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             // $('.grid').isotope().append(card);
-            $("#FeviCard").append(card);
+            $('.grid').isotope('insert', $(card));
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("#video_list").remove();
