@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('.button-collapse').sideNav({
       menuWidth : 240,
       activationWidth : 70
@@ -46,11 +47,22 @@ $(document).ready(function() {
       callApi( url + window.location.search, response_json );
     }
 
-    // addMore 버튼을 누르면 카드를 20개 더 추가한다.
+    // addMore 버튼을 누르면 카드를 10개 더 추가한다.
     $("body").on("click", "#addMore", function( e ){
       var pageNm = $("#currentPage").text();
       var pageNmInt = Number(pageNm) + 1;
+      // console.log(pageNmInt);
       var nextPageUrl = "?size=10&page=" + pageNmInt;
+      $("#addMore").remove();
+      callApi(url + nextPageUrl, response_json);
+    });
+
+    // addMoreCircle 버튼을 누르면 카드를 5개 더 추가한다.
+    $("#addMoreCircle").click(function( e ){
+      var pageNm = $("#currentPage").text();
+      var pageNmInt = Number(pageNm) + 1;
+      // console.log(pageNmInt);
+      var nextPageUrl = "?size=5&page=" + pageNmInt;
       $("#addMore").remove();
       callApi(url + nextPageUrl, response_json);
     });
@@ -72,12 +84,37 @@ $(document).ready(function() {
     $( "body" ).on( "click", "div.card-reveal > span", function( e )  {
       $(this).parents(".expanded").removeClass(".grid expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
 
+      /* refrence 부분 클릭시 이동하는 높이값 수정 */
+      var tr;
+      setTimeout(function(){
+        tr=$('body').scrollTop()-100;
+
+        // IE 브라우저 대응 코드(나중에 리펙토링)
+        // if($.browser.msie==true) {
+        //   tr=document.documentElement.scrollTop -200;
+        //       }else{
+                // tr=$('body').scrollTop()-200;
+              // }
+      },100);
+
+      setTimeout(function(){
+        $('body').scrollTop(tr);
+
+        // IE 브라우저 대응 코드(나중에 리펙토링)
+        // if($.browser.msie==true) {
+        //   document.documentElement.scrollTop=tr;
+        //       }else{
+        //         $('body').scrollTop(tr);
+        //       }
+      },200);
+
       //비디오는 플레이가 중지된다.
         var $pause = $(this).parents('.card-reveal').children('video').get(0);
         $pause.pause();
 
       $('.grid').isotope();
     });
+
 
     // 공유 버튼을 누르면 모달 팝업이 뜬다.
     $("body").on ("click", "i.sharing", function(e){
@@ -109,8 +146,9 @@ $(document).ready(function() {
                         "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
                             "<p class='activator' alt='description'>" + item.description + "</p>" +
                     "</div>" +
-                    "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
-                        "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                    "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
+                        "<video class='video-js vjs-default-skin' controls loop preload='auto' poster='" + item.picture + "' width='100%' >" +
+                          "<source src='" + item.source + "' type='video/mp4'>"
                         "</video>" +
                         "<ul class='collection'><li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
                             "<span class='title'>" + item.name + "</span>" +
@@ -146,13 +184,14 @@ $(document).ready(function() {
     };
 
     function response_id (json) {
+      $("#addMoreCircle").remove();
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
             // 카드를 구성한다
-            var card = "<div class='grid-item " + item.category + "' id='" + item.id +  "''>" +
+            var card = "<div class='grid-item " + item.category + "'>" +
                     "<div class=' container ' data-id='" + item.id +"'>" +
-                        "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "<video class='video-js vjs-default-skin' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
@@ -168,7 +207,7 @@ $(document).ready(function() {
                             "<span class='title'>Description</span>" +
                             "<p>"+ item.description +"</p>"+
                           "</li>"+
-                          "<li class='collection-item avatar'><a href='/index.html'><i class='material-icons circle pink'>add</i>"+
+                          "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
                             "<p>FEVI에서 더 많은 영상을 볼 수 있습니다. 지금 FEVI를 방문하세요! </p></a>"+
                           "</li>"+
@@ -177,7 +216,6 @@ $(document).ready(function() {
                   "</div>" ;
 
             //카드를 화면에 표시한다.
-            // $('.grid').isotope().append(card);
             $('.grid').isotope('insert', $(card));
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
@@ -203,7 +241,7 @@ $(document).ready(function() {
     // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
-      var virtualPvByID = "/index.html?id=" + contentID;
+      var virtualPvByID = "index.html?id=" + contentID;
       console.log(virtualPvByID);
       ga('send', 'pageview', virtualPvByID);
     });
