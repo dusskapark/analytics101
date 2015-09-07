@@ -15,11 +15,6 @@ $(document).ready(function() {
     return r;
   }();
 
-  //page= 가 있나 없나?
-
-    console.log($search.category);
-
-
 
     var url = "http://munsangdong.cafe24.com/api/card";
     var callApi = function( url, successFn ) {
@@ -136,6 +131,13 @@ $(document).ready(function() {
     			max:json.totalPages,
     			// event: false,
     			onclick: function(e,page){
+            //page= 가 있나 없나?
+            if ($search.page !== 0) {
+              var urlPaging =
+            }else {
+              console.log($search.category);
+            }
+
     				// event.stopPropagation();
             	alert('going to page '+ page);
     			//   // var urlPaging = window.location.search + "&page=" + $pageNm;
@@ -198,9 +200,9 @@ $(document).ready(function() {
             $("#FeviCard").append(card);
 
             // 더보기 많은 동영상보기 버튼 추가하기
-            var addFevi = "<div id='addFevi' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+            var addFevi = "<div id='addFevi' class='col s12 grid-item waves-effect waves-block waves-light'>" +
               "<div class='card pink lighten-1 valign-wrapper white-text'>" +
-                "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>add</i><br/>더 많은 비디오 보기</h5>" +
+                "<h5 class='valign center' style='width: 100%;'><i class='material-icons'>add</i><br/>더 많은 비디오 보기</h5>" +
               "</div>"+
             "</div>";
             $("#FeviCard").append(addFevi);
