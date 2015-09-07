@@ -38,13 +38,13 @@ $(document).ready(function() {
       callApi( url + window.location.search, response_json );
     }
 
-    // // addMore 버튼을 누르면 카드를 20개 더 추가한다.
-    // $("body").on("click", "#addMore", function( e ){
-    //   var pageNm = $("#currentPage").text();
-    //   var pageNmInt = Number(pageNm);
-    //   var nextPageUrl = "?page=" + pageNmInt;
-    //   callApi(url + nextPageUrl, response_json);
-    // });
+    // addMore 버튼을 누르면 카드를 20개 더 추가한다.
+    $("body").on("click", "#addMore", function( e ){
+      var pageNm = $("#currentPage").text();
+      var pageNmInt = Number(pageNm);
+      var nextPageUrl = "?page=" + pageNmInt;
+      callApi(url + nextPageUrl, response_json);
+    });
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
@@ -108,14 +108,14 @@ $(document).ready(function() {
             $("#FeviCard").append(card);
         });
 
-        // 더보기 버튼 추가하기
-        // materialize 의 height 가 fix 되는 문제로 인해서 더보기 카드 삭제 //
-        // var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-        //   "</div>"+
-        // "</div>";
-        // $("#FeviCard").append(addMore);
+        더보기 버튼 추가하기
+        materialize 의 height 가 fix 되는 문제로 인해서 더보기 카드 삭제 //
+        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+          "</div>"+
+        "</div>";
+        $("#FeviCard").append(addMore);
 
         //한글 페이지 파싱 라이브러리
     		$('#paging').paging({
