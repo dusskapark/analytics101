@@ -130,19 +130,19 @@ $(document).ready(function() {
     			current:json.number,
     			max:json.totalPages,
     			// event: false,
-    			onclick: function(e,page){
-            //page= 가 있나 없나?
-            if ($search.page !== 0) {
-              var urlPaging =
-            }else {
-              console.log($search.category);
-            }
-
-    				// event.stopPropagation();
-            	alert('going to page '+ page);
-    			//   // var urlPaging = window.location.search + "&page=" + $pageNm;
-    				// window.location.search = urlPaging;
-    			}
+    			// onclick: function(e,page){
+          //   //page= 가 있나 없나?
+          //   if ($search.page !== 0) {
+          //     var urlPaging =
+          //   }else {
+          //     console.log($search.category);
+          //   }
+          //
+    			// 	// event.stopPropagation();
+          //   	alert('going to page '+ page);
+    			// //   // var urlPaging = window.location.search + "&page=" + $pageNm;
+    			// 	// window.location.search = urlPaging;
+    			// }
     		});
 
         //page 및 각종 앨리먼트 정보를 표시한다.
