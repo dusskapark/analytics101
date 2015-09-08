@@ -49,24 +49,14 @@ $(document).ready(function() {
     }
 
     // addMore 버튼을 누르면 카드를 10개 더 추가한다.
-    $("body").on("click", "#addMore", function( e ){
-      var pageNm = $("#currentPage").text();
-      var pageNmInt = Number(pageNm) + 1;
-      // console.log(pageNmInt);
-      var nextPageUrl = "?size=10&page=" + pageNmInt;
-      $("#addMore").remove();
-      callApi(url + nextPageUrl, response_json);
-    });
-
-    // addMoreCircle 버튼을 누르면 카드를 5개 더 추가한다.
-    $("#addMoreCircle").click(function( e ){
+    var addMoreCard = function( e ){
       var pageNm = $("#currentPage").text();
       var pageNmInt = Number(pageNm) + 1;
       // console.log(pageNmInt);
       var nextPageUrl = "?size=5&page=" + pageNmInt;
       $("#addMore").remove();
       callApi(url + nextPageUrl, response_json);
-    });
+    };
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
@@ -248,7 +238,18 @@ $(document).ready(function() {
       ga('send', 'pageview', virtualPvByID);
     });
 
+    // addmore 버튼 큰 것을 누르면 여기로 통계를 잡는다.
+    $("body").on("click", "#addMore", function(){
+      addMoreCard();
+      ga('send', 'event', "Add More", "click-cardbtn" );
 
+    });
+
+    // addmore 버튼 작은 것은 여기서 통계를 잡는다.
+    $("#addMoreCircle").click(function(){
+      addMoreCard();
+      ga('send', 'event', "Add More", "click-Floating" );
+    });
 
     //google-analytics 비디오 플레이를 눌렀는지 체크
     $('body').on('click', '.card-reveal', function(e){
@@ -261,6 +262,8 @@ $(document).ready(function() {
       $('html, body').animate({ scrollTop: 0}, "slow");
       return false;
     });
+
+    // 더보기 버튼을 어떤 것을 많이 누를까?
 
 
 
