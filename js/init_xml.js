@@ -1,4 +1,4 @@
-// 사용할 예정인.. js 코드모음 
+// 사용할 예정인.. js 코드모음
 
 //Tistory RSS를 받아서 카드를 구성하기.
 
@@ -189,14 +189,14 @@ jQuery('#emailField').one("keypress", function() {
 	});
 });
 
-// 이메일 보내는 기능 
+// 이메일 보내는 기능
 jQuery( ".email-form" ).submit(function( event ) {
     event.preventDefault();
     ajaxurl = "/wp-admin/admin-ajax.php";
     jQuery('.progress').slideDown();
-  
+
     var sendIt = jQuery.post( ajaxurl, jQuery( this ).serialize());
-    
+
     sendIt.done(function( data ) {
         console.log(data);
         jQuery('.email-form').slideUp();
@@ -222,9 +222,9 @@ jQuery( ".email-form" ).submit(function( event ) {
         checked.push($(this).val());
     });
     checked = checked.join(", ");
-    
+
     var sendIt = jQuery.post( ajaxurl, jQuery( this ).serialize() + "&platforms=" + checked);
-    
+
     sendIt.done(function( data ) {
 
         $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -258,3 +258,127 @@ jQuery( ".email-form" ).submit(function( event ) {
                                         "created: " + item.created_time + "</p></li></ul>" +
                                 "</div>" +
                               "</div>";
+<<<<<<< HEAD
+=======
+
+//클릭하면 해당 data-id 가져오기
+															// var category = $(e.target).attr("class");
+													    //url = 'http://munsangdong.cafe24.com/api/card?category=' + category;
+													    // console.log(category);
+
+													  });
+													    // $( "body" ).on( "click", "i.fullscreen", function( e )  {
+													    //     console.log(data-id);
+													        // var id = $( e.currentTarget ).attr( "data-id" );
+													        // var url_detail =  url + "?id=" + id;
+													                // console.log(url_detail);
+													//
+													        // callApi( url_detail, detailCardFn );
+													    // });
+
+															// function detailCardFn( data ) {
+															//
+													    //   var $modal = $( "#modalfevi" ),
+													    //       content = data.content[ 0 ];
+													    //   // $modal.find( "h4" ).text( content.name ).end().find( "p" ).text( content.description ).end().
+													    //   $modal.find( "h4" ).text( content.name );
+													    //   $modal.find( "p" ).text( content.description );
+													    //   $modal.find( "video" ).attr( {
+													    //       src: content.source,
+													    //       poster: content.picture
+													    //   });
+															//
+													    //   $modal.show();
+													    // };
+
+
+// 클릭하면 추가
+// $("body").on("click", "div.card-reveal", function(e) {
+//   var dataid = $(this).attr("data-id");
+//   var url_detail = url + "?id=" + dataid;
+//   console.log(url_detail);
+//   callApi(url_detail, datailCardFn);
+// });
+//
+//
+//     function datailCardFn( data ) {
+//       data.content.forEach(function(v, i) {
+//           var item = v;
+//           // 카드를 구성한다
+//           var detailCard = "<div class='col s12 m12 l4 >" +
+//             "<div class='card blue-grey darken-1'>" +
+//               "<div class='video-container'>" +
+//                 "<span class='card-title'>" + item.name  + "</span>" +
+//                   "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' style= 'width:" + item.width + "; max-width: 500px;' >" +
+//                   "</video>" +
+//                 "</div>"
+//                 "<div class='card-content white-text'><p>" + item.description + "</p></div>" +
+//                 "<div class='card-action'>"+
+//                   "<a href='http://facebook.com/" + item.id + "' target='_blank' > 링크 </a>" +
+//                 "</div>" +
+//             "</div>" +
+//           "</div>";
+//           var divid = "#" + item.id;
+//           $(divid).parent().append(detailCard);
+//           $('.grid').isotope();
+//       });
+// }
+//
+//클릭하면 isotope으로 소팅하기
+// $(".fullscreen").click(function() {
+//   console.log(this);
+		// var category = $(this).attr('class');
+		// url = 'http://munsangdong.cafe24.com/api/card';
+		// console.log(url);
+		// $('.grid').isotope({ filter : '.' + category.toUpperCase() });
+// });
+
+// 클릭하면 아래에 카테고리 정보 추가
+// $( ".category li a" ).on( "click", function( e ) {
+//   console.log( "clicked", e.target );
+//   var categoryUrl = url + "?category=" + e.target.className;
+//   $( "#FeviCard" ).empty();
+//   callApi( categoryUrl, response_json );
+//
+// });
+
+
+    // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
+    // if( window.location.hash !== "" ) {
+    //   var IDis = window.location.hash;
+    //   var URLis = window.location.search;
+    //   // window.location.search = URLis + '&id=' + IDis;
+    //   // callApi( url + window.location.search, response_json );
+    // } else {
+    //   callApi( url, response_json );
+    // }
+
+    // $("#addMore").click(function(e){
+    //   console.log(window.location.search[page=]);
+    // });
+
+
+
+		//한글 페이지 파싱 라이브러리
+		// $('#paging').paging({
+		// 	item: "li",
+		// 	itemClass: "waves-effect",
+		// 	itemCurrent: "active",
+		// 	format: "{0}",
+		// 	next: "<i class='material-icons'>chevron_right</i>" ,
+		// 	prev: "<i class='material-icons'>chevron_left</i>",
+		// 	first: "<i class='material-icons'>arrow_back</i>",
+		// 	last: "<i class='material-icons'>arrow_forward</i>",
+		// 	current:json.number,
+		// 	max:json.totalPages,
+		// 	event: true,
+		// 	// onclick: function(e,page){
+			//   //page= 가 있나 없나?
+			//   if ($search.category == "") {
+			//     window.location.search = "?page=" + page;
+			//   } else {
+			//     window.location.search = "?category=" + $search.category + "&page=" + page;
+			//     }
+			//   }
+		// });
+>>>>>>> gh-pages

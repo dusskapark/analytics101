@@ -26,15 +26,32 @@
 
 .grid-item {
 	float: left;
+<<<<<<< HEAD
 	width: 300px !important;
 }
 
 #responsive-img {
+=======
+	min-width: 300px !important;
+	/*max-width: 500px;*/
+}
+
+#responsive-image {
+>>>>>>> gh-pages
 	width: 80%;
 	display: block;
 	margin: 0 auto;
 }
 
+<<<<<<< HEAD
+=======
+.smallcircle {
+	width: 21px;
+	vertical-align: middle;
+
+}
+
+>>>>>>> gh-pages
 /* Banner 관련 */
 
 #index-banner .container {
@@ -95,3 +112,16 @@
     background-color: #f5a5a8;
 }
 
+<<<<<<< HEAD
+=======
+#modalfevi {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.75);
+	z-index: 999;
+	overflow-y: scroll;
+}
+>>>>>>> gh-pages
