@@ -1,5 +1,6 @@
 $(document).ready(function() {
-
+  // preloader 가동하기
+  // $('#modal2').openModal();
   $('.button-collapse').sideNav({
       menuWidth : 240,
       activationWidth : 70
@@ -70,7 +71,7 @@ $(document).ready(function() {
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
-      $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass(".grid expanded s12 m12 l12");
+      $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass("expanded s12 m12 l12");
 
       // 클릭시 비디오가 플레이 된다.
       // 모바일에서는 지극히 느려져서.. 삭제
@@ -81,39 +82,39 @@ $(document).ready(function() {
     });
 
     // 닫기를 누르면 카드가 다시 작아진다.
-    $( "body" ).on( "click", "div.card-reveal > span", function( e )  {
-      $(this).parents(".expanded").removeClass(".grid expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
-
-      /* refrence 부분 클릭시 이동하는 높이값 수정 */
-      var tr;
-      setTimeout(function(){
-        tr=$('body').scrollTop()-100;
-
-        // IE 브라우저 대응 코드(나중에 리펙토링)
-        // if($.browser.msie==true) {
-        //   tr=document.documentElement.scrollTop -200;
-        //       }else{
-                // tr=$('body').scrollTop()-200;
-              // }
-      },100);
-
-      setTimeout(function(){
-        $('body').scrollTop(tr);
-
-        // IE 브라우저 대응 코드(나중에 리펙토링)
-        // if($.browser.msie==true) {
-        //   document.documentElement.scrollTop=tr;
-        //       }else{
-        //         $('body').scrollTop(tr);
-        //       }
-      },200);
-
+    var contractCard = function() {
       //비디오는 플레이가 중지된다.
-        var $pause = $(this).parents('.card-reveal').children('video').get(0);
-        $pause.pause();
+      var $pause = $(document).find('.expanded').find('video').get(0);
+      $pause.pause();
 
+      $(document).find(".expanded").removeClass("expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
+      // 카드의 해쉬 값을 삭제한다.
+      window.location.hash = []
+      /* refrence 부분 클릭시 이동하는 높이값 수정 */
+        var tr;
+        setTimeout(function(){
+          tr=$('body').scrollTop()-100;
+        },100);
+
+        setTimeout(function(){
+          $('body').scrollTop(tr);
+        },200);
+
+      // 카드를 재 정렬한다.
       $('.grid').isotope();
+      };
+    // 카드를 닫기를 누르면 닫힌다.
+    $( "body" ).on( "click", "div.card-reveal > span", function( e ) {
+      contractCard();
     });
+
+    //esc를 누르면 닫힌다.
+    document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+        contractCard();
+    }
+  };
 
 
     // 공유 버튼을 누르면 모달 팝업이 뜬다.
@@ -178,7 +179,8 @@ $(document).ready(function() {
 
 
         $('.grid').imagesLoaded().done(function() {
-            $('.grid').isotope();
+          // $('#modal2').closeModal();
+          $('.grid').isotope();
         });
 
     };
