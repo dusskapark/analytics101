@@ -21,13 +21,12 @@
 
 		<!-- CSS  -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- Font awesome 삭제 -->
-		<!--
+		<!-- Font awesome  -->
+
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	  -->
 		<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-		<link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+		<!-- <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet"> -->
 
 	</head>
 	<body>
@@ -88,7 +87,7 @@
 
 				</div>
 				<div id="addMoreCircle" class="section center-align">
-						<a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">keyboard_arrow_down</i></a>
+						<a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">expand_more</i></a>
 				</div>
 				<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
 			    <a id="scrollTop" class="btn-floating btn-large pink">
@@ -178,12 +177,20 @@
 		<!-- Modal Structure -->
 	  <div id="modal1" class="modal bottom-sheet">
 	    <div class="modal-content">
-	      <h4>Modal Header</h4>
-	      <p>A bunch of text</p>
+	      <h4 class="truncate">동영상 공유하기</h4>
+					<ul class="collection">
+						<li class="collection-item avatar dismissable sendkakao">
+							<i class="fa fa-comment circle yellow darken-1 brown-text"></i>
+							<span class="title">[FEVI]카카오톡 공유하기</span>
+							<p>First Line <br>
+								 Second Line
+							</p>
+							<a id="kakao-link-btn" href="javascript:sendLink();" class="secondary-content brown-text"><i class="material-icons">send</i></a>
+					</ul>
 	    </div>
-	    <div class="modal-footer">
+	    <!-- <div class="modal-footer">
 	      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-	    </div>
+	    </div> -->
 	  </div>
 		<!-- preloader Modal Structure -->
 	  <div id="modal2" class="modal">
@@ -223,7 +230,9 @@
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.min.js"></script>
-		<script src="http://vjs.zencdn.net/4.12/video.js"></script>
+		<!-- <script src="http://vjs.zencdn.net/4.12/video.js"></script> -->
+		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 
 		<script src="./js/materialize.js"></script>

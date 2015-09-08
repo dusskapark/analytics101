@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // preloader 가동하기
   // $('#modal2').openModal();
+
   $('.button-collapse').sideNav({
       menuWidth : 240,
       activationWidth : 70
@@ -13,6 +14,9 @@ $(document).ready(function() {
               gutter : 10
           }
       });
+
+  // 사용할 앱의 JavaScript 키를 설정해 주세요.
+  Kakao.init('d0dd75755ece80295a757c6042496f9b');
 
   //URL 파싱하기
   var $search = function() {
@@ -34,7 +38,6 @@ $(document).ready(function() {
             success : successFn
         });
     };
-    // callApi( url + window.location.search, response_json );
 
     // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
     if( window.location.hash !== "" ) {
@@ -106,14 +109,43 @@ $(document).ready(function() {
     }
   };
 
-
     // 공유 버튼을 누르면 모달 팝업이 뜬다.
-    $("body").on ("click", "i.sharing", function(e){
-      var sharing = $(this).attr("data-id");
+    $("body").on("click", "i.sharing", function(e){
+      var shareId = $(this).attr("data-id");
+      console.log(shareId);
+      callApi(url + "?id=" + shareId, response_share);
       $('#modal1').openModal();
-
     });
 
+    function response_share(json) {
+      var video_list = json.content;
+        video_list.forEach(function(v, i) {
+            var item = v;
+            // 모달 카드를 구성한다
+            var shareLink = "http://fevi.metadata.co.kr#" + item.id;
+            $('.sendkakao').parents().find('h4').text(shareLink);
+            $('.sendkakao').children('p').text('#fevi ' + item.description);
+            var sendLink = $('.sendkakao').click(function() {
+              // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+              Kakao.Link.sendTalkLink({
+                image: {
+                  src: item.picture,
+                  width: item.width,
+                  height: item.height
+                },
+                label: item.description,
+                webButton: {
+                  text: $('FEVI +' + item.name),
+                  url: $(shareLink + "?utm_source=kakaoLink&utm_medium=social") // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                },
+                webLink : {
+                  text: $('출처: '+ item.name),
+                  url: $('http://facebook.com/' + item.id)
+                }
+              });
+            });
+          });
+        };
 
 
     function response_json(json) {
@@ -138,9 +170,8 @@ $(document).ready(function() {
                             "<p class='activator' alt='description'>" + item.description + "</p>" +
                     "</div>" +
                     "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
-                        "<video class='video-js vjs-default-skin' controls loop preload='auto' poster='" + item.picture + "' width='100%' >" +
-                          "<source src='" + item.source + "' type='video/mp4'>"
-                        "</video>" +
+                        "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
+                        "</video>"+
                         "<ul class='collection'><li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
                             "<span class='title'>" + item.name + "</span>" +
                             "<p>updated: " + item.updated_time + "</br>" +
