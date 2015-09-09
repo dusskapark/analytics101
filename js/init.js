@@ -118,6 +118,7 @@ $(document).ready(function() {
     });
 
     function response_share(json) {
+
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
@@ -125,7 +126,7 @@ $(document).ready(function() {
             var shareLink = "http://fevi.metadata.co.kr#" + item.id;
             $('.sendkakao').parents().find('h4').text(shareLink);
             $('.sendkakao').children('p').text('#fevi ' + item.description);
-            var sendLink = $('.sendkakao').click(function() {
+            $('.sendkakao').click(function() {
               // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
               Kakao.Link.sendTalkLink({
                 image: {
@@ -172,12 +173,32 @@ $(document).ready(function() {
                     "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<ul class='collection'><li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
-                            "<span class='title'>" + item.name + "</span>" +
-                            "<p>updated: " + item.updated_time + "</br>" +
-                                "created: " + item.created_time + "</p></li></ul>" +
+                        "<ul class='collection'><li class='collection-item avatar dismissable sendkakao'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                            "<span class='title'>[공유하기] " + item.name + "</span>" +
+                            "<p>" + item.description + "</p>"+
+                            "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text'><i class='material-icons'>send</i></a>"+
+                            "</li></ul>" +
                     "</div>" +
                   "</div>" ;
+                  $('.sendkakao').click(function() {
+                    // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+                    Kakao.Link.sendTalkLink({
+                      image: {
+                        src: item.picture,
+                        width: item.width,
+                        height: item.height
+                      },
+                      label: item.description,
+                      webButton: {
+                        text: item.name,
+                        url: window.location.href + "?utm_source=kakaoLink&utm_medium=social" // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                      },
+                      webLink : {
+                        text: item.name,
+                        url: 'http://facebook.com/' + item.id
+                      }
+                    });
+                  });
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card));
