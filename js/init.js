@@ -110,7 +110,7 @@ $(document).ready(function() {
   };
 
     // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
-    $("body").on("click", ".sendkakao", function(e){
+    var sendkakao = $("body").on("click", ".sendkakao", function(e){
       var shareId = $(this).attr("data-id");
       callApi(url + "?id=" + shareId, response_share);
     });
@@ -174,8 +174,8 @@ $(document).ready(function() {
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
                         "<ul class='collection'><li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                            "<span class='title'>[공유하기] " + item.name + "</span>" +
-                            "<p>" + item.description + "</p>"+
+                            "<span class='title truncate'>[카카오톡 공유] FEVI x" + item.name + "</span>" +
+                            "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                             "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>send</i></a>"+
                             "</li></ul>" +
                     "</div>" +
