@@ -174,9 +174,9 @@ $(document).ready(function() {
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
                         "<ul class='collection'><li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                            "<span class='title truncate'>[카카오톡 공유] FEVI x" + item.name + "</span>" +
+                            "<span class='title truncate'>FEVI x" + item.name + "</span>" +
                             "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                            "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>send</i></a>"+
+                            "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
                             "</li></ul>" +
                     "</div>" +
                   "</div>" ;
@@ -218,23 +218,25 @@ $(document).ready(function() {
             // 카드를 구성한다
             var card = "<div class='grid-item " + item.category + "'>" +
                     "<div class=' container ' data-id='" + item.id +"'>" +
-                        "<video class='video-js vjs-default-skin' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
-                          "<span class='title pink-text'><strong>" + item.category + "</strong><i class='secondary-content pink-text material-icons sharing right' data-id=" + item.id + ">share</i></span>"+
+                          "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
                           "</li>"+
-                          "<li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
+                          "<li class='collection-item avatar dismissable'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
                               "<span class='title'>" + item.name + "</span>" +
-                              "<p>updated: " + item.updated_time + "</br>" +
-                                  "created: " + item.created_time + "</p>"+
-                              "<a href='http://facebook.com/" + item.id + "' target='_blank' class='secondary-content'><i class='material-icons pink-text'>send</i></a>"+
+                              "<p>"+ item.description +"</p>"+
                           "</li>"+
-                          "<li class='collection-item avatar'><i class='material-icons circle pink'>play_arrow</i>"+
-                            "<span class='title'>Description</span>" +
-                            "<p>"+ item.description +"</p>"+
+                          "<li class='collection-item'>"+
+                          "<span class='title pink-text'><strong>공유하기</strong></span>"+
                           "</li>"+
-                          "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
+                          "<li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                              "<span class='title truncate'>FEVI x" + item.name + "</span>" +
+                              "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                              "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
+                              "</li>" +
+                          "<li class='collection-item avatar dismissable'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
                             "<p>FEVI에서 더 많은 영상을 볼 수 있습니다. 지금 FEVI를 방문하세요! </p></a>"+
                           "</li>"+
