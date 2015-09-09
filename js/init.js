@@ -120,6 +120,7 @@ $(document).ready(function() {
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
+            var shareLink = "http://fevi.metadata.co.kr/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
             $('.sendkakao').click(function() {
               // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
               Kakao.Link.sendTalkLink({
@@ -130,8 +131,8 @@ $(document).ready(function() {
                   height: item.height
                 },
                 webButton: {
-                  text: item.name,
-                  url: window.location.href + "?utm_source=kakaoLink&utm_medium=social" // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                  text: "FEVI x " + item.name,
+                  url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
                 },
                 fail: console.log('카카오톡 링크는 카카오톡 앱이 설치되어 있는 모바일 기기에서만 전송 가능합니다.')
                 // webLink : {
