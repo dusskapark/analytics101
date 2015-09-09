@@ -140,7 +140,8 @@ $(document).ready(function() {
               //   url: 'http://facebook.com/' + item.id
               // }
             });
-            Kakao.Link.cleanup();
+            // Kakao.Link.cleanup();
+            ga('send', 'event', "shareLink", "sendkakao", item.id );
           });
         }
 
