@@ -379,3 +379,34 @@ jQuery( ".email-form" ).submit(function( event ) {
 			//     }
 			//   }
 		// });
+
+		function response_share(json) {
+
+      var video_list = json.content;
+        video_list.forEach(function(v, i) {
+            var item = v;
+            // 모달 카드를 구성한다
+            var shareLink = "http://fevi.metadata.co.kr#" + item.id;
+            $('.sendkakao').parents().find('h4').text(shareLink);
+            $('.sendkakao').children('p').text('#fevi ' + item.description);
+            $('.sendkakao').click(function() {
+              // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+              Kakao.Link.sendTalkLink({
+                image: {
+                  src: item.picture,
+                  width: item.width,
+                  height: item.height
+                },
+                label: item.description,
+                webButton: {
+                  text: $('FEVI +' + item.name),
+                  url: $(shareLink + "?utm_source=kakaoLink&utm_medium=social") // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                },
+                webLink : {
+                  text: $('출처: '+ item.name),
+                  url: $('http://facebook.com/' + item.id)
+                }
+              });
+            });
+          });
+        };

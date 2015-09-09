@@ -117,38 +117,6 @@ $(document).ready(function() {
       $('#modal1').openModal();
     });
 
-    function response_share(json) {
-
-      var video_list = json.content;
-        video_list.forEach(function(v, i) {
-            var item = v;
-            // 모달 카드를 구성한다
-            var shareLink = "http://fevi.metadata.co.kr#" + item.id;
-            $('.sendkakao').parents().find('h4').text(shareLink);
-            $('.sendkakao').children('p').text('#fevi ' + item.description);
-            $('.sendkakao').click(function() {
-              // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-              Kakao.Link.sendTalkLink({
-                image: {
-                  src: item.picture,
-                  width: item.width,
-                  height: item.height
-                },
-                label: item.description,
-                webButton: {
-                  text: $('FEVI +' + item.name),
-                  url: $(shareLink + "?utm_source=kakaoLink&utm_medium=social") // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-                },
-                webLink : {
-                  text: $('출처: '+ item.name),
-                  url: $('http://facebook.com/' + item.id)
-                }
-              });
-            });
-          });
-        };
-
-
     function response_json(json) {
         var video_list = json.content;
         var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
@@ -170,7 +138,11 @@ $(document).ready(function() {
                         "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
                             "<p class='activator' alt='description'>" + item.description + "</p>" +
                     "</div>" +
-                    "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i><i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
+                    "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i>"+
+                    "</span>"+
+                      // "<i class='fa fa-comment circle brown-text right sendkakao'></i></span>"+
+                      // "<i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
+                      // "<img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' data-id='"+ item.id +"' class='circle right sendkakao'></span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
                         "<ul class='collection'><li class='collection-item avatar dismissable sendkakao'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
@@ -180,25 +152,27 @@ $(document).ready(function() {
                             "</li></ul>" +
                     "</div>" +
                   "</div>" ;
-                  $('.sendkakao').click(function() {
-                    // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-                    Kakao.Link.sendTalkLink({
-                      image: {
-                        src: item.picture,
-                        width: item.width,
-                        height: item.height
-                      },
-                      label: item.description,
-                      webButton: {
-                        text: item.name,
-                        url: window.location.href + "?utm_source=kakaoLink&utm_medium=social" // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-                      },
-                      webLink : {
-                        text: item.name,
-                        url: 'http://facebook.com/' + item.id
-                      }
-                    });
+
+                  Kakao.Link.createTalkLinkButton({
+                    container: '.sendkakao',
+                    image: {
+                      src: item.picture,
+                      width: item.width,
+                      height: item.height
+                    },
+                    label: item.description,
+                    webButton: {
+                      text: item.name,
+                      url: window.location.href + "?utm_source=kakaoLink&utm_medium=social" // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                    },
+                    fail: console.log('모바일에서 사용하시기 바랍니다.')
+                    // webLink : {
+                    //   text: item.name,
+                    //   url: 'http://facebook.com/' + item.id
+                    // }
                   });
+
+                  Kakao.Link.cleanup();
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card));
