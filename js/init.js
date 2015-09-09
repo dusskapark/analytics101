@@ -145,16 +145,16 @@ $(document).ready(function() {
                       // "<img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' data-id='"+ item.id +"' class='circle right sendkakao'></span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<ul class='collection'><li class='collection-item avatar dismissable sendkakao'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                        "<ul class='collection'><li class='collection-item avatar dismissable' id='sendkakao'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
                             "<span class='title'>[공유하기] " + item.name + "</span>" +
                             "<p>" + item.description + "</p>"+
-                            "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text'><i class='material-icons'>send</i></a>"+
+                            "<a id='kakao-link-btn' href='javascript:Kakao.Link.createTalkLinkButton();' class='secondary-content brown-text'><i class='material-icons'>send</i></a>"+
                             "</li></ul>" +
                     "</div>" +
                   "</div>" ;
 
                   Kakao.Link.createTalkLinkButton({
-                    container: '.sendkakao',
+                    container: '#sendkakao',
                     image: {
                       src: item.picture,
                       width: item.width,
