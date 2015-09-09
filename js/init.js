@@ -120,7 +120,9 @@ $(document).ready(function() {
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
-            var shareLink = "http://fevi.metadata.co.kr/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+            var shareLink = window.location.pathname + "?utm_source=kakaoLink&utm_medium=social#" + item.id;
+            console.log(shareLink);
+
             $('.sendkakao').click(function() {
               // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
               Kakao.Link.sendTalkLink({
