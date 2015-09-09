@@ -120,7 +120,7 @@ $(document).ready(function() {
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
-            var shareLink = window.location.pathname + "?utm_source=kakaoLink&utm_medium=social#" + item.id;
+            var shareLink = "http://fevi.metadata.co.kr/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
             console.log(shareLink);
 
             $('.sendkakao').click(function() {
