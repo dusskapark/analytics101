@@ -141,6 +141,7 @@ $(document).ready(function() {
               // }
             });
             // Kakao.Link.cleanup();
+            // 카카오 공유를 GA로 추적
             ga('send', 'event', "shareLink", "sendkakao", item.id );
           });
         }
