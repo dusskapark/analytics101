@@ -86,6 +86,13 @@
 			<div class="section">
 
 				<div id="FeviCard" class="row grid">
+					<form method="post" action="https://www.tistory.com/oauth/authorize/">
+							        <input type="hidden" name="client_id" value="3fbe3f176c1d16966d06eec77477e4c8"/>
+							        <input type="hidden" name="redirect_uri" value="http://fevi.metadata.co.kr/index.html"/>
+							        <input type="hidden" name="response_type" value="token"/>
+							            <button type="submit">get access_token!</button>
+						</form>
+
 				</div>
 				<div id="addMoreCircle" class="section center-align">
 						<a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">forward_5</i></a>
@@ -188,22 +195,6 @@
 
 
 		<!--  Scripts-->
-		<script>
-						(function(i, s, o, g, r, a, m) {
-								i['GoogleAnalyticsObject'] = r;
-								i[r] = i[r] ||
-								function() {
-										(i[r].q = i[r].q || []).push(arguments)
-								}, i[r].l = 1 * new Date();
-								a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-								a.async = 1;
-								a.src = g;
-								m.parentNode.insertBefore(a, m)
-						})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-						ga('create', 'UA-40374059-5', 'auto');
-						ga('send', 'pageview');
-		</script>
 
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script>
@@ -211,7 +202,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
 
 		<script src="./js/materialize.js"></script>
-		<script src="./js/init.js"></script>
+		<script src="./js/featured.js"></script>
 
 
 		<!--카드 움직임 -->

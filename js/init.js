@@ -55,8 +55,16 @@ $(document).ready(function() {
     var addMoreCard = function( e ){
       var pageNm = $("#currentPage").text();
       var pageNmInt = Number(pageNm) + 1;
-      // console.log(pageNmInt);
-      var nextPageUrl = "?size=5&page=" + pageNmInt;
+      var nextPageUrl = "";
+      if ($search.page == undefined) {
+        var nextPageUrl = "?page=" + pageNmInt;
+      }else if ($search.category !== undefined) {
+        var nextPageUrl = "?category=" + $search.category + "&page=" + pageNmInt;
+        console.log(nextPageUrl);
+
+      } else {
+        var nextPageUrl = "?page=" + pageNmInt;
+      }
       $("#addMore").remove();
       callApi(url + nextPageUrl, response_json);
     };
@@ -82,16 +90,16 @@ $(document).ready(function() {
 
       $(document).find(".expanded").removeClass("expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
       // 카드의 해쉬 값을 삭제한다.
-      window.location.hash = []
-      /* refrence 부분 클릭시 이동하는 높이값 수정 */
-        var tr;
-        setTimeout(function(){
-          tr=$('body').scrollTop()-100;
-        },100);
-
-        setTimeout(function(){
-          $('body').scrollTop(tr);
-        },200);
+      // window.location.hash = ""
+      // /* refrence 부분 클릭시 이동하는 높이값 수정 */
+      //   var tr;
+      //   setTimeout(function(){
+      //     tr=$('body').scrollTop()-100;
+      //   },100);
+      //
+      //   setTimeout(function(){
+      //     $('body').scrollTop(tr);
+      //   },200);
 
       // 카드를 재 정렬한다.
       $('.grid').isotope();
@@ -158,7 +166,7 @@ $(document).ready(function() {
             var item = v;
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
-                "<div class='card'>" +
+                "<div class='card small'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
                             "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
                             "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
@@ -206,6 +214,8 @@ $(document).ready(function() {
 
         $('.grid').imagesLoaded().done(function() {
           // $('#modal2').closeModal();
+          $('.card').removeClass('small');
+          $('#addMore').find('.card').addClass('small');
           $('.grid').isotope();
         });
 
