@@ -410,3 +410,29 @@ jQuery( ".email-form" ).submit(function( event ) {
             });
           });
         };
+
+				// Google spreadsheets api 카드 받아오기
+	      var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
+
+	      // 공지사항 받아오기
+	      // callApi(GSSurl + "&sq=class=notice", additionalAPI );
+	      callApi(GSSurl, additionalAPI );
+
+	      function additionalAPI (data){
+	        var data = data.feed.entry;
+	        var splitArr = [ "data", "class" ];
+	        var result = "";
+	        data.forEach( function( v, j ) {
+
+	          splitArr.forEach( function( val, i ) {
+	           //  if( ( i + 1 ) < v.length ) {
+	           //     result = data.substring( data.indexOf( v + ": " ), data.indexOf( ", " + splitArr[ i + 1 ] ) ).substr( v.length );
+	           //  } else {
+	           //    result =data.substring( data.indexOf( v + ": " ), data.length ).substr( v.length );
+	           //  }
+
+	            result = v.content.$t.substring( v.content.$t.indexOf( val + ": " ), ( ( i + 1 ) < val.length ) ? v.content.$t.indexOf( ", " + splitArr[ i + 1 ] ) : v.content.$t.length ).substr( val.length );
+
+	         } );
+	       });
+	      }

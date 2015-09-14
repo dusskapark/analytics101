@@ -1,6 +1,4 @@
 $(document).ready(function() {
-  // preloader 가동하기
-  // $('#modal2').openModal();
 
   $('.button-collapse').sideNav({
       menuWidth : 240,
@@ -142,7 +140,7 @@ $(document).ready(function() {
                 text: "vikicast x " + item.name,
                 url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
               },
-              fail: console.log('카카오톡 링크는 카카오톡 앱이 설치되어 있는 모바일 기기에서만 전송 가능합니다.')
+              fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
               // webLink : {
               //   text: item.name,
               //   url: 'http://facebook.com/' + item.id
@@ -155,12 +153,16 @@ $(document).ready(function() {
         }
 
     function response_json(json) {
+      $('#modal2').openModal({dismissible: false});
         var video_list = json.content;
-        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-          "</div>"+
-        "</div>";
+        // var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        var cardList = "";
+
+        $( "#FeviCard" ).css( "visibility", "hidden" );
 
         video_list.forEach(function(v, i) {
             var item = v;
@@ -190,15 +192,17 @@ $(document).ready(function() {
                     "</div>" +
                   "</div>" ;
 
+
             //카드를 화면에 표시한다.
-            $('.grid').isotope('insert', $(card));
+
+            $('.grid').isotope('insert', $(card) );
+            $('.grid').isotope();
+
         });
 
 
-
-
         // $("#FeviCard").append(addMore);
-        $('.grid').isotope('insert', $(addMore));
+        // $('.grid').isotope('insert', $(addMore));
 
 
         //page 및 각종 앨리먼트 정보를 표시한다.
@@ -213,10 +217,10 @@ $(document).ready(function() {
 
 
         $('.grid').imagesLoaded().done(function() {
-          // $('#modal2').closeModal();
+          $('#modal2').closeModal();
+          $( "#FeviCard" ).css( "visibility", "visible" );
           $('.grid').isotope();
         });
-
     };
 
     function response_id (json) {
@@ -255,6 +259,8 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card));
+            $('.grid').isotope();
+
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("#video_list").remove();
@@ -266,20 +272,6 @@ $(document).ready(function() {
             ga('send', 'pageview', virtualPvByParam);
         });
       }
-      // Google spreadsheets api 카드 받아오기
-      var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
-
-      // 공지사항 받아오기
-      // callApi(GSSurl + "&sq=class=notice", additionalAPI );
-      callApi(GSSurl, additionalAPI );
-
-      function additionalAPI (data){
-      	var entry = data.feed.entry; //구글 스프레드 시트의 모든 내용은 feed.entry에 담겨있습니다.
-  			entry.forEach(function(v, i) {
-          var item = v.content.$t.substr(5);
-          $('#featured').append(item);
-  				});
-        }
 
 
 
