@@ -1,29 +1,34 @@
 (function($) {
 	$(function() {
-		//Tistory API 불러오기
-		// 01. Authorization 요청 단계 (client -> Tistory)
-			// 1) 티스토리에게 최초로 클라이언트(=컨슈머)가 인증을 요청합니다.
-			// 2) server-side flow와 비교하면 response_type 의 값만 다릅니다.
-		// 인증요청 URL : https://www.tistory.com/oauth/authorize
-		// Parameter : client_id : 등록시 발급받은 client_id
-		// redirect_uri : 등록시 등록한 redirect_uri
-		// response_type : "token" 이라고 입력
-		var tistory = {
-				client_id : "3fbe3f176c1d16966d06eec77477e4c8",
-				redirect_uri : "http://fevi.metadata.co.kr/index.html",
-				response_type : "token"
-		};
+
+		var callApi = function( url, successFn ) {
+        $.ajax({
+            type : 'GET',
+            url : url,
+            dataType : "json",
+            success : successFn
+        });
+    };
+
+		// Google spreadsheets api 카드 받아오기
+		var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
+
+		// 공지사항 받아오기
+		callApi(GSSurl + "&sq=class=notice", additionalAPI );
+
+		function additionalAPI (data){
+			var entry = data.feed.entry; //구글 스프레드 시트의 모든 내용은 feed.entry에 담겨있습니다.
+			entry.forEach(function(v, i) {
+				var item = v.content.$t.substr(5);
+				var grid = $('.grid').children()[Math.floor((Math.random() * 20) + 1)];
+				grid.isotope('insert', $(item));
+				$('.grid').isotope();
 
 
-		jQuery.ajax({
-			type:'get',
-			dataType: 'jsonp',
-	    url:"https://www.tistory.com/oauth/authorize?client_id=3fbe3f176c1d16966d06eec77477e4c8&redirect_uri=http://fevi.metadata.co.kr/index.html&response_type=token",
-	    success:function(args){
-				alert(args);
-				alert("submit 성공");
-    },
-	});
+				});
+			}
+
+
 
 
 

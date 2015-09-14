@@ -166,7 +166,7 @@ $(document).ready(function() {
             var item = v;
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
-                "<div class='card small'>" +
+                "<div class='card'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
                             "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
                             "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
@@ -183,7 +183,7 @@ $(document).ready(function() {
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
                         "<ul class='collection'><li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                            "<span class='title truncate'>FEVI x" + item.name + "</span>" +
+                            "<span class='title truncate'>Viki캐스트 x" + item.name + "</span>" +
                             "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                             "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
                             "</li></ul>" +
@@ -214,8 +214,6 @@ $(document).ready(function() {
 
         $('.grid').imagesLoaded().done(function() {
           // $('#modal2').closeModal();
-          $('.card').removeClass('small');
-          $('#addMore').find('.card').addClass('small');
           $('.grid').isotope();
         });
 
@@ -243,13 +241,13 @@ $(document).ready(function() {
                           "<span class='title pink-text'><strong>공유하기</strong></span>"+
                           "</li>"+
                           "<li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                              "<span class='title truncate'>FEVI x" + item.name + "</span>" +
+                              "<span class='title truncate'>Viki캐스트 x" + item.name + "</span>" +
                               "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                               "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
                               "</li>" +
                           "<li class='collection-item avatar dismissable'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
-                            "<p>FEVI에서 더 많은 영상을 볼 수 있습니다. 지금 FEVI를 방문하세요! </p></a>"+
+                            "<p>Viki캐스트에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
                           "</li>"+
                         "</ul>" +
                     "</div>"+
@@ -268,6 +266,23 @@ $(document).ready(function() {
             ga('send', 'pageview', virtualPvByParam);
         });
       }
+      // Google spreadsheets api 카드 받아오기
+      var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
+
+      // 공지사항 받아오기
+      callApi(GSSurl + "&sq=class=notice", additionalAPI );
+
+      function additionalAPI (data){
+      	var entry = data.feed.entry; //구글 스프레드 시트의 모든 내용은 feed.entry에 담겨있습니다.
+  			entry.forEach(function(v, i) {
+          var item = v.content.$t.substr(5);
+          $('.grid').isotope('insert', $(item));
+                  $('.grid').isotope();
+
+
+  				});
+        }
+
 
 
     // google-analytics 카드 어디를 누를지 체크
