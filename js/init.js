@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   $('.button-collapse').sideNav({
       menuWidth : 240,
       activationWidth : 70
@@ -42,10 +41,12 @@ $(document).ready(function() {
       var URLis = "?id=" + window.location.hash.substr(1);
       $("#FeviCard").empty();
 
+      $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
     //   console.log(window.location.search);
     //
     } else {
+      $('#modal2').openModal({dismissible: false});
       callApi( url + window.location.search, response_json );
     }
 
@@ -64,6 +65,7 @@ $(document).ready(function() {
         var nextPageUrl = "?page=" + pageNmInt;
       }
       $("#addMore").remove();
+      $('#modal2').openModal({dismissible: false});
       callApi(url + nextPageUrl, response_json);
     };
 
@@ -153,7 +155,6 @@ $(document).ready(function() {
         }
 
     function response_json(json) {
-      $('#modal2').openModal({dismissible: false});
         var video_list = json.content;
         // var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
         //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
@@ -260,6 +261,7 @@ $(document).ready(function() {
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card));
             $('.grid').isotope();
+            $('#modal2').closeModal();
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
