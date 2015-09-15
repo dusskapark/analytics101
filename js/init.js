@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('.button-collapse').sideNav({
       menuWidth : 240,
       activationWidth : 70
@@ -120,10 +121,16 @@ $(document).ready(function() {
     // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
     var sendkakao = $("body").on("click", ".sendkakao", function(e){
       var shareId = $(this).attr("data-id");
-      callApi(url + "?id=" + shareId, response_share);
+      callApi(url + "?id=" + shareId, response_kakao);
     });
 
-    function response_share(json) {
+    var sendfacebook = $("body").on("click", ".sendfacebook", function(e){
+      var shareId = $(this).attr("data-id");
+      callApi(url + "?id=" + shareId, response_fb);
+    });
+
+
+    function response_kakao(json) {
 
       var video_list = json.content;
         video_list.forEach(function(v, i) {
@@ -154,14 +161,40 @@ $(document).ready(function() {
           });
         }
 
+        // 페이스북
+
+        function response_fb (json){
+          var video_list = json.content;
+            video_list.forEach(function(v, i) {
+                var item = v;
+                var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+                console.log(shareLink);
+
+                FB.ui(
+                  {
+                    method: 'share',
+                    href: shareLink,
+                  },
+                  // callback
+                  function(response) {
+                    if (response && !response.error_message) {
+                      alert('Posting completed.');
+                    } else {
+                      alert('Error while posting.');
+                    }
+                  }
+                );
+              });
+        };
+
+
     function response_json(json) {
         var video_list = json.content;
-        // var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-        //   "</div>"+
-        // "</div>";
-        var cardList = "";
+        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
+          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+          "</div>"+
+        "</div>";
 
         $( "#FeviCard" ).css( "visibility", "hidden" );
 
@@ -178,24 +211,29 @@ $(document).ready(function() {
                         "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
                             "<p class='activator' alt='description'>" + item.description + "</p>" +
                     "</div>" +
-                    "<div class='card-reveal video-js-box' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i>"+
+                    "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i>"+
                     "</span>"+
                       // "<i class='fa fa-comment circle brown-text right sendkakao'></i></span>"+
                       // "<i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
                       // "<img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' data-id='"+ item.id +"' class='circle right sendkakao'></span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<ul class='collection'><li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                            "<span class='title truncate'>Vikicast x" + item.name + "</span>" +
+                        "<ul class='collection'><li class='collection-item avatar sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                            "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
                             "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                             "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
-                            "</li></ul>" +
+                            "</li>"+
+                            "<li class='collection-item avatar sendfacebook' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
+                            "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                            "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                            "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
+                            "</li>"+
+                            "</ul>" +
                     "</div>" +
                   "</div>" ;
 
 
             //카드를 화면에 표시한다.
-
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
 
@@ -231,8 +269,8 @@ $(document).ready(function() {
             var item = v;
             // 카드를 구성한다
             var card = "<div class='grid-item " + item.category + "'>" +
-                    "<div class=' container ' data-id='" + item.id +"'>" +
-                        "<video controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                    "<div class='container'>" +
+                        "<video id='" + item.id + "' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
@@ -246,10 +284,15 @@ $(document).ready(function() {
                           "<span class='title pink-text'><strong>공유하기</strong></span>"+
                           "</li>"+
                           "<li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                              "<span class='title truncate'>Vikicast x" + item.name + "</span>" +
+                              "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
                               "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                               "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
                               "</li>" +
+                              "<li class='collection-item avatar sendfacebook' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
+                              "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                              "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                              "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
+                              "</li>"+
                           "<li class='collection-item avatar dismissable'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
                             "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
@@ -259,7 +302,7 @@ $(document).ready(function() {
                   "</div>" ;
 
             //카드를 화면에 표시한다.
-            $('.grid').isotope('insert', $(card));
+            $('#FeviCard').append(card);
             $('.grid').isotope();
             $('#modal2').closeModal();
 
@@ -272,6 +315,13 @@ $(document).ready(function() {
             var virtualPvByParam =  "index.html?id=" + item.id;
             console.log(virtualPvByParam);
             ga('send', 'pageview', virtualPvByParam);
+
+            // 비디오 플레이했는지 여부를 체크한다.
+            var vid = document.getElementById(item.id);
+            var vidID = $(vid).get(0);
+            vidID.onplaying = function(){
+              ga('send', 'event', "video played", item.id);
+            }
         });
       }
 
@@ -282,16 +332,22 @@ $(document).ready(function() {
       var contentID = $(this).parents('div[id]').attr('id');
       var clickedPath = $(this).attr('alt');
       ga('send', 'event', "card-reveal", clickedPath, contentID  );
-      });
 
-    // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
-    // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
-    $("body").on("click", ".activator", function ( e ){
-      var contentID = $(this).parents('div[id]').attr('id');
+      // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
+      // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
       var virtualPvByID = "index.html?id=" + contentID;
       console.log(virtualPvByID);
       ga('send', 'pageview', virtualPvByID);
-    });
+
+      //google-analytics 비디오 플레이를 눌렀는지 체크
+      var vid = document.getElementById(contentID);
+      var vidID = $(vid).find('video').get(0);
+      // console.log(vidID);
+      vidID.onplaying = function(){
+        ga('send', 'event', "video played", contentID);
+      }
+
+      });
 
     // addmore 버튼 큰 것을 누르면 여기로 통계를 잡는다.
     $("body").on("click", "#addMore", function(){
@@ -306,11 +362,6 @@ $(document).ready(function() {
       ga('send', 'event', "Add More", "click-Floating" );
     });
 
-    //google-analytics 비디오 플레이를 눌렀는지 체크
-    $('body').on('click', '.card-reveal', function(e){
-    //   var videID = $(this).parent().attr('data-id');
-      // console.log(this);
-    });
 
     // 하단 fix 버튼 클릭시 움직임
     $('#scrollTop').click(function(){
@@ -318,7 +369,6 @@ $(document).ready(function() {
       return false;
     });
 
-    // 더보기 버튼을 어떤 것을 많이 누를까?
 
 
 

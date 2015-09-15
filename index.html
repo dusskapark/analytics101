@@ -21,8 +21,8 @@
 
 		<!-- CSS  -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- Font awesome  삭제 -->
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+		<!-- Font awesome  -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 		<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -85,6 +85,7 @@
 				</div>
 
 				<div id="featured" class="row">
+					<a id="test" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>button</a>
 				</div>
 				<div id="addMoreCircle" class="section center-align">
 						<a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">expand_more</i></a>
@@ -196,9 +197,12 @@
 		<!-- preloader Modal Structure -->
 		<!-- preloader Modal Structure -->
 	  <div id="modal2" class="modal">
-			<div class="progress">
-		      <div class="indeterminate"></div>
-		  </div>
+			<div class="modal-content">
+				<h4>Loading..</h4>
+				<div class="progress">
+			      <div class="indeterminate"></div>
+			  </div>
+			</div>
 	  </div>
 
 
@@ -225,16 +229,31 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.min.js"></script>
 
-
-
-		<script src="./js/materialize.js"></script>
-		<script src="./js/init.js"></script>
-
-
 		<!--카드 움직임 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>
-		<!-- 카카오톡 SDK -->
+		<!-- 소셜 SDK -->
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+		<script>
+		window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1463571523951964',
+	      xfbml      : true,
+	      version    : 'v2.4'
+	    });
+	  };
+
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+		</script>
+
+		<!-- framework -->
+		<script src="./js/materialize.js"></script>
+		<script src="./js/init.js"></script>
 
 	</body>
 </html>
