@@ -213,12 +213,19 @@ $(document).ready(function() {
                     "</div>" +
                     "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i>"+
                     "</span>"+
-                      // "<i class='fa fa-comment circle brown-text right sendkakao'></i></span>"+
-                      // "<i class='material-icons sharing right' data-id=" + item.id + ">share</i></span>" +
-                      // "<img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' data-id='"+ item.id +"' class='circle right sendkakao'></span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<ul class='collection'><li class='collection-item avatar sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                        // "<div class='container'>"+
+                        // //   "<form action='#'>"+
+                        // //     "<p class='range-field'>"+
+                        // //       "<input type='range' id='test5' min='0' max='10' />"+
+                        // //     "</p>"+
+                        // //   "</form>"+
+                        // //   "<a class='btn-floating btn-medium tooltipped waves-effect waves-light yellow darken-1 sendkakao'><i class='fa fa-comment circle'></i></a>  " +
+                        // //   "<a class='btn-floating btn-medium tooltipped waves-effect waves-light indigo darken-4 sendfacebook'><i class='fa fa-facebook-square circle'></i></a>" +
+                        // // "</div>"+
+
+                        "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
                             "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
                             "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
                             "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
