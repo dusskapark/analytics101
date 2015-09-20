@@ -118,74 +118,78 @@ $(document).ready(function() {
     }
   };
 
-    // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
-    var sendkakao = $("body").on("click", ".sendkakao", function(e){
-      var shareId = $(this).attr("data-id");
-      callApi(url + "?id=" + shareId, response_kakao);
-    });
 
-    var sendfacebook = $("body").on("click", ".sendfacebook", function(e){
-      var shareId = $(this).attr("data-id");
-      callApi(url + "?id=" + shareId, response_fb);
-    });
+  // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
+  $('body').on('click', '.share > a', function(){
 
+    var data = $(this).attr('data-id');
+    var type = $(this).attr('data-class');
+    if (type == "kakao") {
+      return callApi(url + "?id=" + data, response_kakao);
 
-    function response_kakao(json) {
+    } else if (type == "facebook") {
+      return callApi(url + "?id=" + data, response_facebook);
+    }
+  });
 
-      var video_list = json.content;
-        video_list.forEach(function(v, i) {
-            var item = v;
-            var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
-            console.log(shareLink);
-            // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-            Kakao.Link.sendTalkLink({
-              label: item.description,
-              image: {
-                src: item.picture,
-                width: item.width,
-                height: item.height
-              },
-              webButton: {
-                text: "vikicast x " + item.name,
-                url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-              },
-              fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
-              // webLink : {
-              //   text: item.name,
-              //   url: 'http://facebook.com/' + item.id
-              // }
-            });
-            // Kakao.Link.cleanup();
-            // 카카오 공유를 GA로 추적
-            ga('send', 'event', "shareLink", "sendkakao", item.id );
+  function response_kakao(json) {
+
+    var video_list = json.content;
+      video_list.forEach(function(v, i) {
+          var item = v;
+          var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+          console.log(shareLink);
+          // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+          Kakao.Link.sendTalkLink({
+            label: item.description,
+            image: {
+              src: item.picture,
+              width: item.width,
+              height: item.height
+            },
+            webButton: {
+              text: "vikicast x " + item.name,
+              url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+            },
+            fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
+            // webLink : {
+            //   text: item.name,
+            //   url: 'http://facebook.com/' + item.id
+            // }
           });
-        }
+          // Kakao.Link.cleanup();
+          // 카카오 공유를 GA로 추적
+          ga('send', 'event', "shareLink", "sendkakao", item.id );
+        });
+      }
 
-        // 페이스북
+      // 페이스북
 
-        function response_fb (json){
-          var video_list = json.content;
-            video_list.forEach(function(v, i) {
-                var item = v;
-                var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
-                console.log(shareLink);
+      function response_facebook (json){
+        var video_list = json.content;
+          video_list.forEach(function(v, i) {
+              var item = v;
+              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+              console.log(shareLink);
 
-                FB.ui(
-                  {
-                    method: 'share',
-                    href: shareLink,
-                  },
-                  // callback
-                  function(response) {
-                    if (response && !response.error_message) {
-                      alert('Posting completed.');
-                    } else {
-                      alert('Error while posting.');
-                    }
+              FB.ui(
+                {
+                  method: 'share',
+                  href: shareLink,
+                },
+                // callback
+                function(response) {
+                  if (response && !response.error_message) {
+                    alert('Posting completed.');
+                    ga('send', 'event', "shareLink", "sendfacebook", item.id );
+
+                  } else {
+                    alert('Error while posting.');
                   }
-                );
-              });
-        };
+                }
+              );
+            });
+      };
 
 
     function response_json(json) {
@@ -205,7 +209,8 @@ $(document).ready(function() {
                 "<div class='card'>" +
                     "<div class='card-image waves-effect waves-block waves-light'>" +
                             "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
-                            "<span class='card-title'>" + item.category + "<i class='material-icons'>play_circle_filled</i></span>" +
+                            "<span class='card-title'>" + item.category +
+                            // "<i class='fa fa-comment circle yellow darken-1 '></i><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
                     "</div>" +
                     "<div class='card-content'>" +
                         "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
@@ -215,28 +220,28 @@ $(document).ready(function() {
                     "</span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        // "<div class='container'>"+
-                        // //   "<form action='#'>"+
-                        // //     "<p class='range-field'>"+
-                        // //       "<input type='range' id='test5' min='0' max='10' />"+
-                        // //     "</p>"+
-                        // //   "</form>"+
-                        // //   "<a class='btn-floating btn-medium tooltipped waves-effect waves-light yellow darken-1 sendkakao'><i class='fa fa-comment circle'></i></a>  " +
-                        // //   "<a class='btn-floating btn-medium tooltipped waves-effect waves-light indigo darken-4 sendfacebook'><i class='fa fa-facebook-square circle'></i></a>" +
-                        // // "</div>"+
+                        "<div class='share center-align'>" +
+                          "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
+                          "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                        "</div>" +
 
-                        "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
-                            "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                            "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                            "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
-                            "</li>"+
-                            "<li class='collection-item avatar sendfacebook' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
-                            "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                            "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                            "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
-                            "</li>"+
-                            "</ul>" +
+                        // "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
+                        //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                        //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                        //     "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
+                        //     "</li>"+
+                        //     "<li class='collection-item avatar sendfacebook' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
+                        //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                        //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                        //     "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
+                        //     "</li>"+
+                        //     "</ul>" +
                     "</div>" +
+                    "<div class='card-action share right-align'>" +
+                      "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                      "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                    "</div>" +
+
                   "</div>" ;
 
 
@@ -283,33 +288,42 @@ $(document).ready(function() {
                           "<li class='collection-item'>"+
                           "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
                           "</li>"+
-                          "<li class='collection-item avatar dismissable'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
+                          "<li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
                               "<span class='title'>" + item.name + "</span>" +
                               "<p>"+ item.description +"</p>"+
                           "</li>"+
-                          "<li class='collection-item'>"+
-                          "<span class='title pink-text'><strong>공유하기</strong></span>"+
-                          "</li>"+
-                          "<li class='collection-item avatar dismissable sendkakao' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                              "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                              "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                              "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
-                              "</li>" +
-                              "<li class='collection-item avatar sendfacebook' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
-                              "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                              "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                              "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
-                              "</li>"+
-                          "<li class='collection-item avatar dismissable'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
+                          // "<li class='collection-item share'>"+
+                          // "<i class='material-icons circle pink'>share</i>" +
+                          // "<span class='title pink-text'><strong>공유하기</strong></span>:  "+
+                          // "<a data-class='kakao' data-id='" + item.id + "'>카톡 공유 <i class='fa fa-comment circle brown-text'></i> </a>  " +
+                          // "<a data-class='facebook' data-id='" + item.id + "'>페북 공유 <i class='fa fa-facebook-square circle indigo-text'></i> </a>" +
+                          // "</span>" +
+                          // "</li>"+
+                          // "<li class='collection-item avatar ' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
+                          //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                          //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                          //     "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
+                          //     "</li>" +
+                          //     "<li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
+                          //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
+                          //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
+                          //     "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
+                          //     "</li>"+
+                          "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
                             "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
                           "</li>"+
                         "</ul>" +
+                        "<div class='card-action share right-align'>" +
+                          "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
+                          "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                        "</div>" +
+
                     "</div>"+
                   "</div>" ;
 
             //카드를 화면에 표시한다.
-            $('#FeviCard').append(card);
+            $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
             $('#modal2').closeModal();
 
@@ -331,6 +345,7 @@ $(document).ready(function() {
             }
         });
       }
+
 
 
 
