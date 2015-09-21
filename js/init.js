@@ -133,34 +133,35 @@ $(document).ready(function() {
   });
 
   function response_kakao(json) {
+    alert('success');
 
-    var video_list = json.content;
-      video_list.forEach(function(v, i) {
-          var item = v;
-          var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
-          console.log(shareLink);
-          // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-          Kakao.Link.sendTalkLink({
-            label: item.description,
-            image: {
-              src: item.picture,
-              width: item.width,
-              height: item.height
-            },
-            webButton: {
-              text: "vikicast x " + item.name,
-              url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-            },
-            fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
-            // webLink : {
-            //   text: item.name,
-            //   url: 'http://facebook.com/' + item.id
-            // }
-          });
-          // Kakao.Link.cleanup();
-          // 카카오 공유를 GA로 추적
-          ga('send', 'event', "shareLink", "sendkakao", item.id );
-        });
+    // var video_list = json.content;
+    //   video_list.forEach(function(v, i) {
+    //       var item = v;
+    //       var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+    //       console.log(shareLink);
+    //       // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+    //       Kakao.Link.sendTalkLink({
+    //         label: item.description,
+    //         image: {
+    //           src: item.picture,
+    //           width: item.width,
+    //           height: item.height
+    //         },
+    //         webButton: {
+    //           text: "vikicast x " + item.name,
+    //           url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+    //         },
+    //         fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
+    //         // webLink : {
+    //         //   text: item.name,
+    //         //   url: 'http://facebook.com/' + item.id
+    //         // }
+    //       });
+    //       // Kakao.Link.cleanup();
+    //       // 카카오 공유를 GA로 추적
+    //       ga('send', 'event', "shareLink", "sendkakao", item.id );
+    //     });
       }
 
       // 페이스북
@@ -315,8 +316,8 @@ $(document).ready(function() {
                           "</li>"+
                         "</ul>" +
                         "<div class='card-action share right-align'>" +
-                          "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
-                          "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                          "<a class='waves-effect waves-light btn' data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
+                          "<a class='waves-effect waves-light btn' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                         "</div>" +
 
                     "</div>"+
