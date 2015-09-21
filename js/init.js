@@ -121,10 +121,12 @@ $(document).ready(function() {
 
   // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
   $('body').on('click', '.share > a', function(){
+    alert('clicked');
 
     var data = $(this).attr('data-id');
     var type = $(this).attr('data-class');
     if (type == "kakao") {
+      alert ('kakao');
       return callApi(url + "?id=" + data, response_kakao);
 
     } else if (type == "facebook") {
