@@ -33,7 +33,8 @@ $(document).ready(function() {
             type : 'GET',
             url : url,
             dataType : "json",
-            success : successFn
+            success : successFn,
+            async: false
         });
     };
 
