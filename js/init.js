@@ -274,7 +274,7 @@ $(document).ready(function() {
                     "</div>" +
                     "<div class='card-action share right-align'>" +
                       "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='javascript:console.log($(this));' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
