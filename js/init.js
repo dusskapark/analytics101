@@ -164,7 +164,8 @@ $(document).ready(function() {
         })
     } else if (type == "facebook") {
       // return callApi(url + "?id=" + data, response_facebook);
-      console.log('facebook');
+      callApi(url+"?id="+data, response_facebook);
+
     }
   });
 
@@ -200,7 +201,7 @@ $(document).ready(function() {
 
       // 페이스북
 
-      response_facebook = function (json){
+      function response_facebook (json){
         var video_list = json.content;
           video_list.forEach(function(v, i) {
               var item = v;
@@ -274,7 +275,7 @@ $(document).ready(function() {
                     "</div>" +
                     "<div class='card-action share right-align'>" +
                       "<a href='javascript:;' data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='javascript:;' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
