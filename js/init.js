@@ -27,8 +27,8 @@ $(document).ready(function() {
     return r;
   }();
 
-    var url = "http://munsangdong.cafe24.com/api/card";
-    var callApi = function( url, successFn ) {
+    url = "http://munsangdong.cafe24.com/api/card";
+    callApi = function( url, successFn ) {
         $.ajax({
             type : 'GET',
             url : url,
@@ -200,7 +200,7 @@ $(document).ready(function() {
 
       // 페이스북
 
-      function response_facebook (json){
+      response_facebook = function (json){
         var video_list = json.content;
           video_list.forEach(function(v, i) {
               var item = v;
@@ -273,8 +273,8 @@ $(document).ready(function() {
                         //     "</ul>" +
                     "</div>" +
                     "<div class='card-action share right-align'>" +
-                      "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='javascript:console.log($(this));' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='javascript:;' data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
