@@ -436,3 +436,37 @@ jQuery( ".email-form" ).submit(function( event ) {
 	         } );
 	       });
 	      }
+				$.ajax({
+          type : "GET",
+          url : url+"?id="+data,
+          dataType : "json",
+          async: false,
+          success: function(json) {
+            var video_list = json.content;
+            video_list.forEach(function(v, i) {
+              var item = v;
+              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+                // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+                Kakao.Link.sendTalkLink({
+                  label: item.description,
+                  image: {
+                    src: item.picture,
+                    width: item.width,
+                    height: item.height
+                  },
+                  webButton: {
+                    text: "vikicast x " + item.name,
+                    url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                  },
+                  fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
+                  // webLink : {
+                  //   text: item.name,
+                  //   url: 'http://facebook.com/' + item.id
+                  // }
+                });
+                // Kakao.Link.cleanup();
+                // 카카오 공유를 GA로 추적
+                ga('send', 'event', "shareLink", "sendkakao", item.id );
+              });
+            }
+        })
