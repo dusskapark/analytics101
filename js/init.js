@@ -16,16 +16,6 @@ $(document).ready(function() {
   // 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('d0dd75755ece80295a757c6042496f9b');
 
-  // facebook SDK
-  $.ajaxSetup({ cache: true });
-  $.getScript('http://connect.facebook.net/en_US/sdk.js', function(){
-    FB.init({
-      appId: '1463571523951964',
-      version: 'v2.4' // or v2.0, v2.1, v2.2, v2.3
-    });
-    $('#loginbutton,#feedbutton').removeAttr('disabled');
-    FB.getLoginStatus(updateStatusCallback);
-  });
 
 
   //URL 파싱하기
@@ -179,26 +169,37 @@ $(document).ready(function() {
       function response_facebook (json){
         var video_list = json.content;
           video_list.forEach(function(v, i) {
+
               var item = v;
               var shareLink = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
 
-              FB.ui({
-                method: "share",
-                display: "iframe",
-                name: item.category + "영상 소문내기!",
-                link: shareLink,
-                picture: item.picture,
-                description: item.description,
-                message: "당신'만' 못본 영상, 여기 다 있어요!",
-               },
-               function(response) {
-                 if (response && response.post_id) {
-                   //alert('Post was published.');
-                 } else {
-                   //alert('Post was not published.');
+              // facebook SDK
+              $.ajaxSetup({ cache: true });
+              $.getScript('http://connect.facebook.net/en_US/sdk.js', function(){
+                FB.init({
+                  appId: '1463571523951964',
+                  version: 'v2.4' // or v2.0, v2.1, v2.2, v2.3
+                });
+                FB.ui({
+                  method: "share",
+                  display: "popup",
+                  name: item.category + "영상 소문내기!",
+                  link: shareLink,
+                  picture: item.picture,
+                  description: item.description,
+                  message: "당신'만' 못본 영상, 여기 다 있어요!",
+                 },
+                 function(response) {
+                   if (response && response.post_id) {
+                     //alert('Post was published.');
+                   } else {
+                     //alert('Post was not published.');
+                   }
                  }
-               }
-              );
+                );
+                $('#loginbutton,#feedbutton').removeAttr('disabled');
+                FB.getLoginStatus(updateStatusCallback);
+              });
             });
           }
 
