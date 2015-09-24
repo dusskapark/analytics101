@@ -180,17 +180,16 @@ $(document).ready(function() {
               //   &action_properties=%7B%22object%22%3A%22https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F%22%7D
               //   &redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer
 
+              FB.ui({
+                method: 'share_open_graph',
+                action_type: 'og.likes',
+                action_properties: JSON.stringify({
 
-              FB.api(
-                "/me/video.watches",
-                "POST",
-                {
-                    "video": item.source,
-                    "image:url": item.picture,
-                    "message": item.description
-                },
-
-                // callback
+                      "video": item.source,
+                      "image:url": item.picture,
+                      "message": item.description
+                  })
+              }, // callback
                 function(response) {
                   if (response && !response.error_message) {
                     console.log('Posting completed.');
