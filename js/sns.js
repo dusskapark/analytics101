@@ -37,12 +37,12 @@ var response_kakao = function (json) {
         video_list.forEach(function(v, i) {
             var item = v;
             var REDIRECT_URL = "http://vikicast.com/index.html#" + item.id;
-            $('meta[name=og\\:url]').attr('content', REDIRECT_URL);
-            $('meta[name=og\\:type]').attr('content', item.category);
-            $('meta[name=og\\:title]').attr('content', "vikicast x" + item.name);
-            $('meta[name=og\\:description]').attr('content', item.description);
-            $('meta[name=og\\:image]').attr('content', item.picture);
-
+            console.log(REDIRECT_URL);
+            $("meta[property=og\\:url]").attr("content", REDIRECT_URL);
+            // $("meta[property=og\\:type]").attr("content", item.category);
+            $("meta[property=og\\:title]").attr("content", "vikicast x" + item.name);
+            $("meta[property=og\\:description]").attr("content", item.description);
+            $("meta[property=og\\:image]").attr("content", item.picture);
 
             var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&redirect_uri="+ "http://vikicast.com/" +"&href=" + REDIRECT_URL;
             window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);

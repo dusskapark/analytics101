@@ -207,12 +207,6 @@ $(document).ready(function() {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
-            $('meta[name=og\\:url]').attr('content', location.href);
-            $('meta[name=og\\:type]').attr('content', item.category);
-            $('meta[name=og\\:title]').attr('content', "vikicast x" + item.name);
-            $('meta[name=og\\:description]').attr('content', item.description);
-            $('meta[name=og\\:image]').attr('content', item.picture);
-
             // 카드를 구성한다
             var card = "<div class='grid-item " + item.category + "'>" +
                     "<div class='container'>" +
@@ -255,6 +249,13 @@ $(document).ready(function() {
 
                     "</div>"+
                   "</div>" ;
+
+            // 페이스북 메타 데이터 변경
+            $("meta[property=og\\:url]").attr("content", location.href);
+            // $("meta[property=og\\:type]").attr("content", item.category);
+            $("meta[property=og\\:title]").attr("content", "[vikicast x" + item.name + "]");
+            $("meta[property=og\\:description]").attr("content", item.description);
+            $("meta[property=og\\:image]").attr("content", item.picture);
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
