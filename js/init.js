@@ -165,41 +165,17 @@ $(document).ready(function() {
       }
 
       // 페이스북
+      var windowHeight = 360;
+      var windowWidth = 640;
 
       function response_facebook (json){
         var video_list = json.content;
           video_list.forEach(function(v, i) {
-
               var item = v;
-              var shareLink = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
 
-              // facebook SDK
-              $.ajaxSetup({ cache: true });
-              $.getScript('http://connect.facebook.net/en_US/sdk.js', function(){
-                FB.init({
-                  appId: '1463571523951964',
-                  version: 'v2.4' // or v2.0, v2.1, v2.2, v2.3
-                });
-                FB.ui({
-                  method: "share",
-                  display: "popup",
-                  name: item.category + "영상 소문내기!",
-                  link: shareLink,
-                  picture: item.picture,
-                  description: item.description,
-                  message: "당신'만' 못본 영상, 여기 다 있어요!",
-                 },
-                 function(response) {
-                   if (response && response.post_id) {
-                     //alert('Post was published.');
-                   } else {
-                     //alert('Post was not published.');
-                   }
-                 }
-                );
-                $('#loginbutton,#feedbutton').removeAttr('disabled');
-                FB.getLoginStatus(updateStatusCallback);
-              });
+              var REDIRECT_URL = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
+              var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&href=" + REDIRECT_URL  + "&redirect_uri=" + REDIRECT_URL;
+              window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
             });
           }
 
