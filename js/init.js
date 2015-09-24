@@ -16,6 +16,18 @@ $(document).ready(function() {
   // 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('d0dd75755ece80295a757c6042496f9b');
 
+  // facebook SDK
+  $.ajaxSetup({ cache: true });
+  $.getScript('http://connect.facebook.net/en_US/sdk.js', function(){
+    FB.init({
+      appId: '1463571523951964',
+      version: 'v2.4' // or v2.0, v2.1, v2.2, v2.3
+    });
+    $('#loginbutton,#feedbutton').removeAttr('disabled');
+    FB.getLoginStatus(updateStatusCallback);
+  });
+
+
   //URL 파싱하기
   var $search = function() {
     var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
@@ -119,11 +131,6 @@ $(document).ready(function() {
   };
 
 
-  // 카카오 공유 공유 버튼을 누르면 모달 팝업이 뜬다.
-  var sharebtn = function(){
-    console.log('sharebtn');
-  } ;
-
   $('body').on('click', '.share > a', function(){
     var data = $(this).attr('data-id');
     var type = $(this).attr('data-class');
@@ -173,9 +180,10 @@ $(document).ready(function() {
         var video_list = json.content;
           video_list.forEach(function(v, i) {
               var item = v;
-              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+              var shareLink = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
+
               FB.ui({
-                method: "feed",
+                method: "share",
                 display: "iframe",
                 name: item.category + "영상 소문내기!",
                 link: shareLink,
