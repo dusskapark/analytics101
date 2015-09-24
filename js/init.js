@@ -174,24 +174,33 @@ $(document).ready(function() {
           video_list.forEach(function(v, i) {
               var item = v;
               var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
-              FB.ui(
-                {
-                  method: 'feed',
-                  name: 'VIKI x ' + item.name,
-                  link: shareLink,
-                  picture: item.picture,
-                  caption: 'vikicast',
-                  description: item.description,
-                  message: '당신만 못본 그 영상! 여기 다 있다! VIKICAST'
+              FB.ui({
+                method: "stream.publish",
+                display: "iframe",
+                user_message_prompt: item.category + "영상 소문내기!",
+                message: "당신'만' 못본 영상, 여기 다 있어요!",
+                attachment: {
+                   name: "vikicast x " + item.name,
+                   description: item.description,
+                   href: shareLink,
+                   media:[{"'type':'image','src':'"+ item.picture +"'/"}],
+                   properties:{
+                     "1)":{"'text':'출처:"+ item.name +"','href':'http://facebook.com/"+item.id +"'/" },
+                    //  "2)":{"text":"Math","href":"http://example.com/skill.php?math"},
+                    //  "3)":{"text":"Farmville","href":"http://example.com/skill.php?farmville"}
+                   }
                 },
-                function(response) {
-                  if (response && response.post_id) {
-                    alert('Post was published.');
-                  } else {
-                    alert('Post was not published.');
-                  }
-                }
+                action_links: [{ text: 'Test yourself', href: 'http://example.com/test.php' }]
+               },
+               function(response) {
+                 if (response && response.post_id) {
+                   //alert('Post was published.');
+                 } else {
+                   //alert('Post was not published.');
+                 }
+               }
               );
+
             });
           }
 
