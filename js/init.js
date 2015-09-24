@@ -175,22 +175,13 @@ $(document).ready(function() {
               var item = v;
               var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
               FB.ui({
-                method: "stream.publish",
+                method: "feed",
                 display: "iframe",
-                user_message_prompt: item.category + "영상 소문내기!",
+                name: item.category + "영상 소문내기!",
+                link: shareLink,
+                picture: item.picture,
+                description: item.description,
                 message: "당신'만' 못본 영상, 여기 다 있어요!",
-                attachment: {
-                   name: "vikicast x " + item.name,
-                   description: item.description,
-                   href: shareLink,
-                   media:[{'type':'image','src':item.picture}],
-                   properties:{
-                     "1)":{'text':'출처:' + item.name ,'href':'http://facebook.com/' + item.id },
-                    //  "2)":{"text":"Math","href":"http://example.com/skill.php?math"},
-                    //  "3)":{"text":"Farmville","href":"http://example.com/skill.php?farmville"}
-                   }
-                },
-                action_links: [{ text: 'Test yourself', href: 'http://example.com/test.php' }]
                },
                function(response) {
                  if (response && response.post_id) {
@@ -200,7 +191,6 @@ $(document).ready(function() {
                  }
                }
               );
-
             });
           }
 
