@@ -173,29 +173,31 @@ $(document).ready(function() {
         var video_list = json.content;
           video_list.forEach(function(v, i) {
               var item = v;
-              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+              // var fbApi = https://www.facebook.com/dialog/share_open_graph?
+              //   app_id=1463571523951964
+              //   &display=popup
+              //   &action_type=og.Watch
+              //   &action_properties=%7B%22object%22%3A%22https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F%22%7D
+              //   &redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer
+
 
               FB.api(
-                'me/objects/video.movie',
-                'post',
-                {'object': {
-                  'og:url': shareLink,
-                  'og:title': item.name,
-                  'og:type': item.category,
-                  'og:image': item.picture,
-                  'og:description': item.description,
-                  'fb:app_id': '1463571523951964',
-                  'video:actor:id': 'Posted From: http://facebook.com/' + item.id
-                }},
+                "/me/video.watches",
+                "POST",
+                {
+                    "video": item.source,
+                    "image:url": item.picture,
+                    "message": item.description
+                },
 
                 // callback
                 function(response) {
                   if (response && !response.error_message) {
-                    alert('Posting completed.');
+                    console.log('Posting completed.');
                     ga('send', 'event', "shareLink", "sendfacebook", item.id );
 
                   } else {
-                    alert('Error while posting.');
+                    console.log('Error while posting.');
                   }
                 }
               );
