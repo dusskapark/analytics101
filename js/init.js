@@ -183,9 +183,9 @@ $(document).ready(function() {
                    name: "vikicast x " + item.name,
                    description: item.description,
                    href: shareLink,
-                   media:[{"'type':'image','src':'"+ item.picture +"'/"}],
+                   media:[{'type':'image','src':item.picture}],
                    properties:{
-                     "1)":{"'text':'출처:"+ item.name +"','href':'http://facebook.com/"+item.id +"'/" },
+                     "1)":{'text':'출처:' + item.name ,'href':'http://facebook.com/' + item.id },
                     //  "2)":{"text":"Math","href":"http://example.com/skill.php?math"},
                     //  "3)":{"text":"Farmville","href":"http://example.com/skill.php?farmville"}
                    }
