@@ -29,8 +29,8 @@ $(document).ready(function() {
     return r;
   }();
 
-    var url = "http://munsangdong.cafe24.com/api/card";
-    var callApi = function( url, successFn ) {
+    url = "http://munsangdong.cafe24.com/api/card";
+    callApi = function( url, successFn ) {
         $.ajax({
             type : 'GET',
             url : url,
@@ -120,65 +120,6 @@ $(document).ready(function() {
     }
   };
 
-
-  $('body').on('click', '.share > a', function(){
-    var data = $(this).attr('data-id');
-    var type = $(this).attr('data-class');
-    if (type == "kakao") {
-      callApi(url+"?id="+data, response_kakao);
-
-    } else if (type == "facebook") {
-      // return callApi(url + "?id=" + data, response_facebook);
-      callApi(url+"?id="+data, response_facebook);
-
-    }
-  });
-
-  function response_kakao(json) {
-    var video_list = json.content;
-      video_list.forEach(function(v, i) {
-          var item = v;
-          var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
-          console.log(shareLink);
-          // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-          Kakao.Link.sendTalkLink({
-            label: item.description,
-            image: {
-              src: item.picture,
-              width: item.width,
-              height: item.height
-            },
-            webButton: {
-              text: "vikicast x " + item.name,
-              url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-            },
-            fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
-            // webLink : {
-            //   text: item.name,
-            //   url: 'http://facebook.com/' + item.id
-            // }
-          });
-          // Kakao.Link.cleanup();
-          // 카카오 공유를 GA로 추적
-          ga('send', 'event', "shareLink", "sendkakao", item.id );
-        });
-      }
-
-      // 페이스북
-      var windowHeight = 360;
-      var windowWidth = 640;
-
-      function response_facebook (json){
-        var video_list = json.content;
-          video_list.forEach(function(v, i) {
-              var item = v;
-
-              var REDIRECT_URL = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
-              var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&href=" + REDIRECT_URL  + "&redirect_uri=vikicast.com";
-              window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
-            });
-          }
-
     function response_json(json) {
         var video_list = json.content;
         var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
@@ -208,8 +149,8 @@ $(document).ready(function() {
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
                         "<div class='share center-align'>" +
-                          "<a data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
-                          "<a data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                          "<a href='javascript:callApi(url+\'?id=\'+"+ item.id +", response_kakao);'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
+                          "<a href='javascript:callApi(url+\'?id=\'+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                         "</div>" +
 
                         // "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
@@ -225,8 +166,8 @@ $(document).ready(function() {
                         //     "</ul>" +
                     "</div>" +
                     "<div class='card-action share right-align'>" +
-                      "<a href='javascript:;' data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='javascript:;' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
@@ -266,6 +207,12 @@ $(document).ready(function() {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
+            $('meta[name=og\\:url]').attr('content', location.href);
+            $('meta[name=og\\:type]').attr('content', item.category);
+            $('meta[name=og\\:title]').attr('content', "vikicast x" + item.name);
+            $('meta[name=og\\:description]').attr('content', item.description);
+            $('meta[name=og\\:image]').attr('content', item.picture);
+
             // 카드를 구성한다
             var card = "<div class='grid-item " + item.category + "'>" +
                     "<div class='container'>" +
@@ -302,8 +249,8 @@ $(document).ready(function() {
                           "</li>"+
                         "</ul>" +
                         "<div class='card-action share right-align'>" +
-                          "<a class='waves-effect waves-light btn' data-class='kakao' data-id='" + item.id + "'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
-                          "<a class='waves-effect waves-light btn' data-class='facebook' data-id='" + item.id + "'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                          "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
+                          "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
                         "</div>" +
 
                     "</div>"+
