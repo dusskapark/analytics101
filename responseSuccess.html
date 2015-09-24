@@ -45,6 +45,7 @@
 		<div class="container">
 			<div class="section">
 				<div id="FeviCard" class="row grid section center-align">
+					<p> 공유하기 성공 </p>
 						<a href="javascript:window.open('','_self').close();" class="waves-effect waves-light btn-large pink">Close <i class="material-icons left ">close</i></a>
 				</div>
 			</div>
@@ -98,7 +99,16 @@
 		<script src="./js/materialize.js"></script>
 		<!-- <script src="./js/sns.js"></script> -->
 		<!-- <script src="./js/init.js"></script> -->
-		<script type="text/javascript">	setTimeout(function () { window.close();}, 3000);</script>
+
+		<script type="text/javascript">
+		 function closeWindow() {
+		    setTimeout(function() {
+		    window.close();
+		    }, 3000);
+		    }
+
+		    window.onload = closeWindow();
+    </script>
 
 	</body>
 </html>
