@@ -174,7 +174,7 @@ $(document).ready(function() {
               var item = v;
 
               var REDIRECT_URL = "http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
-              var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&href=" + REDIRECT_URL  + "&redirect_uri=" + REDIRECT_URL;
+              var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&href=" + REDIRECT_URL  + "&redirect_uri=vikicast.com";
               window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
             });
           }
