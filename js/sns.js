@@ -44,7 +44,7 @@ var response_kakao = function (json) {
             $("meta[property=og\\:description]").attr("content", item.description);
             $("meta[property=og\\:image]").attr("content", item.picture);
 
-            var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&redirect_uri="+ "http://vikicast.com/" +"&href=" + REDIRECT_URL;
+            var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&redirect_uri="+ "http://vikicast.com/responseSuccess.html" +"&href=" + REDIRECT_URL;
             window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
         }
