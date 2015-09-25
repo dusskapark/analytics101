@@ -51,9 +51,9 @@ var response_kakao = function (json) {
             var fbiFrame =  {
                    method: 'share',
                    display: 'touch',
-                   name: 'VIKICAST x  ' + item.name,
+                   name: {'VIKICAST x ' + item.name},
                    picture: "http://vikicast.com/res/facebook/Untitled05.png",
-                   caption: 'category: ' + item.category,
+                   caption: { 'category: ' + item.category },
                    description: { item.description },
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
@@ -67,6 +67,7 @@ var response_kakao = function (json) {
                    } else {
                      console.log('Post was not published.');
                      ga('send', 'event', "sendFBshareFail", item.id );
+
                    }
                  }
                );
