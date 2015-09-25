@@ -51,10 +51,10 @@ var response_kakao = function (json) {
          FB.ui(
                 {
                    method: 'feed',
-                   display: 'touch',
+                   display: 'popup',
                    name: 'VIKICAST x ' + item.name,
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
-                   picture: "http://vikicast.com/res/facebook/Untitled05.png",
+                   picture: item.picture,
                    caption: 'category: ' + item.category ,
                    description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
