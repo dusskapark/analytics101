@@ -54,11 +54,11 @@ var response_kakao = function (json) {
                    display: 'popup',
                    name: 'VIKICAST x ' + item.name,
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
-                   picture: item.picture,
+                   picture: "http://vikicast.com/res/facebook/Untitled05.png",
                    caption: 'category: ' + item.category ,
                    description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
-                   link: REDIRECT_URL
+                  //  link: REDIRECT_URL
                  },
                  function(response) {
                    if (response && response.post_id) {
@@ -66,8 +66,6 @@ var response_kakao = function (json) {
                      ga('send', 'event', "sendFBshareSuccess", item.id );
 
                      if(window.location.search.indexOf('post_id')==1) window.close();
-
-
 
                    } else {
                      console.log('Post was not published.');
