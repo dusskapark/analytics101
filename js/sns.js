@@ -58,7 +58,7 @@ var response_kakao = function (json) {
                    description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
-                   link: REDIRECT_URL
+                   href: REDIRECT_URL
                  },
                  function(response) {
                    if (response && response.post_id) {
