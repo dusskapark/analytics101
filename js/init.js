@@ -155,9 +155,18 @@ $(document).ready(function() {
                     "</span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
+                        "<a class='waves-effect waves-light btn pink ' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
+                        "<a class='waves-effect waves-light btn pink ' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
 
-                        "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
-                        "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
+                        "<div class='adsense card'>" +
+                          "<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>" +
+                          "<ins class='adsbygoogle' " +
+                               "style='display:block' " +
+                               "data-ad-client='ca-pub-0416537700421851' " +
+                               "data-ad-slot='3599428156' " +
+                               "data-ad-format='auto'></ins> " +
+                          "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+                        "</div>" +
 
                         // "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
                         //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
@@ -181,6 +190,21 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
+
+            var adCard = "<div class='adsense card'>" +
+            "<div class='card-content'>" +
+            "<!-- FeviResponsive-02 -->"
+              "<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>" +
+              "<ins class='adsbygoogle' " +
+                   "style='display:block' " +
+                   "data-ad-client='ca-pub-0416537700421851' " +
+                   "data-ad-slot='5076161358' " +
+                   "data-ad-format='auto'></ins> " +
+              "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+            "</div>" +
+            "</div>";
+
+            $('.grid').children()[3].isotope('insert', $(adCard));
             $('.grid').isotope();
 
         });
