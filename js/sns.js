@@ -29,39 +29,60 @@ var response_kakao = function (json) {
     }
 
     // 페이스북
-    var windowHeight = 360;
-    var windowWidth = 640;
+    // var windowHeight = 360;
+    // var windowWidth = 640;
 
     var response_facebook = function (json){
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
-
             var REDIRECT_URL = "http://vikicast.com/index.html#" + item.id;
+            //  페이스북 로그인 시도
+            ga('send', 'event', "sendFBshareRequest", item.id );
             console.log(REDIRECT_URL);
-            // $("meta[property=og\\:url]").attr("content", REDIRECT_URL);
-            // $("meta[property=og\\:type]").attr("content", item.category);
-            // $("meta[property=og\\:title]").attr("content", "vikicast x" + item.name);
-            // $("meta[property=og\\:description]").attr("content", item.description);
-            // $("meta[property=og\\:image]").attr("content", item.picture);
 
-            var facebookUrl = "https://www.facebook.com/dialog/share?"+
-            "app_id=1463571523951964" +
-            "&display=touch" +
-            "&utm_source=facebookLink&utm_medium=social" +
+              FB.ui(
+                 {
+                   method: 'feed',
+                   display: 'iframe',
+                   name: 'VIKICAST x' + item.name,
+                   picture: item.picture,
+                   caption: 'Reference Documentation',
+                   description: item.description,
+                   message: '당신만 못 봤던 그 영상, 여기 다 있다!',
+                  //  redirect_uri: "http://vikicast.com",
+                   link: REDIRECT_URL
+                 },
+                 function(response) {
+                   if (response && response.post_id) {
+                     console.log('Post was published.');
+                     ga('send', 'event', "sendFBshareSuccess", item.id );
+
+                   } else {
+                     console.log('Post was not published.');
+                     ga('send', 'event', "sendFBshareFail", item.id );
+
+                   }
+                 }
+               );
+
+            // var facebookUrl = "https://www.facebook.com/dialog/share?"+
+            // "app_id=1463571523951964" +
+            // "&display=touch" +
+            // "&utm_source=facebookLink&utm_medium=social" +
             // "&action_type=og.like"+
-            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            // "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
 
-            "&href=" + REDIRECT_URL;
+            // "&href=" + REDIRECT_URL;
             // var $fbiFrame = "<iframe src='" + facebookUrl +
             // "' name='facebook' frameborder='0' scrolling='yes'></iframe>";
 
             // $('.modal-content').append($fbiFrame);
             // $('#modal1').openModal();
 
-            ga('send', 'event', "sendFBshareRequest", item.id );
-            window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
+            // ga('send', 'event', "sendFBshareRequest", item.id );
+            // window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
         }
 

@@ -16,6 +16,16 @@ $(document).ready(function() {
   // 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('d0dd75755ece80295a757c6042496f9b');
 
+  // facebook 공유하기
+  $.ajaxSetup({ cache: true });
+  $.getScript('http://connect.facebook.net/en_US/sdk.js', function(){
+    FB.init({
+      appId: '1463571523951964',
+      version: 'v2.4' // or v2.0, v2.1, v2.2, v2.3
+    });
+  });
+
+
 
 
   //URL 파싱하기
@@ -148,6 +158,7 @@ $(document).ready(function() {
                     "</span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
+
                         "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
                         "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
 
@@ -323,10 +334,6 @@ $(document).ready(function() {
       $('html, body').animate({ scrollTop: 0}, "slow");
       return false;
     });
-
-
-
-
 
 
 });
