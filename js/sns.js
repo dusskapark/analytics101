@@ -50,20 +50,24 @@ var response_kakao = function (json) {
             //  페이스북 로그인 시도
          FB.ui(
                 {
-                   method: 'share',
+                   method: 'feed',
                    display: 'touch',
                    name: 'VIKICAST x ' + item.name,
+                   redirect_uri: "http://vikicast.com/responseSuccess.html",
                    picture: "http://vikicast.com/res/facebook/Untitled05.png",
                    caption: 'category: ' + item.category ,
                    description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
-                   redirect_uri: "http://vikicast.com/responseSuccess.html",
-                   href: REDIRECT_URL
+                   link: REDIRECT_URL
                  },
                  function(response) {
                    if (response && response.post_id) {
                      console.log('Post was published.');
                      ga('send', 'event', "sendFBshareSuccess", item.id );
+
+                     if(window.location.search.indexOf('post_id')==1) window.close();
+
+
 
                    } else {
                      console.log('Post was not published.');
@@ -73,23 +77,25 @@ var response_kakao = function (json) {
                  }
                );
 
-            // var facebookUrl = "https://www.facebook.com/dialog/share?"+
+            // var facebookUrl = "https://www.facebook.com/dialog/feed?"+
             // "app_id=1463571523951964" +
             // "&display=touch" +
             // "&utm_source=facebookLink&utm_medium=social" +
-            // // "&action_type=og.like"+
+            // "&action_type=og.like"+
             // "$description=" + item.description +
+            // "&name=VIKICAST x " + item.name +
+            // "&caption=category: " + item.category +
             // "&pictire=" + item.pictire +
             // "&redirect_uri=http://vikicast.com/responseSuccess.html" +
-            // // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
-            //
+            // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
+
             // "&href=" + REDIRECT_URL;
-            // // var $fbiFrame = "<iframe src='" + facebookUrl +
-            // // "' name='facebook' frameborder='0' scrolling='yes'></iframe>";
-            //
-            // // $('.modal-content').append($fbiFrame);
-            // // $('#modal1').openModal();
-            //
+            // var $fbiFrame = "<iframe src='" + facebookUrl +
+            // "' name='facebook' frameborder='0' scrolling='yes'></iframe>";
+
+            // $('.modal-content').append($fbiFrame);
+            // $('#modal1').openModal();
+
             // ga('send', 'event', "sendFBshareRequest", item.id );
             // window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
