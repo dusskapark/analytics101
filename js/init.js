@@ -190,21 +190,6 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
-
-            var adCard = "<div class='adsense card'>" +
-            "<div class='card-content'>" +
-            "<!-- FeviResponsive-02 -->"
-              "<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>" +
-              "<ins class='adsbygoogle' " +
-                   "style='display:block' " +
-                   "data-ad-client='ca-pub-0416537700421851' " +
-                   "data-ad-slot='5076161358' " +
-                   "data-ad-format='auto'></ins> " +
-              "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-            "</div>" +
-            "</div>";
-
-            $('.grid').children()[3].isotope('insert', $(adCard));
             $('.grid').isotope();
 
         });
@@ -222,6 +207,21 @@ $(document).ready(function() {
         $("#firstPage").text(json.first);
         $("#lastPage").text(json.last);
 
+
+        var adCard = "<div class='adsense card medium'>" +
+        "<div class='card-content'>" +
+        "<!-- FeviResponsive-02 -->"
+          "<ins class='adsbygoogle' " +
+               "style='display:block' " +
+               "data-ad-client='ca-pub-0416537700421851' " +
+               "data-ad-slot='5076161358' " +
+               "data-ad-format='auto'></ins> " +
+          "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+        "</div>" +
+        "</div>";
+
+        $('.grid').isotope('insert', $(adCard) );
+        $('.grid').isotope();
 
 
 
