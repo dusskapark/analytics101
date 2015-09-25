@@ -39,26 +39,17 @@ var response_kakao = function (json) {
             var REDIRECT_URL = "http://vikicast.com/index.html#" + item.id;
             console.log(REDIRECT_URL);
 
-            // 페이스북 메타 데이터 변경
-            $("meta[property=og\\:url]").attr("content", REDIRECT_URL);
-            // $("meta[property=og\\:type]").attr("content", item.category);
-            $("meta[property=og\\:title]").attr("content", "[VIKICAST x" + item.name + "]");
-            $("meta[property=og\\:description]").attr("content", item.description);
-            $("meta[property=og\\:image]").attr("content", item.picture);
-
-
             //  페이스북 로그인 시도
          FB.ui(
                 {
                    method: 'feed',
-                   display: 'popup',
                    name: 'VIKICAST x ' + item.name,
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
                    picture: "http://vikicast.com/res/facebook/Untitled05.png",
                    caption: 'category: ' + item.category ,
                    description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
-                  //  link: REDIRECT_URL
+                   link: REDIRECT_URL
                  },
                  function(response) {
                    if (response && response.post_id) {
