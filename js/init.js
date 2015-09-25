@@ -25,9 +25,6 @@ $(document).ready(function() {
     });
   });
 
-
-
-
   //URL 파싱하기
   var $search = function() {
     var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};

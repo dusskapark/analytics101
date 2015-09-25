@@ -48,13 +48,14 @@ var response_kakao = function (json) {
 
 
             //  페이스북 로그인 시도
-            var fbiFrame =  {
+         FB.ui(
+                {
                    method: 'share',
                    display: 'touch',
-                   name: {'VIKICAST x ' + item.name},
+                   name: 'VIKICAST x ' + item.name,
                    picture: "http://vikicast.com/res/facebook/Untitled05.png",
-                   caption: { 'category: ' + item.category },
-                   description: { item.description },
+                   caption: 'category: ' + item.category ,
+                   description: item.description ,
                    message: '당신만 못 봤던 그 영상, 여기 다 있다!',
                    redirect_uri: "http://vikicast.com/responseSuccess.html",
                    link: REDIRECT_URL
