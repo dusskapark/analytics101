@@ -48,6 +48,7 @@ var response_kakao = function (json) {
             var facebookUrl = "https://www.facebook.com/dialog/share?"+
             "app_id=1463571523951964" +
             "&display=touch" +
+            "&utm_source=facebookLink&utm_medium=social" +
             // "&action_type=og.like"+
             "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             // "&action_properties={'object':'"+ REDIRECT_URL +"'}"

@@ -51,8 +51,8 @@
 			</div>
 		</div>
 
-		<!-- <footer class="page-footer orange">
-			<div class="container">
+		<footer class="page-footer orange">
+			<!-- <div class="container">
 				<div class="row">
 					<div class="col l6 s12">
 						<h5 class="white-text">UA Study group</h5>
@@ -117,11 +117,11 @@
 			ga('send', 'event', "FBshareSuccess", $search.post_id );
 
 		}else {
-			ga('send', 'event', "FBshareFail", $search.error_message );
+			ga('send', 'event', "FBshareFail", "http://facebook.com/" + $search.error_message );
 
 		}
 
-			// 창을 닫는다 
+			// 창을 닫는다
 		 function closeWindow() {
 		    setTimeout(function() {
 		    window.close();
