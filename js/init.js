@@ -148,10 +148,8 @@ $(document).ready(function() {
                     "</span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<div class='share center-align'>" +
-                          "<a href='javascript:callApi(url+\'?id=\'+"+ item.id +", response_kakao);'><i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>  " +
-                          "<a href='javascript:callApi(url+\'?id=\'+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
-                        "</div>" +
+                        "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
+                        "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
 
                         // "<ul class='collection'><li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-comment circle yellow darken-1 '></i>" +
                         //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +

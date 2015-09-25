@@ -7,11 +7,12 @@
 		<meta name="msapplication-tap-highlight" content="no">
 		<!-- You can use open graph tags to customize link previews.
 		Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+		<meta property="fb:app_id"				content="1463571523951964" />
 		<meta property="og:type"          content="article" />
 		<meta property="og:url"           content="http://vikicast.com/" />
 		<meta property="og:title"         content="Vikicast" />
 		<meta property="og:description"   content="당신만 못본 동영상 여기 다 있다." />
-		<meta property="og:image"         content="http://vikicast.com/images/favicon/apple-touch-icon-152.png" />
+		<meta property="og:image:url"     content="http://vikicast.com/res/facebook/meta_image.png" />
 
 		<!-- 타이틀 + 영상제목 -->
 		<title>Vikicast | 당신만 못본 동영상 여기 다 있다.</title>
@@ -181,22 +182,14 @@
 			</div>
 		</footer>
 		<!-- Modal Structure -->
-	  <div id="modal1" class="modal bottom-sheet">
+	  <div id="modal1" class="modal">
 	    <div class="modal-content">
 	      <h4 class="truncate">동영상 공유하기</h4>
-					<ul class="collection">
-						<li class="collection-item avatar dismissable sendkakao">
-							<i class="fa fa-comment circle yellow darken-1 brown-text"></i>
-							<span class="title">[viki] 카카오톡 공유하기</span>
-							<p>First Line <br>
-								 Second Line
-							</p>
-							<a id="kakao-link-btn" href="javascript:;" class="secondary-content brown-text"><i class="material-icons">send</i></a>
-					</ul>
+
 	    </div>
-	    <!-- <div class="modal-footer">
-	      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-	    </div> -->
+	    <div class="modal-footer">
+	      <a href="javascript:;" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+	    </div>
 	  </div>
 		<!-- preloader Modal Structure -->
 	  <div id="modal2" class="modal">
@@ -233,7 +226,7 @@
 
 		<!--카드 움직임 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.min.js"></script>
-		<!-- 소셜 SDK -->
+			<!-- 소셜 SDK -->
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 		<script type="text/javascript">		</script>
 		<!-- framework -->

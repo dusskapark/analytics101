@@ -36,15 +36,30 @@ var response_kakao = function (json) {
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
+
             var REDIRECT_URL = "http://vikicast.com/index.html#" + item.id;
             console.log(REDIRECT_URL);
-            $("meta[property=og\\:url]").attr("content", REDIRECT_URL);
+            // $("meta[property=og\\:url]").attr("content", REDIRECT_URL);
             // $("meta[property=og\\:type]").attr("content", item.category);
-            $("meta[property=og\\:title]").attr("content", "vikicast x" + item.name);
-            $("meta[property=og\\:description]").attr("content", item.description);
-            $("meta[property=og\\:image]").attr("content", item.picture);
+            // $("meta[property=og\\:title]").attr("content", "vikicast x" + item.name);
+            // $("meta[property=og\\:description]").attr("content", item.description);
+            // $("meta[property=og\\:image]").attr("content", item.picture);
 
-            var facebookUrl = "https://www.facebook.com/dialog/share?app_id=1463571523951964&display=popup&redirect_uri="+ "http://vikicast.com/responseSuccess.html" +"&href=" + REDIRECT_URL;
+            var facebookUrl = "https://www.facebook.com/dialog/share?"+
+            "app_id=1463571523951964" +
+            "&display=touch" +
+            // "&action_type=og.like"+
+            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
+
+            "&href=" + REDIRECT_URL;
+            // var $fbiFrame = "<iframe src='" + facebookUrl +
+            // "' name='facebook' frameborder='0' scrolling='yes'></iframe>";
+
+            // $('.modal-content').append($fbiFrame);
+            // $('#modal1').openModal();
+
+            ga('send', 'event', "sendFBshareRequest", item.id );
             window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
         }

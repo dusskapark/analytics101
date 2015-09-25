@@ -45,13 +45,13 @@
 		<div class="container">
 			<div class="section">
 				<div id="FeviCard" class="row grid section center-align">
-					<p> 공유하기 성공 </p>
-						<a href="javascript:window.open('','_self').close();" class="waves-effect waves-light btn-large pink">Close <i class="material-icons left ">close</i></a>
+					<p> 공유하기 성공! 이제 여러분의 친구들과 더 재미있게 Viki하세요! </p>
+						<!-- <a href="javascript:window.open('','_self').close();" class="waves-effect waves-light btn-large pink">Close <i class="material-icons left ">close</i></a> -->
 				</div>
 			</div>
 		</div>
 
-		<footer class="page-footer orange">
+		<!-- <footer class="page-footer orange">
 			<div class="container">
 				<div class="row">
 					<div class="col l6 s12">
@@ -61,7 +61,7 @@
 						</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="footer-copyright">
 				<div class="container">
 					Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
@@ -101,9 +101,31 @@
 		<!-- <script src="./js/init.js"></script> -->
 
 		<script type="text/javascript">
+		//URL 파싱하기
+	  var $search = function() {
+	    var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
+	    if (l === 0) {return false;}
+	    while (l--) {
+	      kv = p[l].split(/\=/);
+	      r[kv[0]] = decodeURIComponent(kv[1] || '') || true;
+	    }
+	    return r;
+	  }();
+
+		// #ID 포스팅 성공여부에 따라서 GA를 따로 측정한다.
+		if ($search.post_id !== "") {
+			ga('send', 'event', "FBshareSuccess", $search.post_id );
+
+		}else {
+			ga('send', 'event', "FBshareFail", $search.error_message );
+
+		}
+
+			// 창을 닫는다 
 		 function closeWindow() {
 		    setTimeout(function() {
 		    window.close();
+				// $('#modal1').closeModal()
 		    }, 3000);
 		    }
 
