@@ -139,6 +139,17 @@ $(document).ready(function() {
 
         video_list.forEach(function(v, i) {
             var item = v;
+
+            var facebookUrl = "https://www.facebook.com/dialog/feed?"+
+            "app_id=1463571523951964" +
+            "&display=touch" +
+            "&utm_source=facebookLink&utm_medium=social" +
+            "&name=VIKICAST x " + item.name +
+            "&caption=category: " + item.category +
+            "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            "&link=" + "http://vikicast.com/index.html#" + item.id;
+
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
                 "<div class='card'>" +
@@ -182,7 +193,7 @@ $(document).ready(function() {
                     "</div>" +
                     "<div class='card-action share right-align'>" +
                       "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_facebook);'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='" + facebookUrl + "' target='_blank' width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
