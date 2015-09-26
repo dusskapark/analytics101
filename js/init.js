@@ -140,15 +140,17 @@ $(document).ready(function() {
         video_list.forEach(function(v, i) {
             var item = v;
 
-            var facebookUrl = "https://www.facebook.com/dialog/feed?"+
-            "app_id=1463571523951964" +
-            "&display=touch" +
-            "&utm_source=facebookLink&utm_medium=social" +
-            "&name=VIKICAST x " + item.name +
-            "&caption=category: " + item.category +
-            "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
-            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
-            "&link=" + "http://vikicast.com/index.html#" + item.id;
+            // facebook 공유 기능
+            // var facebookUrl = "https://www.facebook.com/dialog/feed?"+
+            // "app_id=1463571523951964" +
+            // "&display=touch" +
+            // "&utm_source=facebookLink&utm_medium=social" +
+            // "&name=VIKICAST x " + item.name +
+            // "&caption=category: '" + item.category + "'" +
+            // "&user_message_prompt='너만 못본 그 영상! 여기 다 있다~'"
+            // "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+            // "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            // "&link=" + "http://vikicast.com/index.html#" + item.id;
 
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
@@ -193,7 +195,7 @@ $(document).ready(function() {
                     "</div>" +
                     "<div class='card-action share right-align'>" +
                       "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='" + facebookUrl + "' target='_blank' width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_facebook);' target='_blank'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
