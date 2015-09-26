@@ -10,64 +10,36 @@
 		<title>Vikicast | 당신만 못본 동영상 여기 다 있다.</title>
 
 		<!-- Favicons-->
-		<link rel="shortcut icon" href="./images/favicon/apple-touch-icon-152x152.png" type="image/png" />
+		<!-- <link rel="shortcut icon" href="./images/favicon/apple-touch-icon-152x152.png" type="image/png" />
 		<link rel="apple-touch-icon-precomposed" href="./images/favicon/apple-touch-icon-152.png">
 		<meta name="msapplication-TileColor" content="#FFFFFF">
 		<meta name="msapplication-TileImage" content="./images/favicon/mstile-144.png">
-		<link rel="icon" href="./images/favicon/favicon-32.png" sizes="32x32">
-
-		<!--  Android 5 Chrome Color-->
-		<meta name="theme-color" content="#EE6E73">
+		<link rel="icon" href="./images/favicon/favicon-32.png" sizes="32x32"> -->
 
 		<!-- CSS  -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- Font awesome  -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
 		<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	</head>
 
 	<body>
-		<!--상단 네비게이션 -->
-		<div class="navbar">
-			<nav class="pink lighten-1" role="navigation">
-				<div class="container">
-					<div class="nav-wrapper">
-						<div id="logo-container">
-							<a href="#"><img width="40" class="icon hide-on-med-and-down" src="./images/favicon/main-icon-192-004.png" alt=""></a>
-							<a  href="index.html" class="brand-logo">Vikicast</a>
-					</div>
-				</div>
-			</nav>
-		</div>
 		<!--카드 시작 -->
 		<div class="container">
-			<div class="section">
-				<div id="FeviCard" class="row grid section center-align">
-					<p> 공유하기 성공! 이제 여러분의 친구들과 더 재미있게 Viki하세요! </p>
-						<!-- <a href="javascript:window.open('','_self').close();" class="waves-effect waves-light btn-large pink">Close <i class="material-icons left ">close</i></a> -->
+			<div class="row">
+				<div class="col s12 m12">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+							<span class="card-title">VIKICAST 님이 여러분의 공유를 좋아합니다. :)</span>
+							<p>공유 감사합니다! 세상에 재미있는 일이 많이 퍼져나가기를!</p>
+						</div>
+						<div class="card-action">
+							<a href="javascript:closeWindow();">닫기</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<footer class="page-footer orange">
-			<!-- <div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">UA Study group</h5>
-						<p class="grey-text text-lighten-4">
-							Google Universal Analytics를 공부하기 위해서 모인 스터디 그룹입니다. 웹-앱이 통합된 데이터 수집/조정/프로세싱 그리고 최종 리포트를 만들어 내는 것을 목표로 합니다.
-						</p>
-					</div>
-				</div>
-			</div> -->
-			<div class="footer-copyright">
-				<div class="container">
-					Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-				</div>
-			</div>
-		</footer>
 
 
 		<!--  Scripts-->
@@ -101,35 +73,38 @@
 		<!-- <script src="./js/init.js"></script> -->
 
 		<script type="text/javascript">
-		//URL 파싱하기
-	  var $search = function() {
-	    var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
-	    if (l === 0) {return false;}
-	    while (l--) {
-	      kv = p[l].split(/\=/);
-	      r[kv[0]] = decodeURIComponent(kv[1] || '') || true;
-	    }
-	    return r;
-	  }();
+		$(document).ready(function() {
 
-		// #ID 포스팅 성공여부에 따라서 GA를 따로 측정한다.
-		if ($search.post_id !== "") {
-			ga('send', 'event', "FBshareSuccess", $search.post_id );
-
-		}else {
-			ga('send', 'event', "FBshareFail", "http://facebook.com/" + $search.error_message );
-
-		}
-
-			// 창을 닫는다
-		 function closeWindow() {
-		    setTimeout(function() {
-		    window.close();
-				// $('#modal1').closeModal()
-		    }, 3000);
+			//URL 파싱하기
+		  var $search = function() {
+		    var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
+		    if (l === 0) {return false;}
+		    while (l--) {
+		      kv = p[l].split(/\=/);
+		      r[kv[0]] = decodeURIComponent(kv[1] || '') || true;
 		    }
+		    return r;
+		  }();
 
-		    window.onload = closeWindow();
+			// #ID 포스팅 성공여부에 따라서 GA를 따로 측정한다.
+			if ($search.post_id !== "") {
+				ga('send', 'event', "FBshareSuccess", "http://facebook.com/" + $search.post_id );
+
+			}else {
+				ga('send', 'event', "FBshareFail", window.location.hash );
+
+			}
+
+				// 창을 닫는다
+			 function closeWindow() {
+			    setTimeout(function() {
+			    window.close();
+					// $('#modal1').closeModal()
+			    }, 3000);
+			    }
+
+			    window.onload = closeWindow();
+				}); //document 끝
     </script>
 
 	</body>

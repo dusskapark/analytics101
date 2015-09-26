@@ -1,4 +1,4 @@
-var response_kakao = function (json) {
+var shareKakao = function (json) {
   var video_list = json.content;
     video_list.forEach(function(v, i) {
         var item = v;
@@ -28,11 +28,18 @@ var response_kakao = function (json) {
       });
     }
 
+    var shareStory = function() {
+      Kakao.Story.share({
+        url: location.href
+      });
+    };
+
+
     // 페이스북
     var windowHeight = 360;
     var windowWidth = 640;
 
-    var response_facebook = function (json){
+    var shareFacebook = function (json){
       var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
@@ -80,7 +87,12 @@ var response_kakao = function (json) {
           });
         }
 
-var shareTwitter = function() {
-  var twitterUrl = "https://twitter.com/intent/tweet?url=" + location.href;
-  window.open(twitterUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
-};
+var shareTwitter = function (json){
+  var video_list = json.content;
+    video_list.forEach(function(v, i) {
+        var item = v;
+        var twitterUrl = "https://twitter.com/intent/tweet?url=http://vikicast.com/index.html?id=" + item.id;
+        ga('send', 'event', "sendTweetshareRequest", item.id );
+        window.open(twitterUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
+      });
+    }
