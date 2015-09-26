@@ -40,53 +40,53 @@ var response_kakao = function (json) {
             console.log(REDIRECT_URL);
 
             //  페이스북 로그인 시도
-         FB.ui(
-                {
-                   method: 'feed',
-                   name: 'VIKICAST x ' + item.name,
-                   redirect_uri: "http://vikicast.com/responseSuccess.html",
-                   picture: "http://vikicast.com/res/facebook/Untitled05.png",
-                   caption: 'category: ' + item.category ,
-                   description: item.description ,
-                   message: '당신만 못 봤던 그 영상, 여기 다 있다!',
-                   link: REDIRECT_URL
-                 },
-                 function(response) {
-                   if (response && response.post_id) {
-                     console.log('Post was published.');
-                     ga('send', 'event', "sendFBshareSuccess", item.id );
+        //  FB.ui(
+        //         {
+        //            method: 'feed',
+        //            name: 'VIKICAST x ' + item.name,
+        //           //  redirect_uri: "http://vikicast.com/responseSuccess.html",
+        //            picture: "http://vikicast.com/res/facebook/Untitled05.png",
+        //            caption: 'category: ' + item.category ,
+        //            description: item.description ,
+        //            message: '당신만 못 봤던 그 영상, 여기 다 있다!',
+        //            link: REDIRECT_URL
+        //          },
+        //          function(response) {
+        //            if (response && response.post_id) {
+        //              console.log('Post was published.');
+        //              ga('send', 'event', "sendFBshareSuccess", item.id );
+         //
+        //              if(window.location.search.indexOf('post_id')==1) window.close();
+         //
+        //            } else {
+        //              console.log('Post was not published.');
+        //              ga('send', 'event', "sendFBshareFail", item.id );
+         //
+        //            }
+        //          }
+        //        );
 
-                     if(window.location.search.indexOf('post_id')==1) window.close();
-
-                   } else {
-                     console.log('Post was not published.');
-                     ga('send', 'event', "sendFBshareFail", item.id );
-
-                   }
-                 }
-               );
-
-            // var facebookUrl = "https://www.facebook.com/dialog/feed?"+
-            // "app_id=1463571523951964" +
-            // "&display=touch" +
-            // "&utm_source=facebookLink&utm_medium=social" +
+            var facebookUrl = "https://www.facebook.com/dialog/feed?"+
+            "app_id=1463571523951964" +
+            "&display=touch" +
+            "&utm_source=facebookLink&utm_medium=social" +
             // "&action_type=og.like"+
             // "$description=" + item.description +
-            // "&name=VIKICAST x " + item.name +
-            // "&caption=category: " + item.category +
-            // "&pictire=" + item.pictire +
-            // "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            "&name=VIKICAST x " + item.name +
+            "&caption=category: " + item.category +
+            // "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
 
-            // "&href=" + REDIRECT_URL;
+            "&link=" + REDIRECT_URL;
             // var $fbiFrame = "<iframe src='" + facebookUrl +
             // "' name='facebook' frameborder='0' scrolling='yes'></iframe>";
 
             // $('.modal-content').append($fbiFrame);
             // $('#modal1').openModal();
 
-            // ga('send', 'event', "sendFBshareRequest", item.id );
-            // window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
+            ga('send', 'event', "sendFBshareRequest", item.id );
+            window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
         }
 
