@@ -155,8 +155,8 @@ $(document).ready(function() {
                     "</span>"+
                         "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                         "</video>"+
-                        "<a class='waves-effect waves-light btn pink ' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
-                        "<a class='waves-effect waves-light btn pink ' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
+                        "<a class='waves-effect waves-light btn pink ' onclick='callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
+                        "<a class='waves-effect waves-light btn pink ' onclick='callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
 
                         "<div class='adsense card'>" +
                           "<script async src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>" +
@@ -181,8 +181,8 @@ $(document).ready(function() {
                         //     "</ul>" +
                     "</div>" +
                     "<div class='card-action share right-align'>" +
-                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_facebook);'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;

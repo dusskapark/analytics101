@@ -68,13 +68,13 @@ var response_kakao = function (json) {
 
             var facebookUrl = "https://www.facebook.com/dialog/feed?"+
             "app_id=1463571523951964" +
-            "&display=touch" +
+            "&display=popup" +
             "&utm_source=facebookLink&utm_medium=social" +
             // "&action_type=og.like"+
             // "$description=" + item.description +
             "&name=VIKICAST x " + item.name +
             "&caption=category: " + item.category +
-            // "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+            "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
             "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             // "&action_properties={'object':'"+ REDIRECT_URL +"'}"
 
