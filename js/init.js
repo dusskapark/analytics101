@@ -180,7 +180,7 @@ $(document).ready(function() {
                             "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
                           "</div>" +
                     "</div>" +
-                    "<div class='card-action share right-align'>" +
+                    "<div class='card-action truncate'>" +
                       "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' > <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
                       "<a href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                       "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유</a>" +
@@ -197,8 +197,6 @@ $(document).ready(function() {
         });
 
 
-        // $("#FeviCard").append(addMore);
-        // $('.grid').isotope('insert', $(addMore));
 
 
         //page 및 각종 앨리먼트 정보를 표시한다.
@@ -214,22 +212,21 @@ $(document).ready(function() {
 
         $('.grid').imagesLoaded().done(function() {
 
-          var adCard = "<div class='col s12 m12 l3 grid-item adsense>" +
-          "<div class='card large'>" +
-          "<div class='card-content'>" +
-          "<!-- FeviResponsive-02 -->"
-            "<ins class='adsbygoogle' " +
-                 "style='display:block' " +
-                 "data-ad-client='ca-pub-0416537700421851' " +
-                 "data-ad-slot='5076161358' " +
-                 "data-ad-format='auto'></ins> " +
-            "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-          "</div>" +
-          "</div>" +
-          "</div>";
-
-          $("#FeviCard").prepend(adCard);
-
+          // var adCard = "<div class='col s12 m12 l3 grid-item adsense>" +
+          // "<div class='card large'>" +
+          // "<div class='card-content'>" +
+          // "<!-- FeviResponsive-02 -->"
+          //   "<ins class='adsbygoogle' " +
+          //        "style='display:block' " +
+          //        "data-ad-client='ca-pub-0416537700421851' " +
+          //        "data-ad-slot='5076161358' " +
+          //        "data-ad-format='auto'></ins> " +
+          //   "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+          // "</div>" +
+          // "</div>" +
+          // "</div>";
+          //
+          // $("#FeviCard").prepend(adCard);
           $('#modal2').closeModal();
           $( "#FeviCard" ).css( "visibility", "visible" );
           $('.grid').isotope();
@@ -241,6 +238,19 @@ $(document).ready(function() {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
+
+            // facebook 공유 기능
+            var facebookUrl = "https://www.facebook.com/dialog/feed?"+
+            "app_id=1463571523951964" +
+            "&display=touch" +
+            "&name=VIKICAST x " + item.name +
+            "&caption=category:" + item.category +
+            "&description=너만 못본 그 영상! 여기 다 있다~" +
+            "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+            "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
+
+
             // 카드를 구성한다
             var card = "<div class='grid-item " + item.category + "'>" +
                     "<div class='container'>" +
@@ -276,11 +286,11 @@ $(document).ready(function() {
                             "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
                           "</li>"+
                         "</ul>" +
-                        "<div class='card-action share right-align'>" +
-                          "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'><i class='fa fa-comment circle white-text'></i> 카톡 공유</a>  " +
-                          "<a class='waves-effect waves-light btn pink' href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);'><i class='fa fa-facebook-square circle white-text'></i> 페북 공유</a>" +
-                        "</div>" +
-
+                        "<div class='right-align'>"+
+                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
+                            "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
+                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
+                        "</div>"+
                     "</div>"+
                   "</div>" ;
 
