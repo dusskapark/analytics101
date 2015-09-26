@@ -194,8 +194,8 @@ $(document).ready(function() {
                         //     "</ul>" +
                     "</div>" +
                     "<div class='card-action share right-align'>" +
-                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a onclick='callApi(url+\"?id=\"+"+ item.id +", response_facebook);' target='_blank'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_kakao);'> <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", response_facebook);' target='_blank'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
                     "</div>" +
 
                   "</div>" ;
