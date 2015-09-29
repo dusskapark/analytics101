@@ -123,7 +123,8 @@ $(document).ready(function() {
     document.onkeydown = function(evt) {
     evt = evt || window.event;
     if (evt.keyCode == 27) {
-        contractCard();
+      $(document).find(".expanded").find('div.card-reveal > span').trigger('click');
+      contractCard();
     }
   };
 
