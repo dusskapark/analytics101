@@ -25,6 +25,21 @@ $(document).ready(function() {
     });
   });
 
+  // parse.com/
+  Parse.initialize("TBRz2H449VzYCmZoL5sRuDyTjtmQ9zZnZaNz1elq", "5EjKZB05EG5St24i9FINXbrPImtuNSgskCBkI7zp");
+
+  var TestObject = Parse.Object.extend("TestObject");
+  var testObject = new TestObject();
+    testObject.save({foo: "bar"}, {
+    success: function(object) {
+      $(".success").show();
+    },
+    error: function(model, error) {
+      $(".error").show();
+    }
+  });
+
+
   //URL 파싱하기
   var $search = function() {
     var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
