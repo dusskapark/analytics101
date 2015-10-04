@@ -99,6 +99,12 @@ $(document).ready(function() {
       window.location.hash = $(this).parents('div[id]').attr('id');
       $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass("expanded s12 m12 l12");
 
+      // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
+      var virtualPvByID = "index.html?id=" + window.location.hash;
+      console.log(virtualPvByID);
+      ga('send', 'pageview', virtualPvByID);
+
+
       // 클릭시 비디오가 플레이 된다.
       // 모바일에서는 지극히 느려져서.. 삭제
         // var $play = $(this).parents('.card').children('div.card-reveal').children('video').get(0);
