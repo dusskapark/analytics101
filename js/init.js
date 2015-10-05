@@ -12,6 +12,7 @@ $(document).ready(function() {
               gutter : 10
           }
       });
+
       //
       // var openAt = new Date,
       //     uagentLow = navigator.userAgent.toLocaleLowerCase(),
@@ -102,71 +103,38 @@ $(document).ready(function() {
       var URLis = "?id=" + window.location.hash.substr(1);
       $("#FeviCard").empty();
 
-      $('#modal2').openModal({dismissible: false});
+      // $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
-    //   console.log(window.location.search);
-    //
     } else {
-      $('#modal2').openModal({dismissible: false});
+      // $('#modal2').openModal({dismissible: false});
       callApi( url + window.location.search, response_json );
     }
 
-    // addMore 버튼을 누르면 카드를 10개 더 추가한다.
-    var addMoreCard = function( e ){
-      var pageNm = $("#currentPage").text();
-      var pageNmInt = Number(pageNm) + 1;
-      var nextPageUrl = "";
-      if ($search.page == undefined) {
-        var nextPageUrl = "?page=" + pageNmInt;
-      }else if ($search.category !== undefined) {
-        var nextPageUrl = "?category=" + $search.category + "&page=" + pageNmInt;
-        console.log(nextPageUrl);
-
-      } else {
-        var nextPageUrl = "?page=" + pageNmInt;
-      }
-      $("#addMore").remove();
-      $('#modal2').openModal({dismissible: false});
-      callApi(url + nextPageUrl, response_json);
-    };
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      window.location.hash = $(this).parents('div[id]').attr('id');
-      $(this).parents(".grid-item").removeClass("grid-item s12 m12 l3").addClass("expanded s12 m12 l12");
+      if ($(this).parents('.small') !== "" ) {
+        $(this).parents(".small").removeClass(".small");
+        window.location.hash = $(this).parents('div[id]').attr('id');
+        $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
+
+      } else {
+        window.location.hash = $(this).parents('div[id]').attr('id');
+        $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
+
+      }
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
-      var virtualPvByID = "index.html?id=" + window.location.hash;
-      console.log(virtualPvByID);
+      var virtualPvByID = "index.html?id=" + window.location.hash.substr(1);
       ga('send', 'pageview', virtualPvByID);
-
-
-      // 클릭시 비디오가 플레이 된다.
-      // 모바일에서는 지극히 느려져서.. 삭제
-        // var $play = $(this).parents('.card').children('div.card-reveal').children('video').get(0);
-        // $play.play();
-
       $('.grid').isotope();
     });
 
     // 닫기를 누르면 카드가 다시 작아진다.
     var contractCard = function() {
       //비디오는 플레이가 중지된다.
-      var $pause = $(document).find('.expanded').find('video').get(0);
-      $pause.pause();
-
-      $(document).find(".expanded").removeClass("expanded s12 m12 l12").addClass("grid-item s12 m12 l3");
-      // 카드의 해쉬 값을 삭제한다.
-      // window.location.hash = ""
-      // /* refrence 부분 클릭시 이동하는 높이값 수정 */
-      //   var tr;
-      //   setTimeout(function(){
-      //     tr=$('body').scrollTop()-100;
-      //   },100);
-      //
-      //   setTimeout(function(){
-      //     $('body').scrollTop(tr);
-      //   },200);
+      $(document).find('.expanded').find('video').get(0).pause();
+      $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
 
       // 카드를 재 정렬한다.
       $('.grid').isotope();
@@ -180,72 +148,77 @@ $(document).ready(function() {
     document.onkeydown = function(evt) {
     evt = evt || window.event;
     if (evt.keyCode == 27) {
+      // 카드가 다시 작아진다.
       $(document).find(".expanded").find('div.card-reveal > span').trigger('click');
-      contractCard();
+
     }
   };
 
     function response_json(json) {
-        var video_list = json.content;
-        var addMore = "<div id='addMore' class='col s12 m12 l3 grid-item waves-effect waves-block waves-light'>" +
-          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-          "</div>"+
-        "</div>";
 
-        $( "#FeviCard" ).css( "visibility", "hidden" );
+      var video_list = json.content;
 
-        video_list.forEach(function(v, i) {
-            var item = v;
+      // $( "#FeviCard" ).css( "visibility", "hidden" );
+      video_list.forEach(function(v, i) {
+        var item = v;
 
-            // facebook 공유 기능
-            var facebookUrl = "https://www.facebook.com/dialog/feed?"+
-            "app_id=1463571523951964" +
-            "&display=touch" +
-            "&name=VIKICAST x " + item.name +
-            "&caption=category:" + item.category +
-            "&description=너만 못본 그 영상! 여기 다 있다~" +
-            "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
-            "&redirect_uri=http://vikicast.com/responseSuccess.html" +
-            "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
+        // width 계산하기
+        // s12
+        if ($(window).width() <= 584 ) {
+          var cardMaxHeight = item.height * $(window).width() / item.width;
+        } else {
+          var cardMaxHeight = item.height * 278 / item.width;
+        }
 
-            // 카드를 구성한다
-            var card = "<div class='col s12 m12 l3 grid-item " + item.category + "' id='" + item.id +  "''>" +
-                "<div class='card'>" +
-                    "<div class='card-image waves-effect waves-block waves-light'>" +
-                            "<img src=' " + item.picture + " ' class='activator' alt='posterImage'>" +
-                            "<span class='card-title'>" + item.category +
-                            // "<i class='fa fa-comment circle yellow darken-1 '></i><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
-                    "</div>" +
-                    "<div class='card-content'>" +
-                        "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
-                            "<p class='activator' alt='description'>" + item.description + "</p>" +
-                    "</div>" +
-                    "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
-                        "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
-                        "</video>"+
-                        "<div class='right-align'>"+
-                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
-                            "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
-                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
-                        "</div>"+
-                          "<div class='adsense'>" +
-                            "<ins class='adsbygoogle' " +
-                                 "style='display:block' " +
-                                 "data-ad-client='ca-pub-0416537700421851' " +
-                                 "data-ad-slot='3599428156' " +
-                                 "data-ad-format='auto'></ins> " +
-                            "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-                          "</div>" +
-                    "</div>" +
-                    "<div class='card-action truncate'>" +
-                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' > <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
-                      "<a href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
-                      "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유</a>" +
-                      // "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareStory);'><img src='https://dev.kakao.com/assets/img/about/buttons/kakaostory/brand_assets/digital/story_symbol.png' class='circle'></a>"
-                    "</div>" +
 
-                  "</div>" ;
+        // facebook 공유 기능
+        var facebookUrl = "https://www.facebook.com/dialog/feed?"+
+        "app_id=1463571523951964" +
+        "&display=touch" +
+        "&name=VIKICAST x " + item.name +
+        "&caption=category:" + item.category +
+        "&description=너만 못본 그 영상! 여기 다 있다~" +
+        "&pictire=http://vikicast.com/res/facebook/Untitled05.png" +
+        "&redirect_uri=http://vikicast.com/responseSuccess.html" +
+        "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
+
+        // 카드를 구성한다
+        var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
+            "<div class='card small '>" +
+                "<div class='card-image waves-effect waves-block waves-light'>" +
+                        "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
+                        "<span class='card-title'>" + item.category + "</span>" +
+                "</div>" +
+                "<div class='card-content'>" +
+                    "<span class='card-title activator grey-text text-darken-4 truncate' alt='titleText'><img src='" + item.profile_image + "' class='circle smallcircle'> " + item.name + "</span>" +
+                        "<p class='activator truncate' alt='description'>" + item.description + "</p>" +
+                "</div>" +
+                "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
+                  "<div class='container'>" +
+                    "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
+                    "</video>"+
+                    "<p class='activator' alt='description'>" + item.description + "</p>" +
+                  "</div>" +
+                  "<div class='right-align'>"+
+                      "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
+                      "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
+                      // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
+                  "</div>"+
+                  "<div class='card-content adsense center-align'>"+
+                    "<ins class='adsbygoogle' " +
+                       "style='inline-block;width:728px;height:90px'" +
+                       "data-ad-client='ca-pub-0416537700421851' " +
+                       "data-ad-slot='3595395973'></ins> " +
+                  "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
+                  "</div>"+
+                "</div>" +
+                "<div class='card-action truncate'>" +
+                  "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' > <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
+                  "<a href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유</a>" +
+                  // "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유</a>" +
+                  // "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareStory);'><img src='https://dev.kakao.com/assets/img/about/buttons/kakaostory/brand_assets/digital/story_symbol.png' class='circle'></a>"
+                "</div>" +
+              "</div>" ;
 
 
             //카드를 화면에 표시한다.
@@ -253,9 +226,6 @@ $(document).ready(function() {
             $('.grid').isotope();
 
         });
-
-
-
 
         //page 및 각종 앨리먼트 정보를 표시한다.
         $("#totalElements").text(json.totalElements);
@@ -265,30 +235,45 @@ $(document).ready(function() {
         $("#firstPage").text(json.first);
         $("#lastPage").text(json.last);
 
+        // 구글 광고
+        var googleAdCard = "<div class='col s12 m4 l3 grid-item'>" +
+        "<div class='card pink lighten-5 white-text'>" +
+        "<div class='card-content'>" +
+          "<span class='card-title'>Google 광고</span>"+
+          "<ins class='adsbygoogle' " +
+               "style='display:block' " +
+               "data-ad-client='ca-pub-0416537700421851' " +
+               "data-ad-slot='8427653357' " +
+               "data-ad-format='auto'></ins> " +
+          "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
 
-
+        // 광고 반복 횟수를 구한다.
+        var adNum = (json.number + 1) * 20 / 5;
+        for (var i = 1; i <= adNum; i++) {
+          var v = i * 5;
+          $('#FeviCard').children().eq(v).append(googleAdCard);
+        }
 
         $('.grid').imagesLoaded().done(function() {
-
-          // var adCard = "<div class='col s12 m12 l3 grid-item adsense>" +
-          // "<div class='card large'>" +
-          // "<div class='card-content'>" +
-          // "<!-- FeviResponsive-02 -->"
-          //   "<ins class='adsbygoogle' " +
-          //        "style='display:block' " +
-          //        "data-ad-client='ca-pub-0416537700421851' " +
-          //        "data-ad-slot='5076161358' " +
-          //        "data-ad-format='auto'></ins> " +
-          //   "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-          // "</div>" +
-          // "</div>" +
-          // "</div>";
-          //
-          // $("#FeviCard").prepend(adCard);
-          $('#modal2').closeModal();
-          $( "#FeviCard" ).css( "visibility", "visible" );
+          // $('#modal2').closeModal();
+          // $( "#FeviCard" ).css( "visibility", "visible" );
+          $('.small').find('p').removeClass('truncate');
+          $('.small').removeClass('small');
           $('.grid').isotope();
         });
+
+        // var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        //
+        // $("#FeviCard").children().last().append(addMore);
+
+
     };
 
     function response_id (json) {
@@ -296,7 +281,6 @@ $(document).ready(function() {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
-
             // facebook 공유 기능
             var facebookUrl = "https://www.facebook.com/dialog/feed?"+
             "app_id=1463571523951964" +
@@ -308,11 +292,10 @@ $(document).ready(function() {
             "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
 
-
             // 카드를 구성한다
-            var card = "<div class='grid-item " + item.category + "'>" +
+            var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
                     "<div class='container'>" +
-                        "<video id='" + item.id + "' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "<video class='center-align' id='" + item.id + "' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
@@ -322,51 +305,36 @@ $(document).ready(function() {
                               "<span class='title'>" + item.name + "</span>" +
                               "<p>"+ item.description +"</p>"+
                           "</li>"+
-                          // "<li class='collection-item share'>"+
-                          // "<i class='material-icons circle pink'>share</i>" +
-                          // "<span class='title pink-text'><strong>공유하기</strong></span>:  "+
-                          // "<a data-class='kakao' data-id='" + item.id + "'>카톡 공유 <i class='fa fa-comment circle brown-text'></i> </a>  " +
-                          // "<a data-class='facebook' data-id='" + item.id + "'>페북 공유 <i class='fa fa-facebook-square circle indigo-text'></i> </a>" +
-                          // "</span>" +
-                          // "</li>"+
-                          // "<li class='collection-item avatar ' data-id='"+ item.id + "'><img src='https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small_ov.png' class='circle'>" +
-                          //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                          //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                          //     "<a id='kakao-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons pink-text'>share</i></a>"+
-                          //     "</li>" +
-                          //     "<li class='collection-item avatar' data-id='"+ item.id + "'><i class='fa fa-facebook-square circle indigo darken-4'></i>" +
-                          //     "<span class='title truncate'>Vikicast x " + item.name + "</span>" +
-                          //     "<p class='truncate'>출처: <a href='http://facebook.com/"+ item.id +"' target='_blank'>" + item.name + "</a></br>최종 수정일: "+ item.created_time +"</p>"+
-                          //     "<a id='fb-link-btn' href='javascript:;' class='secondary-content brown-text' data-id='"+ item.id + "'><i class='material-icons'>share</i></a>"+
-                          //     "</li>"+
                           "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
                             "<span class='title'>더 많은 동영상 보기</span>" +
                             "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
                           "</li>"+
+                          "<li class='collection-item'>" +
+                            "<div class='right-align'>"+
+                                "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
+                                "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
+                                // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
+                            "</div>"+
+                          "</li>" +
                         "</ul>" +
-                        "<div class='right-align'>"+
-                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
-                            "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
-                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
-                        "</div>"+
+                      "</div>" +
                     "</div>"+
+
                   "</div>" ;
 
-            // 페이스북 메타 데이터 변경
-            $("meta[property=og\\:url]").attr("content", location.href);
-            // $("meta[property=og\\:type]").attr("content", item.category);
-            $("meta[property=og\\:title]").attr("content", "[vikicast x" + item.name + "]");
-            $("meta[property=og\\:description]").attr("content", item.description);
-            $("meta[property=og\\:image]").attr("content", item.picture);
-
             //카드를 화면에 표시한다.
+
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
-            $('#modal2').closeModal();
+            // $('#modal2').closeModal();
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
-            $("#video_list").remove();
+            $("footer > div.container").remove();
+
+
+
+
 
 
             // ID 별로 파라메터를 따로 설정을 한다.
@@ -381,6 +349,10 @@ $(document).ready(function() {
               ga('send', 'event', "video played", item.id);
             }
         });
+        $('.grid').imagesLoaded().done(function() {
+          $('.grid').isotope();
+        });
+
       }
 
 
@@ -415,11 +387,36 @@ $(document).ready(function() {
 
     });
 
+    // addMore 버튼을 누르면 카드를 10개 더 추가한다.
+    addMoreCard = function( e ){
+      var pageNm = $("#currentPage").text();
+      var pageNmInt = Number(pageNm) + 1;
+      var nextPageUrl = "";
+      if ($search.page == undefined) {
+        var nextPageUrl = "?page=" + pageNmInt;
+      }else if ($search.category !== undefined) {
+        var nextPageUrl = "?category=" + $search.category + "&page=" + pageNmInt;
+        console.log(nextPageUrl);
+
+      } else {
+        var nextPageUrl = "?page=" + pageNmInt;
+      }
+      $("#addMore").remove();
+      // $('#modal2').openModal({dismissible: false});
+      callApi(url + nextPageUrl, response_json);
+    };
+
     // addmore 버튼 작은 것은 여기서 통계를 잡는다.
     $("#addMoreCircle").click(function(){
       addMoreCard();
-      ga('send', 'event', "Add More", "click-Floating" );
+      ga('send', 'event', 'Add More', 'click-Floating' );
     });
+
+    // 광고 카드까지 스크롤을 하면 자동으로 카드를 추가로 불러온다.
+    // var options = [
+    //   {selector: '.adsense', offset: 200, callback: "{addMoreCard(),console.log('sucess'), ga('send', 'event', 'Add More', 'click-Floating' )}" },
+    // ];
+    // Materialize.scrollFire(options);
 
 
     // 하단 fix 버튼 클릭시 움직임

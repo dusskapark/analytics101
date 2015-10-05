@@ -134,3 +134,7 @@
 	z-index: 999;
 	overflow-y: scroll;
 }
+
+#hidden {
+  display: none;
+}
