@@ -253,3 +253,9 @@ jQuery(document).ready(function() {
     });
 
 });
+<<<<<<< HEAD
+
+  $(document).ready(function(){
+  });
+=======
+>>>>>>> gh-pages
