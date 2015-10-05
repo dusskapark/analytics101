@@ -258,8 +258,6 @@ jQuery( ".email-form" ).submit(function( event ) {
                                         "created: " + item.created_time + "</p></li></ul>" +
                                 "</div>" +
                               "</div>";
-<<<<<<< HEAD
-=======
 
 //클릭하면 해당 data-id 가져오기
 															// var category = $(e.target).attr("class");
@@ -381,4 +379,94 @@ jQuery( ".email-form" ).submit(function( event ) {
 			//     }
 			//   }
 		// });
->>>>>>> gh-pages
+
+		function response_share(json) {
+
+      var video_list = json.content;
+        video_list.forEach(function(v, i) {
+            var item = v;
+            // 모달 카드를 구성한다
+            var shareLink = "http://fevi.metadata.co.kr#" + item.id;
+            $('.sendkakao').parents().find('h4').text(shareLink);
+            $('.sendkakao').children('p').text('#fevi ' + item.description);
+            $('.sendkakao').click(function() {
+              // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+              Kakao.Link.sendTalkLink({
+                image: {
+                  src: item.picture,
+                  width: item.width,
+                  height: item.height
+                },
+                label: item.description,
+                webButton: {
+                  text: $('FEVI +' + item.name),
+                  url: $(shareLink + "?utm_source=kakaoLink&utm_medium=social") // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                },
+                webLink : {
+                  text: $('출처: '+ item.name),
+                  url: $('http://facebook.com/' + item.id)
+                }
+              });
+            });
+          });
+        };
+
+				// Google spreadsheets api 카드 받아오기
+	      var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
+
+	      // 공지사항 받아오기
+	      // callApi(GSSurl + "&sq=class=notice", additionalAPI );
+	      callApi(GSSurl, additionalAPI );
+
+	      function additionalAPI (data){
+	        var data = data.feed.entry;
+	        var splitArr = [ "data", "class" ];
+	        var result = "";
+	        data.forEach( function( v, j ) {
+
+	          splitArr.forEach( function( val, i ) {
+	           //  if( ( i + 1 ) < v.length ) {
+	           //     result = data.substring( data.indexOf( v + ": " ), data.indexOf( ", " + splitArr[ i + 1 ] ) ).substr( v.length );
+	           //  } else {
+	           //    result =data.substring( data.indexOf( v + ": " ), data.length ).substr( v.length );
+	           //  }
+
+	            result = v.content.$t.substring( v.content.$t.indexOf( val + ": " ), ( ( i + 1 ) < val.length ) ? v.content.$t.indexOf( ", " + splitArr[ i + 1 ] ) : v.content.$t.length ).substr( val.length );
+
+	         } );
+	       });
+	      }
+				$.ajax({
+          type : "GET",
+          url : url+"?id="+data,
+          dataType : "json",
+          async: false,
+          success: function(json) {
+            var video_list = json.content;
+            video_list.forEach(function(v, i) {
+              var item = v;
+              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+                // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+                Kakao.Link.sendTalkLink({
+                  label: item.description,
+                  image: {
+                    src: item.picture,
+                    width: item.width,
+                    height: item.height
+                  },
+                  webButton: {
+                    text: "vikicast x " + item.name,
+                    url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                  },
+                  fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
+                  // webLink : {
+                  //   text: item.name,
+                  //   url: 'http://facebook.com/' + item.id
+                  // }
+                });
+                // Kakao.Link.cleanup();
+                // 카카오 공유를 GA로 추적
+                ga('send', 'event', "shareLink", "sendkakao", item.id );
+              });
+            }
+        })

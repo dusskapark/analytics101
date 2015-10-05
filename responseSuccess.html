@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="msapplication-tap-highlight" content="no">
+
+		<!-- 타이틀 + 영상제목 -->
+		<title>Vikicast | 당신만 못본 동영상 여기 다 있다.</title>
+
+		<!-- Favicons-->
+		<!-- <link rel="shortcut icon" href="./images/favicon/apple-touch-icon-152x152.png" type="image/png" />
+		<link rel="apple-touch-icon-precomposed" href="./images/favicon/apple-touch-icon-152.png">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+		<meta name="msapplication-TileImage" content="./images/favicon/mstile-144.png">
+		<link rel="icon" href="./images/favicon/favicon-32.png" sizes="32x32"> -->
+
+		<!-- CSS  -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	</head>
+
+	<body>
+		<!--카드 시작 -->
+		<div class="container">
+			<div class="row">
+				<div class="col s12 m12">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+							<span class="card-title">VIKICAST 님이 여러분의 공유를 좋아합니다. :)</span>
+							<p>공유 감사합니다! 세상에 재미있는 일이 많이 퍼져나가기를!</p>
+						</div>
+						<div class="card-action">
+							<a href="javascript:closeWindow();">닫기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!--  Scripts-->
+		<script>
+						(function(i, s, o, g, r, a, m) {
+								i['GoogleAnalyticsObject'] = r;
+								i[r] = i[r] ||
+								function() {
+										(i[r].q = i[r].q || []).push(arguments)
+								}, i[r].l = 1 * new Date();
+								a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+								a.async = 1;
+								a.src = g;
+								m.parentNode.insertBefore(a, m)
+						})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+						ga('create', 'UA-40374059-5', 'auto');
+						ga('send', 'pageview');
+		</script>
+
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.1/isotope.pkgd.min.js"></script> -->
+
+		<!--카드 움직임 -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script> -->
+		<!-- 소셜 SDK -->
+		<!-- <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script> -->
+		<!-- framework -->
+		<script src="./js/materialize.js"></script>
+		<!-- <script src="./js/sns.js"></script> -->
+		<!-- <script src="./js/init.js"></script> -->
+
+		<script type="text/javascript">
+		$(document).ready(function() {
+
+			//URL 파싱하기
+		  var $search = function() {
+		    var s = window.location.search.substr(1),p = s.split(/\&/),l = p.length,kv,r = {};
+		    if (l === 0) {return false;}
+		    while (l--) {
+		      kv = p[l].split(/\=/);
+		      r[kv[0]] = decodeURIComponent(kv[1] || '') || true;
+		    }
+		    return r;
+		  }();
+
+			// #ID 포스팅 성공여부에 따라서 GA를 따로 측정한다.
+			if ($search.post_id !== "") {
+				ga('send', 'event', "FBshareSuccess", "http://facebook.com/" + $search.post_id );
+
+			}else {
+				ga('send', 'event', "FBshareFail", window.location.hash );
+
+			}
+
+				// 창을 닫는다
+			 function closeWindow() {
+			    setTimeout(function() {
+			    window.close();
+					// $('#modal1').closeModal()
+			    }, 3000);
+			    }
+
+			    window.onload = closeWindow();
+				}); //document 끝
+    </script>
+
+	</body>
+</html>
