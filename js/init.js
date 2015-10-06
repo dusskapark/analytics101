@@ -13,7 +13,7 @@ $(document).ready(function() {
           }
       });
 
-      //
+      // 연동규격
       // var openAt = new Date,
       //     uagentLow = navigator.userAgent.toLocaleLowerCase(),
       //     chrome25,
@@ -62,19 +62,6 @@ $(document).ready(function() {
     });
   });
 
-  // parse.com/
-  // Parse.initialize("TBRz2H449VzYCmZoL5sRuDyTjtmQ9zZnZaNz1elq", "5EjKZB05EG5St24i9FINXbrPImtuNSgskCBkI7zp");
-  //
-  // var TestObject = Parse.Object.extend("TestObject");
-  // var testObject = new TestObject();
-  //   testObject.save({foo: "bar"}, {
-  //   success: function(object) {
-  //     $(".success").show();
-  //   },
-  //   error: function(model, error) {
-  //     $(".error").show();
-  //   }
-  // });
 
 
   //URL 파싱하기
@@ -103,10 +90,10 @@ $(document).ready(function() {
       var URLis = "?id=" + window.location.hash.substr(1);
       $("#FeviCard").empty();
 
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
     } else {
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi( url + window.location.search, response_json );
     }
 
@@ -158,7 +145,7 @@ $(document).ready(function() {
 
       var video_list = json.content;
 
-      // $( "#FeviCard" ).css( "visibility", "hidden" );
+      $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
 
@@ -184,7 +171,7 @@ $(document).ready(function() {
 
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
-            "<div class='card small '>" +
+            "<div class='card'>" +
                 "<div class='card-image waves-effect waves-block waves-light'>" +
                         "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
                         "<span class='card-title'>" + item.category + "</span>" +
@@ -258,20 +245,20 @@ $(document).ready(function() {
         }
 
         $('.grid').imagesLoaded().done(function() {
-          // $('#modal2').closeModal();
-          // $( "#FeviCard" ).css( "visibility", "visible" );
-          $('.small').find('p').removeClass('truncate');
-          $('.small').removeClass('small');
+          $('#modal2').closeModal();
+          $( "#FeviCard" ).css( "visibility", "visible" );
+          // $('.small').find('p').removeClass('truncate');
+          // $('.small').removeClass('small');
           $('.grid').isotope();
         });
 
-        // var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
-        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-        //   "</div>"+
-        // "</div>";
-        //
-        // $("#FeviCard").children().last().append(addMore);
+        var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
+          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+          "</div>"+
+        "</div>";
+
+        $("#FeviCard").children().last().append(addMore);
 
 
     };
@@ -326,7 +313,7 @@ $(document).ready(function() {
 
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
-            // $('#modal2').closeModal();
+            $('#modal2').closeModal();
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
@@ -402,7 +389,7 @@ $(document).ready(function() {
         var nextPageUrl = "?page=" + pageNmInt;
       }
       $("#addMore").remove();
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi(url + nextPageUrl, response_json);
     };
 
