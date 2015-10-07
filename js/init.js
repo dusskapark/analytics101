@@ -90,10 +90,10 @@ $(document).ready(function() {
       var URLis = "?id=" + window.location.hash.substr(1);
       $("#FeviCard").empty();
 
-      $('#modal2').openModal({dismissible: false});
+      // $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
     } else {
-      $('#modal2').openModal({dismissible: false});
+      // $('#modal2').openModal({dismissible: false});
       callApi( url + window.location.search, response_json );
     }
 
@@ -143,20 +143,14 @@ $(document).ready(function() {
 
     function response_json(json) {
 
+      // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
+      var widthCheck = $('#widthCheck').width()
+
       var video_list = json.content;
 
-      $( "#FeviCard" ).css( "visibility", "hidden" );
+      // $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
-
-        // width 계산하기
-        // s12
-        if ($(window).width() <= 584 ) {
-          var cardMaxHeight = item.height * $(window).width() / item.width;
-        } else {
-          var cardMaxHeight = item.height * 278 / item.width;
-        }
-
 
         // facebook 공유 기능
         var facebookUrl = "https://www.facebook.com/dialog/feed?"+
@@ -173,7 +167,7 @@ $(document).ready(function() {
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
             "<div class='card'>" +
                 "<div class='card-image waves-effect waves-block waves-light'>" +
-                        "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
+                        "<img src=' " + item.picture + " ' class='activator' width ='"+ widthCheck +"' height='"+ item.height +"*"+ widthCheck +"/"+ item.width +"' max-height='500' alt='VIKICAST' >" +
                         "<span class='card-title'>" + item.category + "</span>" +
                 "</div>" +
                 "<div class='card-content'>" +
@@ -192,10 +186,11 @@ $(document).ready(function() {
                       // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
                   "</div>"+
                   "<div class='card-content adsense center-align'>"+
-                    "<ins class='adsbygoogle' " +
-                       "style='inline-block;width:728px;height:90px'" +
+                    "<ins class='adsbygoogle RWD001' " +
+                       "style='display:block'" +
                        "data-ad-client='ca-pub-0416537700421851' " +
-                       "data-ad-slot='3595395973'></ins> " +
+                       "data-ad-slot='4078178953'>"+
+                       "data-ad-format='auto'></ins>" +
                   "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
                   "</div>"+
                 "</div>" +
@@ -210,7 +205,10 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
+            // $('.grid').isotope();
+            // $('#FeviCard').append(card)
             $('.grid').isotope();
+
 
         });
 
@@ -245,20 +243,19 @@ $(document).ready(function() {
         }
 
         $('.grid').imagesLoaded().done(function() {
-          $('#modal2').closeModal();
-          $( "#FeviCard" ).css( "visibility", "visible" );
-          // $('.small').find('p').removeClass('truncate');
+          // $('#modal2').closeModal();
+          // $( "#FeviCard" ).css( "visibility", "visible" );
           // $('.small').removeClass('small');
           $('.grid').isotope();
         });
 
-        var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
-          "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-            "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-          "</div>"+
-        "</div>";
-
-        $("#FeviCard").children().last().append(addMore);
+        // var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        //
+        // $("#FeviCard").children().last().append(addMore);
 
 
     };
@@ -313,7 +310,7 @@ $(document).ready(function() {
 
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
-            $('#modal2').closeModal();
+            // $('#modal2').closeModal();
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
@@ -389,7 +386,7 @@ $(document).ready(function() {
         var nextPageUrl = "?page=" + pageNmInt;
       }
       $("#addMore").remove();
-      $('#modal2').openModal({dismissible: false});
+      // $('#modal2').openModal({dismissible: false});
       callApi(url + nextPageUrl, response_json);
     };
 
