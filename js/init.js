@@ -90,10 +90,10 @@ $(document).ready(function() {
       var URLis = "?id=" + window.location.hash.substr(1);
       $("#FeviCard").empty();
 
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
     } else {
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi( url + window.location.search, response_json );
     }
 
@@ -189,7 +189,7 @@ $(document).ready(function() {
                     "<ins class='adsbygoogle RWD001' " +
                        "style='display:block'" +
                        "data-ad-client='ca-pub-0416537700421851' " +
-                       "data-ad-slot='4078178953'>"+
+                       "data-ad-slot='4078178953'"+
                        "data-ad-format='auto'></ins>" +
                   "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
                   "</div>"+
@@ -243,7 +243,7 @@ $(document).ready(function() {
         }
 
         $('.grid').imagesLoaded().done(function() {
-          // $('#modal2').closeModal();
+          $('#modal2').closeModal();
           // $( "#FeviCard" ).css( "visibility", "visible" );
           // $('.small').removeClass('small');
           $('.grid').isotope();
@@ -310,7 +310,7 @@ $(document).ready(function() {
 
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
-            // $('#modal2').closeModal();
+            $('#modal2').closeModal();
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
@@ -386,7 +386,7 @@ $(document).ready(function() {
         var nextPageUrl = "?page=" + pageNmInt;
       }
       $("#addMore").remove();
-      // $('#modal2').openModal({dismissible: false});
+      $('#modal2').openModal({dismissible: false});
       callApi(url + nextPageUrl, response_json);
     };
 
