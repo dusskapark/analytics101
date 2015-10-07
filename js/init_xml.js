@@ -485,3 +485,20 @@ jQuery( ".email-form" ).submit(function( event ) {
 			  //     $(".error").show();
 			  //   }
 			  // });
+
+				<div class="col s12 m4 l3 grid-item adsense">
+					<div id='widthCheck' class="card">
+						<div class="card-image">
+							<img src="res/facebook/Untitled07.png">
+						</div>
+						<div class="card-content">
+							<!-- FeviResponsive-01 -->
+								<ins class="adsbygoogle RWD001"
+								     style="display:block"
+								     data-ad-client="ca-pub-0416537700421851"
+								     data-ad-slot="5114260156"
+								     data-ad-format="auto"></ins>
+								<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+						</div>
+					</div>
+				</div>

@@ -243,9 +243,9 @@ $(document).ready(function() {
         }
 
         $('.grid').imagesLoaded().done(function() {
+          $('#widthCheck').css('display', 'none')
           $('#modal2').closeModal();
           // $( "#FeviCard" ).css( "visibility", "visible" );
-          // $('.small').removeClass('small');
           $('.grid').isotope();
         });
 
