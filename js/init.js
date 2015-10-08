@@ -100,16 +100,9 @@ $(document).ready(function() {
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      if ($(this).parents('.small') !== "" ) {
-        $(this).parents(".small").removeClass(".small");
-        window.location.hash = $(this).parents('div[id]').attr('id');
-        $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
-
-      } else {
-        window.location.hash = $(this).parents('div[id]').attr('id');
-        $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
-
-      }
+      $(this).parents(".small").removeClass("small");
+      window.location.hash = $(this).parents('div[id]').attr('id');
+      $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
       var virtualPvByID = "index.html?id=" + window.location.hash.substr(1);
@@ -121,7 +114,9 @@ $(document).ready(function() {
     var contractCard = function() {
       //비디오는 플레이가 중지된다.
       $(document).find('.expanded').find('video').get(0).pause();
+      $(document).find('.expanded').children('.card').addClass('small')
       $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
+
 
       // 카드를 재 정렬한다.
       $('.grid').isotope();
@@ -145,6 +140,7 @@ $(document).ready(function() {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
       var widthCheck = $('#widthCheck').width()
+      $('#widthCheck').css('display', 'none')
 
       var video_list = json.content;
 
@@ -166,8 +162,10 @@ $(document).ready(function() {
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
             "<div class='card small'>" +
-                "<div class='card-image waves-effect waves-block waves-light'>" +
-                        "<img src=' " + item.picture + " ' class='activator' width ='"+ widthCheck +"' height='"+ item.height +"*"+ widthCheck +"/"+ item.width +"' max-height='500' alt='VIKICAST' >" +
+                "<div class='card-image waves-effect waves-block waves-light'"+
+                // " width ='"+ widthCheck +"' height='"+ item.height +"*"+ widthCheck +"/"+ item.width +
+                "'>" +
+                        "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
                         "<span class='card-title'>" + item.category + "</span>" +
                 "</div>" +
                 "<div class='card-content'>" +
@@ -214,8 +212,8 @@ $(document).ready(function() {
         //page 및 각종 앨리먼트 정보를 표시한다.
         $("#totalElements").text(json.totalElements);
         $("#totalPages").text(json.totalPages);
-        $("#cardSize").text(json.size);
-        $("#currentPage").text(json.number);
+        $("#cardSize").text(json.size * json.number);
+        $("#currentPage").text(json.number + 1);
         $("#firstPage").text(json.first);
         $("#lastPage").text(json.last);
 
@@ -242,7 +240,6 @@ $(document).ready(function() {
         }
 
         $('.grid').imagesLoaded().done(function() {
-          $('#widthCheck').css('display', 'none')
           // $('#modal2').closeModal();
           // $( "#FeviCard" ).css( "visibility", "visible" );
           $('.grid').isotope();
@@ -373,7 +370,7 @@ $(document).ready(function() {
     // addMore 버튼을 누르면 카드를 10개 더 추가한다.
     addMoreCard = function( e ){
       var pageNm = $("#currentPage").text();
-      var pageNmInt = Number(pageNm) + 1;
+      var pageNmInt = Number(pageNm);
       var nextPageUrl = "";
       if ($search.page == undefined) {
         var nextPageUrl = "?page=" + pageNmInt;
