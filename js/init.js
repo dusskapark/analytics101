@@ -183,13 +183,13 @@ $(document).ready(function() {
                       "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
                       // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
                   "</div>"+
-                  "<div class='card-content adsense center-align'>"+
-                    "<ins class='adsbygoogle' " +
-                       "style='display:inline-block;width:468px;height:60px'" +
-                       "data-ad-client='ca-pub-0416537700421851' " +
-                       "data-ad-slot='6703607615'></ins>" +
-                  "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
-                  "</div>"+
+                  // "<div class='adsense center-align'>"+
+                  //   "<ins class='adsbygoogle' " +
+                  //      "style='display:inline-block;width:468px;height:60px'" +
+                  //      "data-ad-client='ca-pub-0416537700421851' " +
+                  //      "data-ad-slot='6703607615'></ins>" +
+                  // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
+                  // "</div>"+
                 "</div>" +
                 "<div class='card-action truncate'>" +
                   "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' > <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
