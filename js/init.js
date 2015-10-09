@@ -98,23 +98,11 @@ $(document).ready(function() {
     }
 
 
-$('body').on('mouseover', '.card', function( e ){
-  $(this).removeClass('small');
-  $(this).find('p').removeClass('truncate');
-  $('.grid').isotope();
-
-});
-
-$('body').on('mouseout', '.card', function ( e ) {
-  // body...
-  $(this).addClass('small');
-  $(this).find('p').addClass('truncate');
-  $('.grid').isotope();
-
-});
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
+      var heightExpanded = $(this).parents('.card').attr('data-height');
+      $(this).parents('.card').removeClass('small').attr('min-height', heightExpanded);
       $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
       $('.grid').isotope();
 
@@ -129,6 +117,7 @@ $('body').on('mouseout', '.card', function ( e ) {
       //비디오는 플레이가 중지된다.
       $(document).find('.expanded').find('video').get(0).pause();
       window.location.hash = "";
+      $(this).parents('.card').attr('height', 'auto').addClass('small');
       $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
 
 
@@ -158,7 +147,7 @@ $('body').on('mouseout', '.card', function ( e ) {
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
-      // var widthCheck =  $('#widthCheck').width();
+      var widthCheck =  $('#widthCheck').width();
       $('#widthCheck').css('display', 'none')
 
       var video_list = json.content;
@@ -166,7 +155,7 @@ $('body').on('mouseout', '.card', function ( e ) {
       // $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
-        // var heightCheck = item.height * widthCheck / item.width + 173;
+        var heightCheck = item.height * widthCheck / item.width + 173;
 
         // facebook 공유 기능
         var facebookUrl = "https://www.facebook.com/dialog/feed?"+
@@ -181,7 +170,7 @@ $('body').on('mouseout', '.card', function ( e ) {
 
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
-            "<div class='card small'>" +
+            "<div class='card small' data-height='"+ heightCheck +"'>" +
             // "<div class='card' height='"+ heightCheck +"px'>" +
                 "<div class='card-image waves-effect waves-block waves-light'>" +
                         "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
