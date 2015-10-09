@@ -100,15 +100,16 @@ $(document).ready(function() {
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-
       window.location.hash = $(this).parents('div[id]').attr('id');
-      $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
-
       $(this).parents('.card').removeClass('small');
+      $('.grid').isotope();
+      $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
 
 
       // 카드를 재 정렬한다.
-      $('.grid').isotope();
+      $(window.location.hash).imagesLoaded().done(function() {
+        $('.grid').isotope();
+      });
 
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
@@ -294,7 +295,7 @@ $(document).ready(function() {
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
                     "<div class='container'>" +
-                        "<video class='center-align' id='" + item.id + "' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "<video class='center-align' id='" + item.id + "' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
@@ -338,7 +339,6 @@ $(document).ready(function() {
 
             // ID 별로 파라메터를 따로 설정을 한다.
             var virtualPvByParam =  "index.html?id=" + item.id;
-            console.log(virtualPvByParam);
             ga('send', 'pageview', virtualPvByParam);
 
             // 비디오 플레이했는지 여부를 체크한다.
@@ -366,13 +366,11 @@ $(document).ready(function() {
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
       // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
       var virtualPvByID = "index.html?id=" + contentID;
-      console.log(virtualPvByID);
       ga('send', 'pageview', virtualPvByID);
 
       //google-analytics 비디오 플레이를 눌렀는지 체크
       var vid = document.getElementById(contentID);
       var vidID = $(vid).find('video').get(0);
-      // console.log(vidID);
       vidID.onplaying = function(){
         ga('send', 'event', "video played", contentID);
       }
@@ -395,7 +393,6 @@ $(document).ready(function() {
         var nextPageUrl = "?page=" + pageNmInt;
       }else if ($search.category !== undefined) {
         var nextPageUrl = "?category=" + $search.category + "&page=" + pageNmInt;
-        console.log(nextPageUrl);
 
       } else {
         var nextPageUrl = "?page=" + pageNmInt;
