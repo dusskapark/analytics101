@@ -100,30 +100,41 @@ $(document).ready(function() {
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      $(this).parents(".small").removeClass("small");
+
       window.location.hash = $(this).parents('div[id]').attr('id');
       $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
+
+      $(this).parents('.card').removeClass('small');
+
+
+      // 카드를 재 정렬한다.
+      $('.grid').isotope();
+
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
       var virtualPvByID = "index.html?id=" + window.location.hash.substr(1);
       ga('send', 'pageview', virtualPvByID);
-      $('.grid').isotope();
     });
 
     // 닫기를 누르면 카드가 다시 작아진다.
     var contractCard = function() {
       //비디오는 플레이가 중지된다.
       $(document).find('.expanded').find('video').get(0).pause();
-      $(document).find('.expanded').children('.card').addClass('small')
+      window.location.hash = "";
       $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
 
 
       // 카드를 재 정렬한다.
       $('.grid').isotope();
       };
+
     // 카드를 닫기를 누르면 닫힌다.
     $( "body" ).on( "click", "div.card-reveal > span", function( e ) {
       contractCard();
+
+      // 카드를 재 정렬한다.
+      $('.grid').isotope();
+
     });
 
     //esc를 누르면 닫힌다.
@@ -139,7 +150,7 @@ $(document).ready(function() {
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
-      var widthCheck = $('#widthCheck').width()
+      var widthCheck =  $('#widthCheck').width();
       $('#widthCheck').css('display', 'none')
 
       var video_list = json.content;
@@ -147,6 +158,7 @@ $(document).ready(function() {
       // $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
+        var heightCheck = item.height * widthCheck / item.width + 173;
 
         // facebook 공유 기능
         var facebookUrl = "https://www.facebook.com/dialog/feed?"+
@@ -161,10 +173,8 @@ $(document).ready(function() {
 
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
-            "<div class='card small'>" +
-                "<div class='card-image waves-effect waves-block waves-light'"+
-                // " width ='"+ widthCheck +"' height='"+ item.height +"*"+ widthCheck +"/"+ item.width +
-                "'>" +
+            "<div class='card' height='"+ heightCheck +"px'>" +
+                "<div class='card-image waves-effect waves-block waves-light'>" +
                         "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
                         "<span class='card-title'>" + item.category + "</span>" +
                 "</div>" +
@@ -173,11 +183,11 @@ $(document).ready(function() {
                         "<p class='activator truncate' alt='description'>" + item.description + "</p>" +
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
-                  "<div class='container'>" +
+                  // "<div class='container'>" +
                     "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                     "</video>"+
                     "<p class='activator' alt='description'>" + item.description + "</p>" +
-                  "</div>" +
+                  // "</div>" +
                   "<div class='right-align'>"+
                       "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
                       "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
@@ -202,10 +212,9 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
-            // $('.grid').isotope();
-            // $('#FeviCard').append(card)
-            $('.grid').isotope();
 
+            // 카드를 정렬한다.
+            $('.grid').isotope();
 
         });
 
@@ -220,22 +229,31 @@ $(document).ready(function() {
         // 구글 광고
         var googleAdCard = "<div class='col s12 m4 l3 grid-item'>" +
         "<div class='card pink lighten-5 white-text'>" +
-        "<div class='card-content'>" +
-          "<span class='card-title'>Google 광고</span>"+
+        "<div class='card-image'>" +
           "<ins class='adsbygoogle' " +
                "style='display:block' " +
                "data-ad-client='ca-pub-0416537700421851' " +
                "data-ad-slot='8427653357' " +
                "data-ad-format='auto'></ins> " +
           "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-        "</div>" +
+          "<span class='card-title'>Adsense</span>"+
+          "</div>" +
+          // "<div class='card-content'>" +
+          // "<ins class='adsbygoogle' " +
+          //      "style='display:block' " +
+          //      "data-ad-client='ca-pub-0416537700421851' " +
+          //      "data-ad-slot='4078178953' " +
+          //      "data-ad-format='auto'></ins> " +
+          // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+          // "</div>" +
         "</div>" +
         "</div>";
+
 
         // 광고 반복 횟수를 구한다.
         var adNum = (json.number + 1) * 20 / 5;
         for (var i = 1; i <= adNum; i++) {
-          var v = i * 5;
+          var v = i * 5 - 1;
           $('#FeviCard').children().eq(v).append(googleAdCard);
         }
 
