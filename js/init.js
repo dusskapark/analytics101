@@ -117,7 +117,6 @@ $(document).ready(function() {
     var contractCard = function() {
       //비디오는 플레이가 중지된다.
       $(document).find('.expanded').find('video').get(0).pause();
-      window.location.hash = "";
       // $(this).parents('.card').attr('height', '').addClass('small');
       $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
 
@@ -158,6 +157,8 @@ $(document).ready(function() {
       // $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
+
+        // 현재 로드된 스크린에서 카드의 높이를 계산함
         var heightCheck = item.height * widthCheck / item.width + 173;
 
         // facebook 공유 기능
