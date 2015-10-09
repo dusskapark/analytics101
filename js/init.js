@@ -173,7 +173,7 @@ $(document).ready(function() {
 
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
-            "<div class='card'>" +
+            "<div class='card small'>" +
             // "<div class='card' height='"+ heightCheck +"px'>" +
                 "<div class='card-image waves-effect waves-block waves-light'>" +
                         "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
