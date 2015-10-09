@@ -150,7 +150,7 @@ $(document).ready(function() {
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
-      var widthCheck =  $('#widthCheck').width();
+      // var widthCheck =  $('#widthCheck').width();
       $('#widthCheck').css('display', 'none')
 
       var video_list = json.content;
@@ -158,7 +158,7 @@ $(document).ready(function() {
       // $( "#FeviCard" ).css( "visibility", "hidden" );
       video_list.forEach(function(v, i) {
         var item = v;
-        var heightCheck = item.height * widthCheck / item.width + 173;
+        // var heightCheck = item.height * widthCheck / item.width + 173;
 
         // facebook 공유 기능
         var facebookUrl = "https://www.facebook.com/dialog/feed?"+
@@ -173,7 +173,8 @@ $(document).ready(function() {
 
         // 카드를 구성한다
         var card = "<div class='col s12 m4 l3 grid-item " + item.category + "' id='" + item.id +  "'>" +
-            "<div class='card' height='"+ heightCheck +"px'>" +
+            "<div class='card'>" +
+            // "<div class='card' height='"+ heightCheck +"px'>" +
                 "<div class='card-image waves-effect waves-block waves-light'>" +
                         "<img src=' " + item.picture + " ' class='activator' alt='VIKICAST' >" +
                         "<span class='card-title'>" + item.category + "</span>" +
@@ -236,7 +237,7 @@ $(document).ready(function() {
                "data-ad-slot='8427653357' " +
                "data-ad-format='auto'></ins> " +
           "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-          "<span class='card-title'>Adsense</span>"+
+          // "<span class='card-title'>Adsense</span>"+
           "</div>" +
           // "<div class='card-content'>" +
           // "<ins class='adsbygoogle' " +
