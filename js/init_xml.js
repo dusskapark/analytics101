@@ -502,3 +502,19 @@ jQuery( ".email-form" ).submit(function( event ) {
 						</div>
 					</div>
 				</div>
+
+				// // 광고 반복 횟수를 구한다.
+        // var adNum = (json.number + 1) * 20 / 10;
+        // for (var i = 0; i <= adNum; i++) {
+        //   var v = i * 5 - 1;
+        //   $('#FeviCard').children().eq(v).append(googleAdCard);
+        // }
+
+
+				// var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        //
+        // $("#FeviCard").children().last().append(addMore);

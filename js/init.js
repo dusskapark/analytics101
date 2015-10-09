@@ -146,6 +146,30 @@ $(document).ready(function() {
     }
   };
 
+  // 구글 광고
+  var googleAdCard = "<div class='col s12 m12 l12 grid-item adsense'>" +
+  "<div class='card pink lighten-5 white-text'>" +
+  "<div class='card-image'>" +
+    "<ins class='adsbygoogle' " +
+         "style='display:block' " +
+         "data-ad-client='ca-pub-0416537700421851' " +
+         "data-ad-slot='8427653357' " +
+         "data-ad-format='auto'></ins> " +
+    "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+    // "<span class='card-title'>Adsense</span>"+
+    "</div>" +
+    // "<div class='card-content'>" +
+    // "<ins class='adsbygoogle' " +
+    //      "style='display:block' " +
+    //      "data-ad-client='ca-pub-0416537700421851' " +
+    //      "data-ad-slot='4078178953' " +
+    //      "data-ad-format='auto'></ins> " +
+    // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+    // "</div>" +
+  "</div>" +
+  "</div>";
+
+
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
@@ -215,6 +239,7 @@ $(document).ready(function() {
             //카드를 화면에 표시한다.
             $('.grid').isotope('insert', $(card) );
 
+
             // 카드를 정렬한다.
             $('.grid').isotope();
 
@@ -228,52 +253,13 @@ $(document).ready(function() {
         $("#firstPage").text(json.first);
         $("#lastPage").text(json.last);
 
-        // 구글 광고
-        var googleAdCard = "<div class='col s12 m4 l3 grid-item adsense'>" +
-        "<div class='card pink lighten-5 white-text'>" +
-        "<div class='card-image'>" +
-          "<ins class='adsbygoogle' " +
-               "style='display:block' " +
-               "data-ad-client='ca-pub-0416537700421851' " +
-               "data-ad-slot='8427653357' " +
-               "data-ad-format='auto'></ins> " +
-          "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-          // "<span class='card-title'>Adsense</span>"+
-          "</div>" +
-          // "<div class='card-content'>" +
-          // "<ins class='adsbygoogle' " +
-          //      "style='display:block' " +
-          //      "data-ad-client='ca-pub-0416537700421851' " +
-          //      "data-ad-slot='4078178953' " +
-          //      "data-ad-format='auto'></ins> " +
-          // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-          // "</div>" +
-        "</div>" +
-        "</div>";
-
-// 광고카드를 보면
-
-
-        // 광고 반복 횟수를 구한다.
-        var adNum = (json.number + 1) * 20 / 10;
-        for (var i = 0; i <= adNum; i++) {
-          var v = i * 5 - 1;
-          $('#FeviCard').children().eq(v).append(googleAdCard);
-        }
-
         $('.grid').imagesLoaded().done(function() {
           // $('#modal2').closeModal();
           // $( "#FeviCard" ).css( "visibility", "visible" );
+          $('#FeviCard').children().last().append(googleAdCard);
           $('.grid').isotope();
         });
 
-        // var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
-        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
-        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
-        //   "</div>"+
-        // "</div>";
-        //
-        // $("#FeviCard").children().last().append(addMore);
     };
 
     function response_id (json) {
@@ -369,18 +355,11 @@ $(document).ready(function() {
       //google-analytics 비디오 플레이를 눌렀는지 체크
       var vid = document.getElementById(contentID);
       var vidID = $(vid).find('video').get(0);
-      vidID.onplaying = function(){
-        ga('send', 'event', "video played", contentID);
-      }
+        vidID.onplaying = function(){
+          ga('send', 'event', "video played", contentID);
+        }
 
       });
-
-    // addmore 버튼 큰 것을 누르면 여기로 통계를 잡는다.
-    $("body").on("click", "#addMore", function(){
-      addMoreCard();
-      ga('send', 'event', "Add More", "click-cardbtn" );
-
-    });
 
     // addMore 버튼을 누르면 카드를 10개 더 추가한다.
     addMoreCard = function( e ){
@@ -405,14 +384,6 @@ $(document).ready(function() {
       addMoreCard();
       ga('send', 'event', 'Add More', 'click-Floating' );
     });
-
-    // 광고 카드까지 스크롤을 하면 자동으로 카드를 추가로 불러온다.
-
-    var options = [
-      {selector: '.adsense-scrollFire', offset: 200, callback: 'addMoreCard()' },
-    ];
-    Materialize.scrollFire(options);
-
 
 
     // 하단 fix 버튼 클릭시 움직임
