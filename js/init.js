@@ -209,11 +209,11 @@ $(document).ready(function() {
                         "<p class='activator truncate' alt='description'>" + item.description + "</p>" +
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
-                  // "<div class='container'>" +
-                    "<video width='100%' controls loop preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
+                  "<div class='container center-align'>" +
+                    "<video height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
                     "</video>"+
-                    "<p class='activator' alt='description'>" + item.description + "</p>" +
-                  // "</div>" +
+                    "<p class='activator left-align' alt='description'>" + item.description + "</p>" +
+                  "</div>" +
                   "<div class='right-align'>"+
                       "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
                       "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
