@@ -98,18 +98,25 @@ $(document).ready(function() {
     }
 
 
+$('body').on('mouseover', '.card', function( e ){
+  $(this).removeClass('small');
+  $(this).find('p').removeClass('truncate');
+  $('.grid').isotope();
+
+});
+
+$('body').on('mouseout', '.card', function ( e ) {
+  // body...
+  $(this).addClass('small');
+  $(this).find('p').addClass('truncate');
+  $('.grid').isotope();
+
+});
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
-      $(this).parents('.card').removeClass('small');
-      $('.grid').isotope();
       $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
-
-
-      // 카드를 재 정렬한다.
-      $(window.location.hash).imagesLoaded().done(function() {
-        $('.grid').isotope();
-      });
+      $('.grid').isotope();
 
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
