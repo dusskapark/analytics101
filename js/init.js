@@ -101,8 +101,9 @@ $(document).ready(function() {
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
       window.location.hash = $(this).parents('div[id]').attr('id');
-      var heightExpanded = $(this).parents('.card').attr('data-height');
-      $(this).parents('.card').removeClass('small').attr('min-height', heightExpanded);
+      // var heightExpanded = $(this).parents('.card').attr('data-height');
+      // $(this).parents('.card').removeClass('small').attr('min-height', heightExpanded);
+       $(this).parents('.card').removeClass('small').addClass('large')
       $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
       $('.grid').isotope();
 
@@ -117,7 +118,7 @@ $(document).ready(function() {
       //비디오는 플레이가 중지된다.
       $(document).find('.expanded').find('video').get(0).pause();
       window.location.hash = "";
-      $(this).parents('.card').attr('height', 'auto').addClass('small');
+      // $(this).parents('.card').attr('height', '').addClass('small');
       $(document).find('.expanded').removeClass('expanded s12 m12 l12').addClass('s12 m4 l3 grid-item');
 
 
@@ -127,6 +128,8 @@ $(document).ready(function() {
 
     // 카드를 닫기를 누르면 닫힌다.
     $( "body" ).on( "click", "div.card-reveal > span", function( e ) {
+      $(this).parents('.card').removeClass('large').addClass('small')
+
       contractCard();
 
       // 카드를 재 정렬한다.
