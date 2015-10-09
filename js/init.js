@@ -228,7 +228,7 @@ $(document).ready(function() {
         $("#lastPage").text(json.last);
 
         // 구글 광고
-        var googleAdCard = "<div class='col s12 m4 l3 grid-item'>" +
+        var googleAdCard = "<div class='col s12 m4 l3 grid-item adsense'>" +
         "<div class='card pink lighten-5 white-text'>" +
         "<div class='card-image'>" +
           "<ins class='adsbygoogle' " +
@@ -250,10 +250,12 @@ $(document).ready(function() {
         "</div>" +
         "</div>";
 
+// 광고카드를 보면
+
 
         // 광고 반복 횟수를 구한다.
-        var adNum = (json.number + 1) * 20 / 5;
-        for (var i = 1; i <= adNum; i++) {
+        var adNum = (json.number + 1) * 20 / 10;
+        for (var i = 0; i <= adNum; i++) {
           var v = i * 5 - 1;
           $('#FeviCard').children().eq(v).append(googleAdCard);
         }
@@ -271,8 +273,6 @@ $(document).ready(function() {
         // "</div>";
         //
         // $("#FeviCard").children().last().append(addMore);
-
-
     };
 
     function response_id (json) {
@@ -354,8 +354,6 @@ $(document).ready(function() {
       }
 
 
-
-
     // google-analytics 카드 어디를 누를지 체크
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
@@ -408,10 +406,12 @@ $(document).ready(function() {
     });
 
     // 광고 카드까지 스크롤을 하면 자동으로 카드를 추가로 불러온다.
-    // var options = [
-    //   {selector: '.adsense', offset: 200, callback: "{addMoreCard(),console.log('sucess'), ga('send', 'event', 'Add More', 'click-Floating' )}" },
-    // ];
-    // Materialize.scrollFire(options);
+
+    var options = [
+      {selector: '.adsense-scrollFire', offset: 200, callback: 'addMoreCard()' },
+    ];
+    Materialize.scrollFire(options);
+
 
 
     // 하단 fix 버튼 클릭시 움직임
