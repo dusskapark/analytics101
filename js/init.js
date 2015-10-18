@@ -210,7 +210,7 @@ $(document).ready(function() {
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
                   "<div class='container center-align'>" +
-                    "<video height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "'>" +
+                    "<video width='90%' height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' >" +
                     "</video>"+
                     "<p class='activator left-align' alt='description'>" + item.description + "</p>" +
                   "</div>" +
@@ -281,7 +281,9 @@ $(document).ready(function() {
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
                     "<div class='container'>" +
-                        "<video class='center-align' id='" + item.id + "' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' width='100%' >" +
+                        "<video class='center-align' id='" + item.id + "' poster='" + item.picture + 
+                        "' controls preload='auto' width='100%' >"+
+                          "<source src='" + item.source + "' />" +
                         "</video>" +
                         "<ul class='collection'>" +
                           "<li class='collection-item'>"+
@@ -319,10 +321,6 @@ $(document).ready(function() {
             $("footer > div.container").remove();
 
 
-
-
-
-
             // ID 별로 파라메터를 따로 설정을 한다.
             var virtualPvByParam =  "index.html?id=" + item.id;
             ga('send', 'pageview', virtualPvByParam);
@@ -334,12 +332,12 @@ $(document).ready(function() {
               ga('send', 'event', "video played", item.id);
             }
         });
+
         $('.grid').imagesLoaded().done(function() {
           $('.grid').isotope();
         });
 
       }
-
 
     // google-analytics 카드 어디를 누를지 체크
     $("body").on("click", ".activator", function ( e ){
@@ -360,6 +358,7 @@ $(document).ready(function() {
         }
 
       });
+  
 
     // addMore 버튼을 누르면 카드를 10개 더 추가한다.
     addMoreCard = function( e ){

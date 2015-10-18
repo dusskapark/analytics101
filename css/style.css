@@ -140,6 +140,10 @@
   display: none;
 }
 
+.vidcontents {
+	height: 300px;
+}
+
 /*Google ADsense RWD*/
 .RWD001 { width:320px; height: 250px; }
 @media(min-width: 446px) { .RWD001 { width: 336px; height: 280px; } }
