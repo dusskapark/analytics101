@@ -87,7 +87,7 @@ $(document).ready(function() {
 
     // #ID를 달고 브라우저를 직접 접속했을 때, hash를 ?id= 로 리다이렉트 시키는 것이 필요함.
     if( window.location.hash !== "" ) {
-      var URLis = "?id=" + window.location.hash.substr(1);
+      var URLis = "?id=" + window.location.hash.substr(1);  
       $("#FeviCard").empty();
 
       // $('#modal2').openModal({dismissible: false});
@@ -366,13 +366,14 @@ $(document).ready(function() {
       var pageNm = $("#currentPage").text();
       var pageNmInt = Number(pageNm);
       var nextPageUrl = "";
-      if ($search.page == undefined) {
-        var nextPageUrl = "?page=" + pageNmInt;
-      }else if ($search.category !== undefined) {
+      if ($search.category !== undefined) {
         var nextPageUrl = "?category=" + $search.category + "&page=" + pageNmInt;
+        // console.log(nextPageUrl);
 
       } else {
         var nextPageUrl = "?page=" + pageNmInt;
+        // console.log(nextPageUrl);
+
       }
       $("#addMore").remove();
       // $('#modal2').openModal({dismissible: false});
