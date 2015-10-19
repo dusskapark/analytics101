@@ -518,3 +518,41 @@ jQuery( ".email-form" ).submit(function( event ) {
         // "</div>";
         //
         // $("#FeviCard").children().last().append(addMore);
+
+
+
+      // 연동규격
+      var openAt = new Date,
+          uagentLow = navigator.userAgent.toLocaleLowerCase(),
+          chrome25,
+          kitkatWebview;
+      
+      $("body").append("<iframe id='____sorilink____'></iframe>");
+      $("#____sorilink____").hide();
+      
+      setTimeout( function() {
+          if (new Date - openAt < 4000) {
+              if (uagentLow.search("android") > -1) {
+                  $("#____sorilink____").attr("src","market://details?id=com.app.fevir&hl=ko");
+                } elss {
+                  location.replace("http://vikicast.com/")
+                }
+              // } else if (uagentLow.search("iphone") > -1) {
+                  // location.replace("https://itunes.apple.com/kr/app/solibada-myujig-mujehan-eum/id346528006?mt=8");
+              // }
+          }
+      }, 1000);
+      
+      if(uagentLow.search("android") > -1){
+          chrome25 = uagentLow.search("chrome") > -1 && navigator.appVersion.match(/Chrome\/\d+.\d+/)[0].split("/")[1] > 25;
+          kitkatWebview = uagentLow.indexOf("naver") != -1 || uagentLow.indexOf("daum") != -1;
+      
+          if (chrome25 && !kitkatWebview){
+              document.location.href = "intent://applink?param=value#Intent;scheme=soribada30;package=com.soribada.android;end";
+          } else{
+              $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
+          }
+      }
+      else if(uagentLow.search("iphone") > -1){
+          $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
+      }

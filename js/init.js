@@ -13,42 +13,6 @@ $(document).ready(function() {
           }
       });
 
-      // 연동규격
-      // var openAt = new Date,
-      //     uagentLow = navigator.userAgent.toLocaleLowerCase(),
-      //     chrome25,
-      //     kitkatWebview;
-      //
-      // $("body").append("<iframe id='____sorilink____'></iframe>");
-      // $("#____sorilink____").hide();
-      //
-      // setTimeout( function() {
-      //     if (new Date - openAt < 4000) {
-      //         if (uagentLow.search("android") > -1) {
-      //             $("#____sorilink____").attr("src","market://details?id=com.app.fevir&hl=ko");
-      //           } elss {
-      //             location.replace("http://vikicast.com/")
-      //           }
-      //         // } else if (uagentLow.search("iphone") > -1) {
-      //             // location.replace("https://itunes.apple.com/kr/app/solibada-myujig-mujehan-eum/id346528006?mt=8");
-      //         // }
-      //     }
-      // }, 1000);
-      //
-      // if(uagentLow.search("android") > -1){
-      //     chrome25 = uagentLow.search("chrome") > -1 && navigator.appVersion.match(/Chrome\/\d+.\d+/)[0].split("/")[1] > 25;
-      //     kitkatWebview = uagentLow.indexOf("naver") != -1 || uagentLow.indexOf("daum") != -1;
-      //
-      //     if (chrome25 && !kitkatWebview){
-      //         document.location.href = "intent://applink?param=value#Intent;scheme=soribada30;package=com.soribada.android;end";
-      //     } else{
-      //         $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
-      //     }
-      // }
-      // else if(uagentLow.search("iphone") > -1){
-      //     $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
-      // }
-
 
   // 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('d0dd75755ece80295a757c6042496f9b');
@@ -169,7 +133,6 @@ $(document).ready(function() {
   "</div>" +
   "</div>";
 
-
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
@@ -262,6 +225,21 @@ $(document).ready(function() {
 
     };
 
+            player = videojs('content_video');
+            options = {
+              id: 'content_video',
+              adTagUrl: 'http://googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on'
+            };
+
+            player.ima(options);
+            player.ima.requestAds();
+            // On mobile devices, you must call initializeAdDisplayContainer as the result
+            // of a user action (e.g. button click). If you do not make this call, the SDK
+            // will make it for you, but not as the result of a user action. For more info
+            // see our examples, all of which are set up to work on mobile devices.
+            // player.ima.initializeAdDisplayContainer();
+            player.play();
+
     function response_id (json) {
       $("#addMoreCircle").remove();
         var video_list = json.content;
@@ -280,8 +258,8 @@ $(document).ready(function() {
 
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
-                    "<div class='container'>" +
-                        "<video class='center-align' id='" + item.id + "' poster='" + item.picture + 
+                    "<div class='container '>" +
+                        "<video class='center-align video-js vjs-default-skin ' id='content_video' poster='" + item.picture + 
                         "' controls preload='auto' width='100%' >"+
                           "<source src='" + item.source + "' />" +
                         "</video>" +
@@ -315,6 +293,7 @@ $(document).ready(function() {
             $('.grid').isotope('insert', $(card) );
             $('.grid').isotope();
             // $('#modal2').closeModal();
+
 
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
