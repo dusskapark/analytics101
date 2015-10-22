@@ -1,3 +1,5 @@
+var player;
+
 $(document).ready(function() {
 
   $('.button-collapse').sideNav({
@@ -225,20 +227,7 @@ $(document).ready(function() {
 
     };
 
-            player = videojs('content_video');
-            options = {
-              id: 'content_video',
-              adTagUrl: 'http://googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on'
-            };
 
-            player.ima(options);
-            player.ima.requestAds();
-            // On mobile devices, you must call initializeAdDisplayContainer as the result
-            // of a user action (e.g. button click). If you do not make this call, the SDK
-            // will make it for you, but not as the result of a user action. For more info
-            // see our examples, all of which are set up to work on mobile devices.
-            // player.ima.initializeAdDisplayContainer();
-            player.play();
 
     function response_id (json) {
       $("#addMoreCircle").remove();
@@ -259,7 +248,7 @@ $(document).ready(function() {
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
                     "<div class='container '>" +
-                        "<video class='center-align video-js vjs-default-skin ' id='content_video' poster='" + item.picture + 
+                        "<video class='center-align' id='content_video' poster='" + item.picture + 
                         "' controls preload='auto' width='100%' >"+
                           "<source src='" + item.source + "' />" +
                         "</video>" +
@@ -294,7 +283,15 @@ $(document).ready(function() {
             $('.grid').isotope();
             // $('#modal2').closeModal();
 
+            // player = videojs('content_video');
 
+            // var options = {
+            //   id: 'content_video',
+            //   adTagUrl: 'http://googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on'
+            // };
+
+            // player.ima(options);
+            // player.ima.requestAds();
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("footer > div.container").remove();
@@ -318,11 +315,17 @@ $(document).ready(function() {
 
       }
 
+      $('#content_video').click(function(){
+        console.log('clicked');
+        player.play();
+
+      });
+
     // google-analytics 카드 어디를 누를지 체크
     $("body").on("click", ".activator", function ( e ){
       var contentID = $(this).parents('div[id]').attr('id');
       var clickedPath = $(this).attr('alt');
-      ga('send', 'event', "card-reveal", clickedPath, contentID  );
+      ga('send', 'event', 'card-reveal', clickedPath, contentID  );
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
       // hash를 따로 달고 날아오는 경우와 동일하게 통계를 잡는다.
