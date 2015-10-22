@@ -24,7 +24,7 @@ var shareKakao = function (json) {
         });
         // Kakao.Link.cleanup();
         // 카카오 공유를 GA로 추적
-        ga('send', 'event', "shareLink", "sendkakao", item.id );
+        ga('send', 'social', 'KakaoTalk', 'kakaoLink', item.id );
       });
     }
 
@@ -82,7 +82,7 @@ var shareKakao = function (json) {
             "&user_message_prompt='너만 못본 그 영상! 여기 다 있다~'" +
             "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social" + item.id;
 
-            ga('send', 'event', "sendFBshareRequest", item.id );
+            ga('send', 'social', 'facebook', 'shareRequest', item.id );
             window.open(facebookUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
           });
         }
@@ -92,7 +92,7 @@ var shareTwitter = function (json){
     video_list.forEach(function(v, i) {
         var item = v;
         var twitterUrl = "https://twitter.com/intent/tweet?url=http://vikicast.com/index.html?id=" + item.id;
-        ga('send', 'event', "sendTweetshareRequest", item.id );
+        ga('send', 'social', 'facebook', 'sendTweetshareRequest', item.id );
         window.open(twitterUrl, "_blank", "height=" + windowHeight + ",width=" + windowWidth);
       });
     }

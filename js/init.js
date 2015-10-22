@@ -174,8 +174,8 @@ $(document).ready(function() {
                         "<p class='activator truncate' alt='description'>" + item.description + "</p>" +
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
-                  "<div class='container center-align'>" +
-                    "<video width='90%' height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' >" +
+                  "<div class='center-align'>" +
+                    "<video width='100%' height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' >" +
                     "</video>"+
                     "<p class='activator left-align' alt='description'>" + item.description + "</p>" +
                   "</div>" +
@@ -305,7 +305,7 @@ $(document).ready(function() {
             var vid = document.getElementById(item.id);
             var vidID = $(vid).get(0);
             vidID.onplaying = function(){
-              ga('send', 'event', "video played", item.id);
+              ga('send', 'event', 'video played', item.id);
             }
         });
 
