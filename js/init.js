@@ -1,4 +1,3 @@
-var player;
 
 $(document).ready(function() {
 
@@ -246,35 +245,37 @@ $(document).ready(function() {
             "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
 
             // 카드를 구성한다
-            var card = "<div class='col s12 m12 l12 grid-item " + item.category + "'>" +
-                    "<div class='container '>" +
-                        "<video class='center-align' id='content_video' poster='" + item.picture + 
-                        "' controls preload='auto' width='100%' >"+
-                          "<source src='" + item.source + "' />" +
-                        "</video>" +
-                        "<ul class='collection'>" +
-                          "<li class='collection-item'>"+
-                          "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
-                          "</li>"+
-                          "<li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
-                              "<span class='title'>" + item.name + "</span>" +
-                              "<p>"+ item.description +"</p>"+
-                          "</li>"+
-                          "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
-                            "<span class='title'>더 많은 동영상 보기</span>" +
-                            "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
-                          "</li>"+
-                          "<li class='collection-item'>" +
-                            "<div class='right-align'>"+
-                                "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
-                                "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
-                                // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
-                            "</div>"+
-                          "</li>" +
-                        "</ul>" +
-                      "</div>" +
+            var card = "<div class='col s12 m12 l12 grid-item " + item.category + " '>" +
+                    "<div class='content'>" +
+                      "<video class='center-align' id='"+ item.id +"' poster='" + item.picture + "' controls preload='auto' width='100%' height='360px'>"+
+                        "<source src='" + item.source + "' />" +
+                      "</video>" +
+                      "<div id='adcontainer'></div>" +
                     "</div>"+
 
+                    "<ul class='collection'>" +
+                      "<li class='collection-item'>"+
+                        "<button id='playButton'>Play</button>"+
+                      "</li>"+
+                      "<li class='collection-item'>"+
+                      "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
+                      "</li>"+
+                      "<li class='collection-item avatar'><img src='" + item.profile_image + "' class='circle responsive-img'>" +
+                          "<span class='title'>" + item.name + "</span>" +
+                          "<p>"+ item.description +"</p>"+
+                      "</li>"+
+                      "<li class='collection-item avatar'><a href='./index.html'><i class='material-icons circle pink'>add</i>"+
+                        "<span class='title'>더 많은 동영상 보기</span>" +
+                        "<p>Vikicast에서 더 많은 영상을 볼 수 있습니다. 지금 방문하세요! </p></a>"+
+                      "</li>"+
+                      "<li class='collection-item'>" +
+                        "<div class='right-align'>"+
+                            "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
+                            "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
+                            // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
+                        "</div>"+
+                      "</li>" +
+                    "</ul>" +
                   "</div>" ;
 
             //카드를 화면에 표시한다.
