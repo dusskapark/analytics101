@@ -255,7 +255,7 @@ $(document).ready(function() {
 
                     "<ul class='collection'>" +
                       "<li class='collection-item'>"+
-                        "<button id='playButton'>Play</button>"+
+                        "<button id='playButton'>Play</button>"
                       "</li>"+
                       "<li class='collection-item'>"+
                       "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+

@@ -1,11 +1,11 @@
 $(document).ready(function(){
   vidID = window.location.hash;
 
-    $("body").on("click", vidID, function(e){   
-      var adsManager;
-      var clickTrackingOverlay = document.getElementById('clickTrackingOverlay');
-      var videoElement = document.getElementById(vidID.substr(1));
-      var adsLoader = new google.ima.AdsLoader();
+  $("body").on("click", vidID, function(e){   
+    var adsManager;
+    var clickTrackingOverlay = document.getElementById('clickTrackingOverlay');
+    var videoElement = document.getElementById(vidID.substr(1));
+    var adsLoader = new google.ima.AdsLoader();
 
   // Add event listeners
   adsLoader.addEventListener(
