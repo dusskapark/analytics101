@@ -247,14 +247,14 @@ $(document).ready(function() {
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + " '>" +
                     "<div class='content'>" +
-                      "<video class='center-align' id='"+ item.id +"' poster='" + item.picture + "' controls preload='auto' width='100%' height='360px'>"+
+                      "<video class='center-align contentElement' id='"+ item.id +"' poster='" + item.picture + "' width='100%', height='360px' no-controls preload='auto'>"+
                         "<source src='" + item.source + "' />" +
                       "</video>" +
                       "<div id='adcontainer'></div>" +
                     "</div>"+
                     "<ul class='collection'>" +
-                      "<li class='collection-item'>"+
-                        "<button id='playButton'>Play</button>" +
+                      "<li class='collection-item center-align' border='0'>"+
+                        "<a class='btn-floating btn-large waves-effect waves-light red'  id='playPause'><i class='material-icons'>play_arrow</i></a>" +
                       "</li>"+
                       "<li class='collection-item'>"+
                       "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
@@ -283,15 +283,10 @@ $(document).ready(function() {
             $('.grid').isotope();
             // $('#modal2').closeModal();
 
-            // player = videojs('content_video');
 
-            // var options = {
-            //   id: 'content_video',
-            //   adTagUrl: 'http://googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on'
-            // };
-
-            // player.ima(options);
-            // player.ima.requestAds();
+              $('.grid').imagesLoaded().done(function() {
+                $('.grid').isotope();
+              });
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("footer > div.container").remove();
@@ -308,18 +303,9 @@ $(document).ready(function() {
               ga('send', 'event', 'video played', item.id);
             }
         });
-
-        $('.grid').imagesLoaded().done(function() {
-          $('.grid').isotope();
-        });
-
       }
 
-      $('#content_video').click(function(){
-        console.log('clicked');
-        player.play();
 
-      });
 
     // google-analytics 카드 어디를 누를지 체크
     $("body").on("click", ".activator", function ( e ){
