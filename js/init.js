@@ -116,25 +116,16 @@ $(document).ready(function() {
 
   // 구글 광고
   var googleAdCard = "<div class='col s12 m12 l12 grid-item adsense'>" +
-  "<div class='card pink lighten-5 white-text'>" +
-  "<div class='card-image'>" +
-    "<ins class='adsbygoogle' " +
-         "style='display:block' " +
-         "data-ad-client='ca-pub-0416537700421851' " +
-         "data-ad-slot='8427653357' " +
-         "data-ad-format='auto'></ins> " +
-    "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-    // "<span class='card-title'>Adsense</span>"+
+    "<div class='card pink lighten-5 white-text'>" +
+      "<div class='card-image'>" +
+        "<ins class='adsbygoogle' " +
+             "style='display:block' " +
+             "data-ad-client='ca-pub-0416537700421851' " +
+             "data-ad-slot='8427653357' " +
+             "data-ad-format='auto'></ins> " +
+        "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+      "</div>" +
     "</div>" +
-    // "<div class='card-content'>" +
-    // "<ins class='adsbygoogle' " +
-    //      "style='display:block' " +
-    //      "data-ad-client='ca-pub-0416537700421851' " +
-    //      "data-ad-slot='4078178953' " +
-    //      "data-ad-format='auto'></ins> " +
-    // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-    // "</div>" +
-  "</div>" +
   "</div>";
 
     function response_json(json) {
@@ -196,23 +187,20 @@ $(document).ready(function() {
                   // "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareStory);'><img src='https://dev.kakao.com/assets/img/about/buttons/kakaostory/brand_assets/digital/story_symbol.png' class='circle'></a>"
                 "</div>" +
               "</div>" ;
-
-              var vid = $(item.id).children()
-              console.log(vid);
          
               $('.grid').isotope('insert', $(card) );
 
-              // video JS 를 순서대로 작동하기기 
-              // videojs(document.getElementsByClassName('vidContents'), {
+              video JS 를 순서대로 작동하기기 
+              videojs(document.getElementsByClassName('vidContents')[i], {
 
-              //   "controls": true,
-              //   "preload": "auto"
+                "controls": true,
+                "preload": "auto"
 
-              // }, function() {
-              //   $('.grid').isotope();
+              }, function() {
+                $('.grid').isotope();
 
 
-              // });
+              });
 
 
 
