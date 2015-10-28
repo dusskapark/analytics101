@@ -190,7 +190,7 @@ $(document).ready(function() {
          
               $('.grid').isotope('insert', $(card) );
 
-              video JS 를 순서대로 작동하기기 
+              // video JS 를 순서대로 작동하기기 
               videojs(document.getElementsByClassName('vidContents')[i], {
 
                 "controls": true,
