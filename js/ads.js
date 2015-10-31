@@ -9,6 +9,7 @@ var vidID = $(window.location.hash)[0];
 		var consoleText = $(this).find('i').text();
 
 		if (consoleText == 'play_arrow') {
+			console.log(this);
 			vidID.play();
 			$(this).find('i').text('pause');
 
@@ -20,7 +21,7 @@ var vidID = $(window.location.hash)[0];
 
 	});
 
-	$('body').on('ready', '#adContainer', 	function(){
+	$('body').on('load', '#adContainer', 	function(){
 
 		var adDisplayContainer = new google.ima.AdDisplayContainer(
 		document.getElementById('adContainer'),

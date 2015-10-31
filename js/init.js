@@ -1,4 +1,6 @@
 
+var widthCheck = $('#widthCheck').width();
+
 $(document).ready(function() {
 
   $('.button-collapse').sideNav({
@@ -65,17 +67,19 @@ $(document).ready(function() {
 
     // 카드를 누르면 카드가 확대된다.
     $("body").on("click", ".activator", function ( e ){
-      window.location.hash = $(this).parents('div[id]').attr('id');
-      // var heightExpanded = $(this).parents('.card').attr('data-height');
-      // $(this).parents('.card').removeClass('small').attr('min-height', heightExpanded);
-       $(this).parents('.card').removeClass('small').addClass('large')
+      var $hash = $(this).parents('div[id]').attr('id');
+      window.location.hash = $hash
+
+
+      $(this).parents('.card').removeClass('small').addClass('large')
       $(this).parents(".grid-item").removeClass("s12 m4 l3 grid-item").addClass("expanded s12 m12 l12");
       $('.grid').isotope();
-
 
       // 카드를 눌렀을 때는 해당 카드의 PV를 따로 잡는다.
       var virtualPvByID = "index.html?id=" + window.location.hash.substr(1);
       ga('send', 'pageview', virtualPvByID);
+
+
     });
 
     // 닫기를 누르면 카드가 다시 작아진다.
@@ -111,34 +115,26 @@ $(document).ready(function() {
     }
   };
 
+
   // 구글 광고
   var googleAdCard = "<div class='col s12 m12 l12 grid-item adsense'>" +
-  "<div class='card pink lighten-5 white-text'>" +
-  "<div class='card-image'>" +
-    "<ins class='adsbygoogle' " +
-         "style='display:block' " +
-         "data-ad-client='ca-pub-0416537700421851' " +
-         "data-ad-slot='8427653357' " +
-         "data-ad-format='auto'></ins> " +
-    "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-    // "<span class='card-title'>Adsense</span>"+
+    "<div class='card pink lighten-5 white-text'>" +
+      "<div class='card-image'>" +
+        "<ins class='adsbygoogle' " +
+             "style='display:block' " +
+             "data-ad-client='ca-pub-0416537700421851' " +
+             "data-ad-slot='8427653357' " +
+             "data-ad-format='auto'></ins> " +
+        "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
+      "</div>" +
     "</div>" +
-    // "<div class='card-content'>" +
-    // "<ins class='adsbygoogle' " +
-    //      "style='display:block' " +
-    //      "data-ad-client='ca-pub-0416537700421851' " +
-    //      "data-ad-slot='4078178953' " +
-    //      "data-ad-format='auto'></ins> " +
-    // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>" +
-    // "</div>" +
-  "</div>" +
   "</div>";
 
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
-      var widthCheck =  $('#widthCheck').width();
-      $('#widthCheck').css('display', 'none')
+      console.log(widthCheck)
+      $('#widthCheck').remove()
 
       var video_list = json.content;
 
@@ -174,22 +170,16 @@ $(document).ready(function() {
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
                   "<div class='center-align'>" +
-                    "<video width='100%' height='300px' controls preload='auto' poster='" + item.picture + "' src='" + item.source + "' >" +
+                    "<video class='center-align video-js vjs-default-skin vidContents' poster='" + item.picture + 
+                      "' width='"+ widthCheck * 0.9 +"' height='360'>"+
+                        "<source src='" + item.source + "' />" +
                     "</video>"+
                     "<p class='activator left-align' alt='description'>" + item.description + "</p>" +
                   "</div>" +
                   "<div class='right-align'>"+
                       "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' ><i class='fa fa-comment circle brown-text'></i> 카톡 공유  </a>" +
                       "<a class='waves-effect waves-pink btn-flat' href='" + facebookUrl + "', target='_blank', width='360', height='640'> <i class='fa fa-facebook-square circle indigo-text'></i> 페북 공유  </a>" +
-                      // "<a class='waves-effect waves-pink btn-flat' href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareTwitter);'> <i class='fa fa-twitter circle blue-text'></i> 트윗 공유  </a>" +
                   "</div>"+
-                  // "<div class='adsense center-align'>"+
-                  //   "<ins class='adsbygoogle' " +
-                  //      "style='display:inline-block;width:468px;height:60px'" +
-                  //      "data-ad-client='ca-pub-0416537700421851' " +
-                  //      "data-ad-slot='6703607615'></ins>" +
-                  // "<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"+
-                  // "</div>"+
                 "</div>" +
                 "<div class='card-action truncate'>" +
                   "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareKakao);' > <i class='fa fa-comment circle brown-text'></i> 카톡 공유</a>" +
@@ -198,15 +188,32 @@ $(document).ready(function() {
                   // "<a href='javascript:callApi(url+\"?id=\"+"+ item.id +", shareStory);'><img src='https://dev.kakao.com/assets/img/about/buttons/kakaostory/brand_assets/digital/story_symbol.png' class='circle'></a>"
                 "</div>" +
               "</div>" ;
+         
+              $('.grid').isotope('insert', $(card) );
+
+              var video_dom = $('#' + item.id).find('video')[0];
+              console.log(video_dom);
+
+              // video JS 를 순서대로 작동하기기 
+              videojs(video_dom , {
+
+                "controls": true,
+                "preload": "auto"
+
+              }, function() {
+                $('.grid').isotope();
+
+              });
+
+
+
 
 
             //카드를 화면에 표시한다.
-            $('.grid').isotope('insert', $(card) );
-
-
-            // 카드를 정렬한다.
-            $('.grid').isotope();
-
+            $('.grid').imagesLoaded().done(function() {
+              // 카드를 정렬한다.
+              $('.grid').isotope();
+            });
         });
 
         //page 및 각종 앨리먼트 정보를 표시한다.
@@ -226,9 +233,14 @@ $(document).ready(function() {
 
     };
 
-
-
     function response_id (json) {
+
+      // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
+      var widthCheck =  $('#widthCheck').width();
+      $('#widthCheck').remove()
+
+
+
       $("#addMoreCircle").remove();
         var video_list = json.content;
         video_list.forEach(function(v, i) {
@@ -244,18 +256,23 @@ $(document).ready(function() {
             "&redirect_uri=http://vikicast.com/responseSuccess.html" +
             "&link=http://vikicast.com/index.html?utm_source=facebookLink&utm_medium=social#" + item.id;
 
+
+            // 현재 로드된 스크린에서 카드의 높이를 계산함
+            var heightCheck = item.height * widthCheck / item.width;
+
             // 카드를 구성한다
             var card = "<div class='col s12 m12 l12 grid-item " + item.category + " '>" +
-                    "<div class='content'>" +
-                      "<video class='center-align contentElement' id='"+ item.id +"' poster='" + item.picture + "' width='100%', height='360px' no-controls preload='auto'>"+
+                    "<div class='content' id='"+ item.id +"' >" +
+                      "<video class='center-align video-js vjs-default-skin vidContents' poster='" + item.picture + 
+                      "' width='"+ widthCheck +"' height='360'>"+
                         "<source src='" + item.source + "' />" +
                       "</video>" +
-                      "<div id='adcontainer'></div>" +
+                      // "<div id='adcontainer'></div>" +
                     "</div>"+
                     "<ul class='collection'>" +
-                      "<li class='collection-item center-align' border='0'>"+
-                        "<a class='btn-floating btn-large waves-effect waves-light red'  id='playPause'><i class='material-icons'>play_arrow</i></a>" +
-                      "</li>"+
+                      // "<li class='collection-item center-align'>"+
+                      //   "<a class='btn-floating btn-large waves-effect waves-light red'  id='playPause'><i class='material-icons'>play_arrow</i></a>" +
+                      // "</li>"+
                       "<li class='collection-item'>"+
                       "<span class='title pink-text'><strong>" + item.category + "</strong></span>"+
                       "</li>"+
@@ -279,14 +296,18 @@ $(document).ready(function() {
 
             //카드를 화면에 표시한다.
 
-            $('.grid').isotope('insert', $(card) );
-            $('.grid').isotope();
-            // $('#modal2').closeModal();
+            $('.grid').imagesLoaded().done(function() {
+              $('.grid').isotope('insert', $(card) );
 
+              videojs( document.getElementsByClassName('vidContents')[0], {
+                "controls": true,
+                "preload": "auto"
 
-              $('.grid').imagesLoaded().done(function() {
+              }, function() {
                 $('.grid').isotope();
-              });
+                console.log( "loaded" );
+              })
+            });
 
             //ID로 접속한 경우에는 페이지 정보는 삭제한다.
             $("footer > div.container").remove();
@@ -297,13 +318,15 @@ $(document).ready(function() {
             ga('send', 'pageview', virtualPvByParam);
 
             // 비디오 플레이했는지 여부를 체크한다.
-            var vid = document.getElementById(item.id);
-            var vidID = $(vid).get(0);
-            vidID.onplaying = function(){
-              ga('send', 'event', 'video played', item.id);
-            }
+            // video.js 도입 이후 해당 기능은 일시 정지
+            // var vid = document.getElementById(item.id);
+            // var vidID = $(vid).get(0);
+            // vidID.onplaying = function(){
+            //   ga('send', 'event', 'video played', item.id);
+            // }
         });
       }
+
 
 
 
