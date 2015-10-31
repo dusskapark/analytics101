@@ -1,4 +1,6 @@
 
+var widthCheck = $('#widthCheck').width();
+
 $(document).ready(function() {
 
   $('.button-collapse').sideNav({
@@ -131,7 +133,6 @@ $(document).ready(function() {
     function response_json(json) {
 
       // 현재 로드된 스크린에서 카드의 가로 사이즈 찾기
-      var widthCheck =  $('#widthCheck').width();
       console.log(widthCheck)
       $('#widthCheck').remove()
 
@@ -168,7 +169,7 @@ $(document).ready(function() {
                         "<p class='activator truncate' alt='description'>" + item.description + "</p>" +
                 "</div>" +
                 "<div class='card-reveal' data-id='" + item.id +"'><span class='card-title grey-text text-darken-4'>" + item.category + "<i class='material-icons right close'>close</i></span>"+
-                  "<div  id='"+ item.id +"'  class='center-align'>" +
+                  "<div class='center-align'>" +
                     "<video class='center-align video-js vjs-default-skin vidContents' poster='" + item.picture + 
                       "' width='"+ widthCheck * 0.9 +"' height='360'>"+
                         "<source src='" + item.source + "' />" +
@@ -190,15 +191,17 @@ $(document).ready(function() {
          
               $('.grid').isotope('insert', $(card) );
 
+              var video_dom = $('#' + item.id).find('video')[0];
+              console.log(video_dom);
+
               // video JS 를 순서대로 작동하기기 
-              videojs(document.getElementsByClassName('vidContents')[i], {
+              videojs(video_dom , {
 
                 "controls": true,
                 "preload": "auto"
 
               }, function() {
                 $('.grid').isotope();
-
 
               });
 
