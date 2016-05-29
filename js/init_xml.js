@@ -258,8 +258,6 @@ jQuery( ".email-form" ).submit(function( event ) {
                                         "created: " + item.created_time + "</p></li></ul>" +
                                 "</div>" +
                               "</div>";
-<<<<<<< HEAD
-=======
 
 //클릭하면 해당 data-id 가져오기
 															// var category = $(e.target).attr("class");
@@ -381,4 +379,180 @@ jQuery( ".email-form" ).submit(function( event ) {
 			//     }
 			//   }
 		// });
->>>>>>> gh-pages
+
+		function response_share(json) {
+
+      var video_list = json.content;
+        video_list.forEach(function(v, i) {
+            var item = v;
+            // 모달 카드를 구성한다
+            var shareLink = "http://fevi.metadata.co.kr#" + item.id;
+            $('.sendkakao').parents().find('h4').text(shareLink);
+            $('.sendkakao').children('p').text('#fevi ' + item.description);
+            $('.sendkakao').click(function() {
+              // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+              Kakao.Link.sendTalkLink({
+                image: {
+                  src: item.picture,
+                  width: item.width,
+                  height: item.height
+                },
+                label: item.description,
+                webButton: {
+                  text: $('FEVI +' + item.name),
+                  url: $(shareLink + "?utm_source=kakaoLink&utm_medium=social") // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                },
+                webLink : {
+                  text: $('출처: '+ item.name),
+                  url: $('http://facebook.com/' + item.id)
+                }
+              });
+            });
+          });
+        };
+
+				// Google spreadsheets api 카드 받아오기
+	      var GSSurl = "https://spreadsheets.google.com/feeds/list/1xpRKoviu9XiM7jvzN2xD--V6S-FE9Dq16otBvntUImA/1/public/basic?alt=json-in-script&callback=?";
+
+	      // 공지사항 받아오기
+	      // callApi(GSSurl + "&sq=class=notice", additionalAPI );
+	      callApi(GSSurl, additionalAPI );
+
+	      function additionalAPI (data){
+	        var data = data.feed.entry;
+	        var splitArr = [ "data", "class" ];
+	        var result = "";
+	        data.forEach( function( v, j ) {
+
+	          splitArr.forEach( function( val, i ) {
+	           //  if( ( i + 1 ) < v.length ) {
+	           //     result = data.substring( data.indexOf( v + ": " ), data.indexOf( ", " + splitArr[ i + 1 ] ) ).substr( v.length );
+	           //  } else {
+	           //    result =data.substring( data.indexOf( v + ": " ), data.length ).substr( v.length );
+	           //  }
+
+	            result = v.content.$t.substring( v.content.$t.indexOf( val + ": " ), ( ( i + 1 ) < val.length ) ? v.content.$t.indexOf( ", " + splitArr[ i + 1 ] ) : v.content.$t.length ).substr( val.length );
+
+	         } );
+	       });
+	      }
+				$.ajax({
+          type : "GET",
+          url : url+"?id="+data,
+          dataType : "json",
+          async: false,
+          success: function(json) {
+            var video_list = json.content;
+            video_list.forEach(function(v, i) {
+              var item = v;
+              var shareLink = "http://vikicast.com/index.html?utm_source=kakaoLink&utm_medium=social#" + item.id;
+                // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+                Kakao.Link.sendTalkLink({
+                  label: item.description,
+                  image: {
+                    src: item.picture,
+                    width: item.width,
+                    height: item.height
+                  },
+                  webButton: {
+                    text: "vikicast x " + item.name,
+                    url: shareLink // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                  },
+                  fail: Materialize.toast('카카오톡 링크는 모바일 기기에서만 전송 가능합니다.', 4000, 'rounded')
+                  // webLink : {
+                  //   text: item.name,
+                  //   url: 'http://facebook.com/' + item.id
+                  // }
+                });
+                // Kakao.Link.cleanup();
+                // 카카오 공유를 GA로 추적
+                ga('send', 'event', "shareLink", "sendkakao", item.id );
+              });
+            }
+        })
+
+
+				// parse.com/
+			  // Parse.initialize("TBRz2H449VzYCmZoL5sRuDyTjtmQ9zZnZaNz1elq", "5EjKZB05EG5St24i9FINXbrPImtuNSgskCBkI7zp");
+			  //
+			  // var TestObject = Parse.Object.extend("TestObject");
+			  // var testObject = new TestObject();
+			  //   testObject.save({foo: "bar"}, {
+			  //   success: function(object) {
+			  //     $(".success").show();
+			  //   },
+			  //   error: function(model, error) {
+			  //     $(".error").show();
+			  //   }
+			  // });
+
+				<div class="col s12 m4 l3 grid-item adsense">
+					<div id='widthCheck' class="card">
+						<div class="card-image">
+							<img src="res/facebook/Untitled07.png">
+						</div>
+						<div class="card-content">
+							<!-- FeviResponsive-01 -->
+								<ins class="adsbygoogle RWD001"
+								     style="display:block"
+								     data-ad-client="ca-pub-0416537700421851"
+								     data-ad-slot="5114260156"
+								     data-ad-format="auto"></ins>
+								<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+						</div>
+					</div>
+				</div>
+
+				// // 광고 반복 횟수를 구한다.
+        // var adNum = (json.number + 1) * 20 / 10;
+        // for (var i = 0; i <= adNum; i++) {
+        //   var v = i * 5 - 1;
+        //   $('#FeviCard').children().eq(v).append(googleAdCard);
+        // }
+
+
+				// var addMore = "<div id='addMore' class='col s12 m4 l3 grid-item waves-effect waves-block waves-light'>" +
+        //   "<div class='card small pink lighten-1 valign-wrapper white-text'>" +
+        //     "<h5 class='valign center' style='width: 100%;'><i class='material-icons large'>playlist_add</i></h5>" +
+        //   "</div>"+
+        // "</div>";
+        //
+        // $("#FeviCard").children().last().append(addMore);
+
+
+
+      // 연동규격
+      var openAt = new Date,
+          uagentLow = navigator.userAgent.toLocaleLowerCase(),
+          chrome25,
+          kitkatWebview;
+      
+      $("body").append("<iframe id='____sorilink____'></iframe>");
+      $("#____sorilink____").hide();
+      
+      setTimeout( function() {
+          if (new Date - openAt < 4000) {
+              if (uagentLow.search("android") > -1) {
+                  $("#____sorilink____").attr("src","market://details?id=com.app.fevir&hl=ko");
+                } elss {
+                  location.replace("http://vikicast.com/")
+                }
+              // } else if (uagentLow.search("iphone") > -1) {
+                  // location.replace("https://itunes.apple.com/kr/app/solibada-myujig-mujehan-eum/id346528006?mt=8");
+              // }
+          }
+      }, 1000);
+      
+      if(uagentLow.search("android") > -1){
+          chrome25 = uagentLow.search("chrome") > -1 && navigator.appVersion.match(/Chrome\/\d+.\d+/)[0].split("/")[1] > 25;
+          kitkatWebview = uagentLow.indexOf("naver") != -1 || uagentLow.indexOf("daum") != -1;
+      
+          if (chrome25 && !kitkatWebview){
+              document.location.href = "intent://applink?param=value#Intent;scheme=soribada30;package=com.soribada.android;end";
+          } else{
+              $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
+          }
+      }
+      else if(uagentLow.search("iphone") > -1){
+          $("#____sorilink____").attr("src", 'soribada30://applink?param=value');
+      }

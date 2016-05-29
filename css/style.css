@@ -6,6 +6,27 @@
  * Made By MaterializeCSS.com
  */
 
+ @font-face {
+ 	font-family: 'BM JUA';
+ 	font-weight: normal;
+ 	font-style: normal;
+ 	src: url('../font/BM/BM-JUA.eot');
+ 	src: url('../font/BM/BM-JUA.eot?#iefix') format('embedded-opentype'),
+ 		url('../font/BM/BM-JUA.woff') format('woff'),
+ 		url('../font/BM/BM-JUA.svg#BM-JUA') format('svg'),
+ 		url('../font/BM/BM-JUA.ttf') format('truetype');
+ }
+ @font-face {
+ 	font-family: 'BM HANNA';
+ 	font-weight: normal;
+ 	font-style: normal;
+ 	src: url('../font/BM/BM-HANNA.eot');
+ 	src: url('../font/BM/BM-HANNA.eot?#iefix') format('embedded-opentype'),
+ 	        url('../font/BM/BM-HANNA.woff') format('woff'),
+ 	        url('../font/BM/BM-HANNA.svg#BM-HANNA') format('svg'),
+ 	        url('../font/BM/BM-HANNA.ttf') format('truetype');
+ }
+
 .icon-block {
 	padding: 0 15px;
 }
@@ -19,39 +40,31 @@
 }
 .brand-logo {
 	color: #FFFFFF !important;
-	font-family: 'Abel', sans-serif;
-	text-transform: uppercase;
+	font-family:'BM JUA','배달의민족 주아',sans-serif;
+	/*font-family: 'Abel', sans-serif;*/
+	/*text-transform: uppercase;*/
 	left: 50px;
 }
 
 .grid-item {
 	float: left;
-<<<<<<< HEAD
-	width: 300px !important;
-}
-
-#responsive-img {
-=======
 	min-width: 300px !important;
+  /*max-height: 550px !important;*/
 	/*max-width: 500px;*/
 }
 
 #responsive-image {
->>>>>>> gh-pages
 	width: 80%;
 	display: block;
 	margin: 0 auto;
 }
 
-<<<<<<< HEAD
-=======
 .smallcircle {
 	width: 21px;
 	vertical-align: middle;
 
 }
 
->>>>>>> gh-pages
 /* Banner 관련 */
 
 #index-banner .container {
@@ -112,8 +125,6 @@
     background-color: #f5a5a8;
 }
 
-<<<<<<< HEAD
-=======
 #modalfevi {
 	position: fixed;
 	width: 100%;
@@ -124,4 +135,24 @@
 	z-index: 999;
 	overflow-y: scroll;
 }
->>>>>>> gh-pages
+
+#hidden {
+  display: none;
+}
+
+
+/*Google ADsense RWD*/
+.RWD001 { width:320px; height: 250px; }
+@media(min-width: 446px) { .RWD001 { width: 336px; height: 280px; } }
+@media(min-width: 768px) { .RWD001 { width: 720px; height: 60px; } }
+@media(min-width: 1440px) { .RWD001 { width: 970px; height: 250px; } }
+
+
+
+#adcontainer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 360px;
+}
