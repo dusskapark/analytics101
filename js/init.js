@@ -15,7 +15,7 @@ $(document).ready(function() {
               gutter : 10
           }
       });
-
+ 
 
   // 사용할 앱의 JavaScript 키를 설정해 주세요.
   Kakao.init('d0dd75755ece80295a757c6042496f9b');
@@ -56,7 +56,6 @@ $(document).ready(function() {
     if( window.location.hash !== "" ) {
       var URLis = "?id=" + window.location.hash.substr(1);  
       $("#FeviCard").empty();
-
       // $('#modal2').openModal({dismissible: false});
       callApi( url + URLis, response_id );
     } else {
@@ -228,9 +227,9 @@ $(document).ready(function() {
           // $('#modal2').closeModal();
           // $( "#FeviCard" ).css( "visibility", "visible" );
           $('#FeviCard').children().last().append(googleAdCard);
+
           $('.grid').isotope();
         });
-
     };
 
     function response_id (json) {
@@ -245,6 +244,7 @@ $(document).ready(function() {
         var video_list = json.content;
         video_list.forEach(function(v, i) {
             var item = v;
+
             // facebook 공유 기능
             var facebookUrl = "https://www.facebook.com/dialog/feed?"+
             "app_id=1463571523951964" +
@@ -294,7 +294,7 @@ $(document).ready(function() {
                     "</ul>" +
                   "</div>" ;
 
-            //카드를 화면에 표시한다.
+            // 페이스북 메타 데이터 변경
 
             $('.grid').imagesLoaded().done(function() {
               $('.grid').isotope('insert', $(card) );
@@ -318,12 +318,7 @@ $(document).ready(function() {
             ga('send', 'pageview', virtualPvByParam);
 
             // 비디오 플레이했는지 여부를 체크한다.
-            // video.js 도입 이후 해당 기능은 일시 정지
-            // var vid = document.getElementById(item.id);
-            // var vidID = $(vid).get(0);
-            // vidID.onplaying = function(){
-            //   ga('send', 'event', 'video played', item.id);
-            // }
+
         });
       }
 
@@ -344,6 +339,7 @@ $(document).ready(function() {
       //google-analytics 비디오 플레이를 눌렀는지 체크
       var vid = document.getElementById(contentID);
       var vidID = $(vid).find('video').get(0);
+
         vidID.onplaying = function(){
           ga('send', 'event', "video played", contentID);
         }
@@ -373,7 +369,9 @@ $(document).ready(function() {
     // addmore 버튼 작은 것은 여기서 통계를 잡는다.
     $("#addMoreCircle").click(function(){
       addMoreCard();
+
       ga('send', 'event', 'Add More', 'click-Floating' );
+
     });
 
 
